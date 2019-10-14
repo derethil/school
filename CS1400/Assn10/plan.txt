@@ -1,0 +1,15 @@
+Softare Development Lifecycle
+
+System Requirements
+    This program will print out a single chessboard at a user-specified coordinate with a default length and width.
+    The user can optionally speciify a custom length and width if they want.
+
+System Analysis
+    The program will use a main function in assn10.py and import everything else from chessboard.py.
+
+System Design
+    1. Ask user for coordinate
+    2. Ask user for optional length and/or width
+    3. Use drawChessboard function 
+
+Testing
