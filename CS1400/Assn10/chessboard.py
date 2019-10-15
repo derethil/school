@@ -31,7 +31,7 @@ def drawAllRectangles(t, totalHeight, totalWidth):
     drawRectangle(t, totalHeight, totalWidth) # Draw the border for the entire chessboard
     turtle.width(5)
 
-    NUM_OF_RECTS = 8
+    NUM_OF_RECTS = 8 # Number of rectangles on one side of the chessboard
     START_X = t.xcor()
     START_Y = t.ycor()
 
@@ -46,7 +46,7 @@ def drawAllRectangles(t, totalHeight, totalWidth):
         
     
 # Main draw chessboard loop
-def drawChessboard(coordX, coordY, height=250, width=250):
+def drawChessboard(coordX, coordY, width=250, height=250):
     t = turtle.Turtle()
     t.speed(10)
     t.penup()
