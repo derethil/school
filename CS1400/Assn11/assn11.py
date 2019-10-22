@@ -27,9 +27,15 @@ def main():
         # If they choose 'Rectangle Patterns'
         if mode == 1:
             #### Add Input Statement(s) as needed ####
+            centerPoint = input("Enter a center point(x, y): ").split(',')
+            centerX, centerY = eval(centerPoint[0]), eval(centerPoint[1])
 
+            offset = eval(input("Offset? "))
+            height = eval(input("Height? "))
+            width = eval(input("Width? "))
+            count = eval(input("Count? "))
+            rotation = eval(input("Rotation? "))
             #### End Add Inputs Statement(s) ####
-
 
             # Draw the rectangle pattern
             pattern.drawRectanglePattern(centerX, centerY, offset, width, height, count, rotation)
@@ -37,7 +43,12 @@ def main():
         # If they choose 'Circle Patterns'
         elif mode == 2:
             #### Add Input Statement(s) as needed ####
+            centerPoint = input("Enter a center point(x, y): ").split(',')
+            centerX, centerY = eval(centerPoint[0]), eval(centerPoint[1])
 
+            offset = eval(input("Offset? "))
+            radius = eval(input("Radius? "))
+            count = eval(input("Count? "))
             #### End Add Inputs Statement(s) ####
 
             # Draw the circle pattern
@@ -46,7 +57,7 @@ def main():
         # If they choose 'Super Patterns'
         elif mode == 3:
             #### Add Input Statement(s) as needed ####
-
+            num = input("Number? ")
             #### End Add Inputs Statement(s) ####
             if num == "":
                 pattern.drawSuperPattern()
@@ -61,7 +72,13 @@ def main():
         response = eval(input("Choose 1, 2, or 3: "))
 
         #### Add Statement(s) to clear drawings and play again ####
-
+        if response == 1:
+            continue
+        elif response == 2:
+            pattern.reset()
+            continue
+        else:
+            playAgain = False
         #### End Add Inputs Statement(s) ####
 
     # print a message saying thank you
