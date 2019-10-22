@@ -5,11 +5,33 @@ System Requirements
     The user can optionally speciify a custom length and width if they want.
 
 System Analysis
-    The program will use a main function in assn10.py and import everything else from chessboard.py.
+    The program will use a main function in assn10.py and import everything else from chessboard.py, which contains all other functions.
 
 System Design
     1. Ask user for coordinate
     2. Ask user for optional length and/or width
-    3. Use drawChessboard function 
+    3. Define drawRectangle function that takes a turtle, height, and width that gets called in main()
+    4. Define a drawRow function that takes a turtle, total height, total width, and # of rectangles
+    5. Define drawAllRectangle function that draws the main grid of rectangles with turtle, total height, and total width parameters
+        a. Draw main border box with a thickness of 10
+        b. NUM_OF_RECTS constant to get length of chessboard in # of rectangles
+        c. Set starting coord constants
+        d. Draw each row in a loop and move to correct position for each one
+    6. Call main()
 
 Testing
+    Input:
+        0,0
+        <blank>
+        <blank>
+    Output:
+        Board with length and width of 250 and correct rectangles at 0,0
+    Passed
+
+    Input:
+        500,-100
+        100
+        300
+    Output:
+        Board at 500,-100 with height of 300 and width of 100
+    Passed

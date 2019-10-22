@@ -14,8 +14,8 @@ def main():
     startCoord = input("Enter an (x,y) coordinate to draw the chessboard: ").strip('()').split(',')
     startX, startY = int(startCoord[0]), int(startCoord[1])
 
-    width = input("Enter a width value (leave blank for default): ")
-    height = input("Enter a height value (leave blank for default): ")
+    width = input("Enter a width value (leave blank for default 250): ")
+    height = input("Enter a height value (leave blank for default 250): ")
 
     #### End Add Code to get input from user ####
 
