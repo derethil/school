@@ -69,7 +69,7 @@ def drawCirclePattern(centerX, centerY, offset, radius, count):
         tr.left((360 / count) * i)
 
 # Draw random number of shapes
-def drawSuperPattern(count):
+def drawSuperPattern(count=5):
     for i in range(count + 1):
         centerX, centerY = randint(-400,400), randint(-300,300)
         count = randint(1,50)
@@ -88,7 +88,7 @@ def drawSuperPattern(count):
         # CirclePattern
         else:  
             radius = randint(1,150)
-            drawCirclePattern(centerX, centerY, offset, radius)
+            drawCirclePattern(centerX, centerY, offset, radius, count)
 
 
 def setRandomColor():
