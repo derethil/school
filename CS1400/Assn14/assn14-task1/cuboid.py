@@ -1,3 +1,9 @@
+'''
+Jaren Glenn
+CS1400 - 2
+Assn 14 - Task 1
+'''
+
 class Cuboid():
     def __init__(self, length, width, height):
         self.__length = length
@@ -16,7 +22,12 @@ class Cuboid():
 
     def __sub__(self, other):
         sideLength = (self.getVolume() - other.getVolume()) ** (1/3)
-        return Cuboid(sideLength, sideLength, sideLength)
+
+        # If statement makes sure the dimensions can't be negative, and returns a cuboid with a volume 0 if so
+        if type(sideLength) == float or type(sideLength) == int:
+            return Cuboid(sideLength, sideLength, sideLength)
+        else:
+            return Cuboid(0,0,0)
 
     def __gt__(self, other):
         if self.getVolume() > other.getVolume():
@@ -37,14 +48,14 @@ class Cuboid():
             return False
 
     def __len__(self):
-        return self.getSurfaceArea()
+        return int(self.getSurfaceArea())
 
+    # Create a nice looking string to print when calling str()
     def __str__(self):
-        infoStr = '-' * 35 + "\n"
-        infoStr += format("Length:", "<13s") + format(str(round(self.__length, 3)), ">7s") + "\n"
-        infoStr += format("Width:", "<13s") + format(str(round(self.__width, 3)), ">7s") + "\n"
-        infoStr += format("Height:", "<13s") + format(str(round(self.__height, 3)), ">7s") + "\n"
-        infoStr += format("Volume:", "<13s") + format(str(round(self.getVolume(), 3)), ">7s") + "\n"
-        infoStr += format("Surface Area:") + format(str(round(self.getSurfaceArea(), 3)), ">7s") + "\n"
+        infoStr = format("Length:", "<15s") + format(str(round(self.__length, 3)), ">7s") + "\n"
+        infoStr += format("Width:", "<15s") + format(str(round(self.__width, 3)), ">7s") + "\n"
+        infoStr += format("Height:", "<15s") + format(str(round(self.__height, 3)), ">7s") + "\n"
+        infoStr += format("Volume:", "<15s") + format(str(round(self.getVolume(), 3)), ">7s") + "\n"
+        infoStr += format("Surface Area:", "<15s") + format(str(round(self.getSurfaceArea(), 3)), ">7s")
 
         return infoStr
