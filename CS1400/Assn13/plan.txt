@@ -101,6 +101,11 @@ Unified Modeling Language
     isValid(): boolean
     getErrorMessage(): string
     -resetPassword(): None
+    -checkLength(): None
+    -checkAlnum(): None
+    -checkNums(): None
+    -checkPassword(): None
+    -check123(): None
     ----------------------------------------
 
 
