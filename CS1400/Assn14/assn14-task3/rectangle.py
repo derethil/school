@@ -6,18 +6,6 @@ class Rectangle():
         self.__width = width
         self.__color = color
 
-    def getPosition(self):
-        return self.__position
-
-    def getHeight(self):
-        return self.__height
-
-    def getWidth(self):
-        return self.__width
-
-    def getColor(self):
-        return self.__color
-
     def draw(self):
          # Set up
         self.__tur.speed(10)

@@ -5,15 +5,6 @@ class Circle():
         self.__radius = radius
         self.__color = color
 
-    def getPosition(self):
-        return self.__position
-
-    def getRadius(self):
-        return self.__radius
-
-    def getColor(self):
-        return self.__color
-
     def draw(self):
         # Set up
         self.__tur.speed(10)
