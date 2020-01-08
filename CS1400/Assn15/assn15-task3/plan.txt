@@ -1,0 +1,80 @@
+Jaren Glenn
+CS1400 - 2
+Assignment 15 - Task 3
+
+Software Development Process
+
+1. System Requirements
+	This program will create give the user a hand containing 30 cards. Each card will contain 3 properties: its value (1-20), its paw, (Rock, Paper, Scissors) and its Coin (Heads, Tails). The user will be able to sort by Value, sort by ID, or search for a specific card, as well as resetting their hand.
+
+2. System Analysis
+	assn14-task3 will import everything from their respective files. It will only use the Card file for creating a temporary card to search, though - most of the time, Card will be called by the Deck class. 
+
+	Card also needs to import gronkyutil for mapping purposes.
+
+3. System Design
+	1. Create a new deck and shuffle its
+	2. Give 30 cards to the player's hand 
+	3. While loop inside main()
+	4. Print menu and ask for user's input
+	5. If user chooses sorting by value:
+		a. Call insertionSort function
+		b. Print the sorted hand
+	6. If user chooses sorting by ID:
+		a. Call bubbleSort function
+		b. Print the sorted hand
+	7. If user chooses finding a card:
+		a. Ask for their value, paw, and Coin
+		b. Create a tempCard using these values to compare to cards in hand
+		c. Call bubbleSort function (specifically - it sorts by ID)
+		d. Call binarySearch function and display if the card the user chose is in the deck
+	8. Call main()
+
+4. Testing
+	Test 1
+		Sort by Value
+		Output:
+			Displays the hand of cards in format "# of Paw Coin" in order of Value
+		Test Passed
+	Test 2
+		Sort by ID
+		Output:
+			Displays hand of cards in same format but sorted using all Rocks, then all Papers, then all Scissors
+		Test Passed
+	Test 3
+		Find card
+		Input:
+			10 of Rock Tails
+		Output:
+			That card is not in your hand OR That card is in your hand
+		Test Passed
+	Test 4
+		Get a new hand
+		Output:
+			New Hand (competely randomized hand)
+		Test Passed
+
+Unified Modeling Language
+
+-------------------------
+Card(_id: int)
+-------------------------
+-str: string
+-repr: string
+getId: int
+getValue: int
+getPaw: string
+getCoin: string
+-------------------------
+-id: int
+-------------------------
+
+-------------------------
+Deck()
+-------------------------
+-str: string
+shuffle: None
+draw: Card
+-------------------------
+-deck: list
+-------------------------
