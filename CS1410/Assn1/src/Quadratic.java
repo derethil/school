@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class PartOne {
+public class Quadratic {
     public static void main(String[] args) {
         System.out.print("Enter a, b, c:");
 
@@ -28,8 +28,7 @@ public class PartOne {
                 System.out.println("r1 = " + r1);
 
            } else if (r2 == Double.NaN) {
-                System.out.print("r1 = ");
-                System.out.println(r1);
+                System.out.println("r1 = " + r1);
 
             } else {
                 System.out.println("r1 = " + r2);
