@@ -8,19 +8,33 @@ public class Pyramids1 {
 
         final int LINES = userInput.nextInt();
         final int COL_LEN = String.valueOf(LINES).length() + 1;
-        final int TOTAL_LEN = (COL_LEN * LINES * 2) + 1;
+        final int TOTAL_LEN = (COL_LEN * LINES * 2) - COL_LEN;
+
+        System.out.println(COL_LEN);
+        System.out.println(TOTAL_LEN);
+
 
         for (int line = 1; line <= LINES; line ++) {
 
+            String lineStr = "";
+
             for (int num = line; num > 0; num--) {
-                System.out.printf("%" + COL_LEN + "d", num);
+                lineStr += String.format("%" + COL_LEN + "d", num);
             }
 
             for (int num = 2; num <= line; num++) {
-                System.out.printf("%" + COL_LEN + "d", num);
+                lineStr += String.format("%" + COL_LEN + "d", num);
             }
 
-            System.out.print("\n");
+            int lineLen = (COL_LEN * line * 2) - COL_LEN;
+            int centerNum = (TOTAL_LEN - lineLen) / 2;
+
+
+            if (centerNum == 0) {
+                System.out.println(lineStr);
+            } else {
+                System.out.printf("%" + (TOTAL_LEN - centerNum) + "s\n", lineStr);
+            }
         }
     }
 }
