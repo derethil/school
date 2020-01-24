@@ -11,24 +11,22 @@ public class Pyramids2 {
 
 		for (int line = 1; line <= LINES; line ++) {
 
-			String lineStr = "";
+			String formattedString = "";
 
 			for (int num = 1; num <= line; num++) {
-				lineStr += String.format("%" + COL_LEN + "d", (int)Math.pow(2, num - 1));
+				formattedString += String.format("%" + COL_LEN + "d", (int)Math.pow(2, num - 1));
 			}
 
 			for (int num = line - 1; num > 0; num--) {
-				lineStr += String.format("%" + COL_LEN + "d", (int)Math.pow(2, num - 1));
+				formattedString += String.format("%" + COL_LEN + "d", (int)Math.pow(2, num - 1));
 			}
 
 			int lineLen = (COL_LEN * line * 2) - COL_LEN;
 			int centerNum = (TOTAL_LEN - lineLen) / 2;
+			int formatNum = centerNum == 0 ? TOTAL_LEN : TOTAL_LEN - centerNum;
 
-			if (centerNum == 0) {
-				System.out.println(lineStr);
-			} else {
-				System.out.printf("%" + (TOTAL_LEN - centerNum) + "s\n", lineStr);
-			}
+			System.out.printf("%" + formatNum + "s\n", formattedString);
+
 		}
 	}
 }
