@@ -1,5 +1,3 @@
-import org.w3c.dom.ls.LSOutput;
-
 import java.util.Arrays;
 
 /**
@@ -16,8 +14,10 @@ public class EvaluationDriver {
     static final int NUMBER_SEARCHES = 50_000;
 
     public static void main(String[] args) {
-        int[] numList = generateNumbers(10,1);
-        System.out.println(Arrays.toString(numList));
+        demoLinearSearchUnsorted(MAX_VALUE, MAX_ARRAY_SIZE, ARRAY_INCREMENT, NUMBER_SEARCHES);
+        demoLinearSearchSorted(MAX_VALUE, MAX_ARRAY_SIZE, ARRAY_INCREMENT, NUMBER_SEARCHES);
+        demoBinarySearchSelectionSort(MAX_VALUE, MAX_ARRAY_SIZE, ARRAY_INCREMENT, NUMBER_SEARCHES);
+        demoBinarySearchFastSort(MAX_VALUE, MAX_ARRAY_SIZE, ARRAY_INCREMENT, NUMBER_SEARCHES);
     }
 
     public static int[] generateNumbers(int howMany, int maxValue) {
@@ -42,7 +42,6 @@ public class EvaluationDriver {
     }
 
     public static boolean binarySearch(int[] data, int search) {
-        selectionSort(data);
         int low = 0;
         int high = data.length - 1;
 
@@ -57,7 +56,6 @@ public class EvaluationDriver {
             }
         }
         return false;
-
     }
 
     public static void selectionSort(int[] data) {
@@ -71,33 +69,92 @@ public class EvaluationDriver {
             data[index] = data[i];
             data[i] = smallerNumber;
         }
+
     }
 
     public static void printSearchInfo(int itemCount, int itemsFound, int time) {
         System.out.println("Number of items       : " + itemCount);
         System.out.println("Times value was found : " + itemsFound);
-        System.out.println("Total search time     : " + time + " ms");
+        System.out.println("Total search time     : " + time + " ms\n");
     }
 
-    public static void demoLinearSearchUnsorted() {
+    public static void demoLinearSearchUnsorted(final int MAX_VALUE, final int MAX_ARRAY_SIZE, final int ARRAY_INCREMENT, final int NUMBER_SEARCHES) {
         System.out.println("--- Linear Search Timing (unsorted) ---");
         for (int itemCount = ARRAY_INCREMENT; itemCount <= MAX_ARRAY_SIZE; itemCount += ARRAY_INCREMENT) {
+            int[] numList = generateNumbers(itemCount, MAX_VALUE);
+            int itemsFound = 0;
+
             long begin = System.currentTimeMillis();
+            for (int searchIter = 0; searchIter <= NUMBER_SEARCHES; searchIter++) {
+                if (linearSearch(numList, generateNumbers(1, MAX_VALUE)[0])) {
+                    itemsFound ++;
+                }
+            }
+            long end = System.currentTimeMillis();
 
-
+            printSearchInfo(itemCount, itemsFound, (int)(end - begin));
         }
 
     }
 
-    public static void demoLinearSearchSorted() {
+    public static void demoLinearSearchSorted(final int MAX_VALUE, final int MAX_ARRAY_SIZE, final int ARRAY_INCREMENT, final int NUMBER_SEARCHES) {
+        System.out.println("--- Linear Search Timing (Selection Sort) ---");
+        for (int itemCount = ARRAY_INCREMENT; itemCount <= MAX_ARRAY_SIZE; itemCount += ARRAY_INCREMENT) {
+            int[] numList = generateNumbers(itemCount, MAX_VALUE);
 
+            selectionSort(numList);
+
+            int itemsFound = 0;
+            long begin = System.currentTimeMillis();
+
+            for (int searchIter = 0; searchIter <= NUMBER_SEARCHES; searchIter++) {
+                if (linearSearch(numList, generateNumbers(1, MAX_VALUE)[0])) {
+                    itemsFound ++;
+                }
+            }
+            long end = System.currentTimeMillis();
+            printSearchInfo(itemCount, itemsFound, (int)(end - begin));
+        }
     }
 
-    public static void demoBinarySearchSelectionSort() {
+    public static void demoBinarySearchSelectionSort(final int MAX_VALUE, final int MAX_ARRAY_SIZE, final int ARRAY_INCREMENT, final int NUMBER_SEARCHES) {
+        System.out.println("--- Binary Search Timing (Selection Sort) ---");
+        for (int itemCount = ARRAY_INCREMENT; itemCount <= MAX_ARRAY_SIZE; itemCount += ARRAY_INCREMENT) {
+            int[] numList = generateNumbers(itemCount, MAX_VALUE);
 
+            selectionSort(numList);
+
+            int itemsFound = 0;
+            long begin = System.currentTimeMillis();
+
+            for (int searchIter = 0; searchIter <= NUMBER_SEARCHES; searchIter++) {
+                if (binarySearch(numList, generateNumbers(1, MAX_VALUE)[0])) {
+                    itemsFound++;
+                }
+            }
+            long end = System.currentTimeMillis();
+            printSearchInfo(itemCount, itemsFound, (int)(end - begin));
+        }
     }
 
-    public static void demoBinarySearchFastSort() {
+    public static void demoBinarySearchFastSort(final int MAX_VALUE, final int MAX_ARRAY_SIZE, final int ARRAY_INCREMENT, final int NUMBER_SEARCHES) {
+        System.out.println("--- Binary Search Timing (Arrays.sort) ---");
+        for (int itemCount = ARRAY_INCREMENT; itemCount <= MAX_ARRAY_SIZE; itemCount += ARRAY_INCREMENT) {
+            int[] numList = generateNumbers(itemCount, MAX_VALUE);
+
+            Arrays.sort(numList);
+
+            int itemsFound = 0;
+            long begin = System.currentTimeMillis();
+
+            for (int searchIter = 0; searchIter <= NUMBER_SEARCHES; searchIter++) {
+                if (binarySearch(numList, generateNumbers(1, MAX_VALUE)[0])) {
+                    itemsFound++;
+                }
+            }
+            long end = System.currentTimeMillis();
+            printSearchInfo(itemCount, itemsFound, (int)(end - begin));
+        }
 
     }
 }
