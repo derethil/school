@@ -1,31 +1,42 @@
-public class GregorianDate {
-    public static void main(String[] args) {
-        Gregorian cal1 = new Gregorian(2004, 6,24);
+//class Gregorian {
+//    public static void main(String[] args) {
+//        Gregorian cal1 = new Gregorian(2004, 6,24);
+//
+//        System.out.println(cal1.getYear());
+//        System.out.println(cal1.getMonth());
+//        cal1.printLongDate();
+//        System.out.println();
+//        cal1.printShortDate();
+//    }
+//}
 
-        System.out.println(cal1.getYear());
-        System.out.println(cal1.getMonth());
-    }
-}
-
-class  Gregorian {
+public class  GregorianDate {
     private int year;
     private int month;
     private int day;
 
-    Gregorian() {
+    GregorianDate() {
         year = 0;
         month = 0;
         day = 0;
     }
 
-    Gregorian(int year, int month, int day) {
+    GregorianDate(int year, int month, int day) {
         this.year = year;
         this.month = month;
         this.day = day;
     }
 
     public void addDays(int days) {
-
+        for (int i = 1; i <= days; i++) {
+            if (day++ > getNumberOfDaysInMonth(year, month)) {
+                day = 1;
+                if (month++ > 12) {
+                    month = 1;
+                    year++;
+                }
+            }
+        }
     }
 
     public void subtractDays(int days) {
@@ -36,17 +47,23 @@ class  Gregorian {
         return isLeapYear(year);
     }
 
+    // complete
     public void printShortDate() {
-
+        System.out.printf("%s/%s/%s", month, day, year);
     }
 
+    // complete
     public void printLongDate() {
-
+        System.out.printf("%s %s, %s", getMonthName(month), day, year);
     }
 
     // complete
     public int getMonth() {
         return month;
+    }
+
+    public String getMonthName() {
+        return getMonthName(month);
     }
 
     // complete
@@ -60,7 +77,7 @@ class  Gregorian {
     }
 
     // complete
-    private boolean isLeapYear(int year) {
+    private static boolean isLeapYear(int year) {
         if ((year % 4 == 0) && (year % 100 != 0 || year % 400 == 0)) {
             return true;
         }
@@ -68,7 +85,7 @@ class  Gregorian {
     }
 
     // complete
-    private int getNumberOfDaysInMonth(int year, int month) { // complete
+    private static int getNumberOfDaysInMonth(int year, int month) { // complete
         String monthName = getMonthName(month);
 
         int days = 0;
@@ -97,12 +114,12 @@ class  Gregorian {
     }
 
     // complete
-    private int getNumberOfDaysInYear(int year) { // complete
+    private static int getNumberOfDaysInYear(int year) { // complete
         return isLeapYear(year) ? 366 : 365;
     }
 
     // complete
-    private String getMonthName(int month) {
+    private static String getMonthName(int month) {
         final String[] MONTH_NAMES = {
                 "January",
                 "February",
