@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9b9e6dba-be8f-47a4-bb32-8d2ab97866dd" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assign4 - Performance Evaluation/EvaluationDriver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assign4 - Performance Evaluation/EvaluationDriver.class" afterDir="false" />
-    </list>
+    <list default="true" id="9b9e6dba-be8f-47a4-bb32-8d2ab97866dd" name="Default" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,7 +33,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549300328025" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Dates1" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -149,6 +146,10 @@
       <screen x="0" y="28" width="2560" height="1412" />
     </state>
     <state x="738" y="378" key="#com.intellij.execution.impl.EditConfigurationsDialog/2560.0.2560.1440/0.28.2560.1412@0.28.2560.1412" timestamp="1581493029732" />
+    <state x="3623" y="492" width="424" height="482" key="FileChooserDialogImpl" timestamp="1582488354067">
+      <screen x="2560" y="0" width="2560" height="1440" />
+    </state>
+    <state x="3623" y="492" width="424" height="482" key="FileChooserDialogImpl/2560.0.2560.1440/0.28.2560.1412@2560.0.2560.1440" timestamp="1582488354067" />
     <state width="1330" height="211" key="GridCell.Tab.0.bottom" timestamp="1581575522376">
       <screen x="0" y="28" width="2560" height="1412" />
     </state>
