@@ -3,8 +3,7 @@ public class GregorianDate {
         Gregorian cal1 = new Gregorian(2004, 6,24);
 
         System.out.println(cal1.getYear());
-        System.out.println(cal1.isLeapYear());
-        System.out.println(cal1.getDayOfMonth());
+        System.out.println(cal1.getMonth());
     }
 }
 
@@ -45,18 +44,22 @@ class  Gregorian {
 
     }
 
+    // complete
     public int getMonth() {
         return month;
     }
 
+    // complete
     public int getYear() {
         return year;
     }
 
+    // complete
     public int getDayOfMonth() {
-        return getNumberOfDaysInMonth(year, month);
+        return day;
     }
 
+    // complete
     private boolean isLeapYear(int year) {
         if ((year % 4 == 0) && (year % 100 != 0 || year % 400 == 0)) {
             return true;
@@ -64,12 +67,13 @@ class  Gregorian {
         return false;
     }
 
-    private int getNumberOfDaysInMonth(int year, int month) {
-        String monthString = getMonthName(month);
+    // complete
+    private int getNumberOfDaysInMonth(int year, int month) { // complete
+        String monthName = getMonthName(month);
 
         int days = 0;
 
-        switch (monthString) {
+        switch (monthName) {
             case "January":
             case "March":
             case "May":
@@ -92,10 +96,12 @@ class  Gregorian {
         return days;
     }
 
-    private int getNumberOfDaysInYear(int year) {
+    // complete
+    private int getNumberOfDaysInYear(int year) { // complete
         return isLeapYear(year) ? 366 : 365;
     }
 
+    // complete
     private String getMonthName(int month) {
         final String[] MONTH_NAMES = {
                 "January",
