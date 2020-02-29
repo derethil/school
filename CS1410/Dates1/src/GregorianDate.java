@@ -1,24 +1,21 @@
-//class Gregorian {
-//    public static void main(String[] args) {
-//        Gregorian cal1 = new Gregorian(2004, 6,24);
-//
-//        System.out.println(cal1.getYear());
-//        System.out.println(cal1.getMonth());
-//        cal1.printLongDate();
-//        System.out.println();
-//        cal1.printShortDate();
-//    }
-//}
-
 public class  GregorianDate {
+    public static void main(String[] args) {
+
+    }
     private int year;
     private int month;
     private int day;
 
     GregorianDate() {
-        year = 0;
-        month = 0;
-        day = 0;
+        year = 1970;
+        month = 1;
+        day = 1;
+
+        final double MS_TO_DAY = 0.000000011574074;
+
+        long currTime = System.currentTimeMillis() + java.util.TimeZone.getDefault().getRawOffset();
+        int numDaysPassed = (int) (currTime * MS_TO_DAY);
+        addDays(numDaysPassed);
     }
 
     GregorianDate(int year, int month, int day) {
@@ -29,9 +26,9 @@ public class  GregorianDate {
 
     public void addDays(int days) {
         for (int i = 1; i <= days; i++) {
-            if (day++ > getNumberOfDaysInMonth(year, month)) {
+            if (++day > getNumberOfDaysInMonth(year, month)) {
                 day = 1;
-                if (month++ > 12) {
+                if (++month > 12) {
                     month = 1;
                     year++;
                 }
@@ -40,6 +37,15 @@ public class  GregorianDate {
     }
 
     public void subtractDays(int days) {
+        for (int i = 1; i <= days; i++) {
+            if (--day < 1) {
+                if (--month < 1) {
+                    month = 12;
+                    year--;
+                }
+                day = getNumberOfDaysInMonth(year, month);
+            }
+        }
 
     }
 

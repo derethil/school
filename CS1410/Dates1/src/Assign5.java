@@ -7,17 +7,17 @@
 public class Assign5 {
     public static void main(String[] args) {
 
-//        System.out.printf("--- Demonstrating Julian Dates ---\n\n");
-//        demoJulianFromToday();
-//
-//        JulianDate futureYear = new JulianDate(2100, 2, 27);
-//        demoDateJulian2(futureYear);
-//        JulianDate leapYear = new JulianDate(2000, 2, 27);
-//        demoDateJulian2(leapYear);
-//        JulianDate notLeapYear = new JulianDate(2001, 2, 27);
-//        demoDateJulian2(notLeapYear);
-//        JulianDate endOfYear = new JulianDate(1999, 12, 30);
-//        demoDateJulian2(endOfYear);
+        System.out.printf("--- Demonstrating Julian Dates ---\n\n");
+        demoJulianFromToday();
+
+        JulianDate futureYear = new JulianDate(2100, 2, 27);
+        demoDateJulian2(futureYear);
+        JulianDate leapYear = new JulianDate(2000, 2, 27);
+        demoDateJulian2(leapYear);
+        JulianDate notLeapYear = new JulianDate(2001, 2, 27);
+        demoDateJulian2(notLeapYear);
+        JulianDate endOfYear = new JulianDate(1999, 12, 30);
+        demoDateJulian2(endOfYear);
 
         System.out.printf("\n--- Demonstrating Gregorian Dates ---\n\n");
         demoGregorianFromToday();
@@ -38,27 +38,27 @@ public class Assign5 {
      *
      * @author James Dean Mathias
      */
-//    public static void demoJulianFromToday() {
-//        JulianDate date = new JulianDate();
-//        System.out.print("Today's date is  : ");
-//        date.printLongDate();
-//        System.out.println();
-//
-//        date.addDays(1);
-//        System.out.print("Tomorrow will be : ");
-//        date.printLongDate();
-//        System.out.println();
-//
-//        date.subtractDays(2);
-//        System.out.print("Yesterday was    : ");
-//        date.printLongDate();
-//        System.out.println();
-//        if (date.isLeapYear()) {
-//            System.out.println("This year is a leap year!");
-//        }
-//        else {
-//            System.out.println("This year is not a leap year.");
-//        }
+    public static void demoJulianFromToday() {
+        JulianDate date = new JulianDate();
+        System.out.print("Today's date is  : ");
+        date.printLongDate();
+        System.out.println();
+
+        date.addDays(1);
+        System.out.print("Tomorrow will be : ");
+        date.printLongDate();
+        System.out.println();
+
+        date.subtractDays(2);
+        System.out.print("Yesterday was    : ");
+        date.printLongDate();
+        System.out.println();
+        if (date.isLeapYear()) {
+            System.out.println("This year is a leap year!");
+        }
+        else {
+            System.out.println("This year is not a leap year.");
+        }
     }
 
     /**
