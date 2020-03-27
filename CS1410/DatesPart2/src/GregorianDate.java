@@ -1,5 +1,5 @@
-public class  GregorianDate extends Date {
-    GregorianDate() {
+public class GregorianDate extends Date {
+    public GregorianDate() {
         year = 1970;
         month = 1;
         day = 1;
@@ -11,38 +11,14 @@ public class  GregorianDate extends Date {
         addDays(numDaysPassed);
     }
 
-    GregorianDate(int year, int month, int day) {
+    public GregorianDate(int year, int month, int day) {
         this.year = year;
         this.month = month;
         this.day = day;
     }
 
-    public void addDays(int days) {
-        for (int i = 1; i <= days; i++) {
-            if (++day > getNumberOfDaysInMonth(year, month)) {
-                day = 1;
-                if (++month > 12) {
-                    month = 1;
-                    year++;
-                }
-            }
-        }
-    }
-
-    public void subtractDays(int days) {
-        for (int i = 1; i <= days; i++) {
-            if (--day < 1) {
-                if (--month < 1) {
-                    month = 12;
-                    year--;
-                }
-                day = getNumberOfDaysInMonth(year, month);
-            }
-        }
-
-    }
-
-    private static boolean isLeapYear(int year) {
+    @Override
+    public boolean isLeapYear(int year) {
         if ((year % 4 == 0) && (year % 100 != 0 || year % 400 == 0)) {
             return true;
         }

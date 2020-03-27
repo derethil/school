@@ -19,12 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="732e47cb-e927-415e-9b46-96473e3700ef" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assign5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assign5.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GregorianDate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GregorianDate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/JulianDate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JulianDate.java" afterDir="false" />
-    </list>
+    <list default="true" id="732e47cb-e927-415e-9b46-96473e3700ef" name="Default" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -63,7 +58,7 @@
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550679209808" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="create.test.in.the.same.root" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../DatesPart2" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -181,6 +176,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="189" y="103" key="#Project_Structure" timestamp="1582125027254">
@@ -199,10 +195,11 @@
       <screen x="2560" y="0" width="2560" height="1440" />
     </state>
     <state x="3572" y="518" width="525" height="430" key="#com.intellij.ide.util.TreeClassChooserDialog/2560.0.2560.1440/0.28.2560.1412@2560.0.2560.1440" timestamp="1582584743686" />
-    <state x="825" y="408" key="FileChooserDialogImpl" timestamp="1581986125901">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state x="3385" y="420" width="424" height="482" key="FileChooserDialogImpl" timestamp="1583792607508">
+      <screen x="2560" y="0" width="2560" height="1440" />
     </state>
     <state x="825" y="408" key="FileChooserDialogImpl/-3840.0.2560.1400/0.0.2560.1400@0.0.2560.1400" timestamp="1581986125901" />
+    <state x="3385" y="420" width="424" height="482" key="FileChooserDialogImpl/2560.0.2560.1440/0.28.2560.1412@2560.0.2560.1440" timestamp="1583792607508" />
     <state width="2510" height="484" key="GridCell.Tab.0.bottom" timestamp="1582588194852">
       <screen x="2560" y="0" width="2560" height="1440" />
     </state>

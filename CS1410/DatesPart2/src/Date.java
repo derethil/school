@@ -3,8 +3,28 @@ public class Date {
     int month;
     int day;
 
-    public void addDays() {
+    public void addDays(int days) {
+        for (int i = 1; i <= days; i++) {
+            if (++day > getNumberOfDaysInMonth(year, month)) {
+                day = 1;
+                if (++month > 12) {
+                    month = 1;
+                    year++;
+                }
+            }
+        }
+    }
 
+    public void subtractDays(int days) {
+        for (int i = 1; i <= days; i++) {
+            if (--day < 1) {
+                if (--month < 1) {
+                    month = 12;
+                    year--;
+                }
+                day = getNumberOfDaysInMonth(year, month);
+            }
+        }
     }
 
     public void printShortDate() {
@@ -31,11 +51,7 @@ public class Date {
         return day;
     }
 
-    public boolean isLeapYear() {
-        return isLeapYear(year);
-    }
-
-    static int getNumberOfDaysInMonth(int year, int month) { // complete
+    public int getNumberOfDaysInMonth(int year, int month) { // complete
         String monthName = getMonthName(month);
 
         int days = 0;
@@ -63,7 +79,16 @@ public class Date {
         return days;
     }
 
-    static int getNumberOfDaysInYear(int year) { // complete
+    public boolean isLeapYear(int year) {
+        return false;
+    }
+
+    public boolean isLeapYear() {
+        return isLeapYear(year);
+    }
+
+
+    public int getNumberOfDaysInYear(int year) { // complete
         return isLeapYear(year) ? 366 : 365;
     }
 
@@ -84,6 +109,4 @@ public class Date {
         };
         return MONTH_NAMES[month - 1];
     }
-
-
 }
