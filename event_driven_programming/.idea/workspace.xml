@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="373eef63-230f-4f62-a377-5659bcd66b83" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/proguard-rules.pro" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/androidTest/java/com/example/webbrowser/ExampleInstrumentedTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/java/com/example/webbrowser/Button.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/java/com/example/webbrowser/HistoryList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/java/com/example/webbrowser/MainActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/res/mipmap-hdpi/ic_launcher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/res/mipmap-mdpi/ic_launcher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/res/mipmap-xhdpi/ic_launcher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/main/res/values/styles.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/app/src/test/java/com/example/webbrowser/ExampleUnitTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/gradle.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/Recursion/src/Tree.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/out/production/disaster_ready_greedy/Graph.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/out/production/disaster_ready_greedy/GreedySolution.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/out/production/disaster_ready_greedy/LinkedList$ListNode.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/out/production/disaster_ready_greedy/LinkedList.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/out/production/disaster_ready_greedy/OptimalSolution.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/src/LinkedList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/src/OptimalSolution.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CS2410/WebBrowser/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/disaster_ready_greedy.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/disaster_ready_greedy.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/out/production/disaster_ready_greedy/BritishIsles.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/out/production/disaster_ready_greedy/BritishIsles.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/out/production/disaster_ready_greedy/CentralEurope.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/out/production/disaster_ready_greedy/CentralEurope.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/out/production/disaster_ready_greedy/EdgeInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/out/production/disaster_ready_greedy/EdgeInfo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/out/production/disaster_ready_greedy/Graph.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/out/production/disaster_ready_greedy/GraphNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/out/production/disaster_ready_greedy/GraphNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/out/production/disaster_ready_greedy/GreedySolution.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/out/production/disaster_ready_greedy/IberianPeninsula.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/out/production/disaster_ready_greedy/IberianPeninsula.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/out/production/disaster_ready_greedy/NortheastUS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/out/production/disaster_ready_greedy/NortheastUS.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/out/production/disaster_ready_greedy/NortheastUS2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/out/production/disaster_ready_greedy/NortheastUS2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/out/production/disaster_ready_greedy/SouthernNigeria.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/out/production/disaster_ready_greedy/SouthernNigeria.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/out/production/disaster_ready_greedy/SouthernSouthKorea.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/out/production/disaster_ready_greedy/SouthernSouthKorea.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/out/production/disaster_ready_greedy/SouthernUS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/out/production/disaster_ready_greedy/SouthernUS.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/out/production/disaster_ready_greedy/SupplySolution.class" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/out/production/disaster_ready_greedy/SupplySolution.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/out/production/disaster_ready_greedy/Tester.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/out/production/disaster_ready_greedy/Tester.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/out/production/disaster_ready_greedy/Tester2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/out/production/disaster_ready_greedy/Tester2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/out/production/disaster_ready_greedy/WesternUS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/out/production/disaster_ready_greedy/WesternUS.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/resources/BritishIsles.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/resources/BritishIsles.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/resources/CentralEurope.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/resources/CentralEurope.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/resources/IberianPeninsula.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/resources/IberianPeninsula.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/resources/NortheastUS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/resources/NortheastUS.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/resources/NortheastUS2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/resources/NortheastUS2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/resources/SouthernNigeria.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/resources/SouthernNigeria.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/resources/SouthernSouthKorea.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/resources/SouthernSouthKorea.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/resources/SouthernUS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/resources/SouthernUS.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/resources/Tester.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/resources/Tester.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/resources/Tester2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/resources/Tester2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/resources/WesternUS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/resources/WesternUS.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/src/EdgeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/src/EdgeInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/src/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/src/Graph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/src/GraphNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/src/GraphNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/src/GreedySolution.java" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/src/GreedySolution.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/src/LinkedList.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_greedy/src/SupplySolution.java" beforeDir="false" afterPath="$PROJECT_DIR$/../data_structures_and_algorithms/disaster_ready_optimal/src/SupplySolution.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1iWSrXUelVDdZF03miAACLitQNf" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="373eef63-230f-4f62-a377-5659bcd66b83" name="Default Changelist" comment="" />
+      <created>1602022054996</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1602022054996</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="3618" y="474" width="424" height="515" key="FileChooserDialogImpl" timestamp="1602022115490">
+      <screen x="2560" y="0" width="2560" height="1440" />
+    </state>
+    <state x="3618" y="474" width="424" height="515" key="FileChooserDialogImpl/2560.0.2560.1440/0.28.2560.1412@2560.0.2560.1440" timestamp="1602022115490" />
+    <state x="3434" y="289" width="802" height="887" key="new project wizard" timestamp="1602022119785">
+      <screen x="2560" y="0" width="2560" height="1440" />
+    </state>
+    <state x="3434" y="289" width="802" height="887" key="new project wizard/2560.0.2560.1440/0.28.2560.1412@2560.0.2560.1440" timestamp="1602022119785" />
+  </component>
+</project>
