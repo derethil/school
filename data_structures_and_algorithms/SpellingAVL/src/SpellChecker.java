@@ -1,6 +1,5 @@
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -48,30 +47,41 @@ public class SpellChecker {
         return dp[len1][len2];
     }
 
-    private static void checkWord(String wordToCheck, Dictionary dict) {
-        if (dict.avl.contains(wordToCheck) == null && dict.misspelled.contains(wordToCheck) == null && !wordToCheck.equals("")) {
-            System.out.printf("\nfound misspelled :%s:\n", wordToCheck);
-            dict.misspelled.insert(wordToCheck);
+    private static void checkWord(String wordToCheck, Dictionary dict, AVLTree<WordFreq> misspelled) {
+        if (dict.avl.contains(wordToCheck) != null) { return; }
+        if (wordToCheck.equals("")) { return; }
 
-            int closeCount = 0;
-
-            for (String dictWord: dict.lst) {
-                int distance = minDistance(wordToCheck, dictWord);
-                if (distance <= 2 && closeCount <= 10) {
-                    closeCount++;
-                    System.out.printf("%s(%s) ", dictWord, distance);
-                } else if (distance < 2) {
-                    closeCount++;
-                    System.out.printf("%s(%s) ", dictWord, distance);
-                }
-            }
-            if (closeCount == 0) { System.out.printf("No close words found"); }
-            System.out.println();
+        WordFreq currentFreq = new WordFreq(wordToCheck);
+        if (misspelled.contains(currentFreq) == null) {
+            currentFreq.incrementFrequency();
+            misspelled.insert(currentFreq);
+        } else {
+            misspelled.contains(currentFreq).incrementFrequency();
+            return;
         }
+
+        System.out.printf("\nfound misspelled :%s:\n", wordToCheck);
+
+        int closeCount = 0;
+
+        for (String dictWord: dict.lst) {
+            int distance = minDistance(wordToCheck, dictWord);
+            if (distance <= 2 && closeCount <= 10) {
+                closeCount++;
+                System.out.printf("%s(%s) ", dictWord, distance);
+            } else if (distance < 2) {
+                closeCount++;
+                System.out.printf("%s(%s) ", dictWord, distance);
+            }
+        }
+        if (closeCount == 0) { System.out.printf("No close words found"); }
+        System.out.println();
+
     }
 
     private static void checkFile(String filename) {
         Dictionary dict = new Dictionary();
+        AVLTree<WordFreq> misspelled = new AVLTree<>();
 
         try {
             Scanner reader = new Scanner(new File("resources/" + filename));
@@ -83,11 +93,11 @@ public class SpellChecker {
                 line = line.toLowerCase().replaceAll("\\p{Punct}", "");
                 String[] words = line.split(" ");
                 for (String word: words) {
-                    checkWord(word, dict);
+                    checkWord(word, dict, misspelled);
                 }
             }
             System.out.println();
-            dict.misspelled.printTree("Misspelled words of " + filename);
+            misspelled.printTree("Misspelled words of " + filename);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -96,7 +106,6 @@ public class SpellChecker {
     private static class Dictionary {
         ArrayList<String> lst = new ArrayList<>();
         AVLTree<String> avl = new AVLTree<>();
-        AVLTree<String> misspelled = new AVLTree<>();
         
         public Dictionary() {
             try {
