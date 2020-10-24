@@ -124,8 +124,6 @@ public class SpellChecker {
         }
         
     }
-    
-
 
     public static void main(String[] args) {
         checkFile("paragraph1.txt");

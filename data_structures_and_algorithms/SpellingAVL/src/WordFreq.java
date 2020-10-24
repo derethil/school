@@ -20,10 +20,4 @@ public class WordFreq implements Comparable<WordFreq> {
     public int compareTo(WordFreq wordFrequency) {
         return word.compareTo(wordFrequency.word);
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return word.equals(obj);
-    }
-
 }

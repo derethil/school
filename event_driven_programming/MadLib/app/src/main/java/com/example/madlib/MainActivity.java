@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
                 String storyText = String.format("One day, a %s %s named %s existed. It was walking to %s. It quickly got lost and %s before falling over and dying.",
                         adjective, animal, name, location, verb);
-
                 storyView.setText(storyText);
 
                 layout.removeAllViews();
