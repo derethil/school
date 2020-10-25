@@ -3,8 +3,8 @@ import java.util.Objects;
 import static java.lang.String.format;
 
 public class WordFreq implements Comparable<WordFreq> {
-    private int frequency = 0;
-    String word;
+    private int frequency = 1;
+    private String word;
 
     public WordFreq(String word) {
         this.word = word;
@@ -12,6 +12,7 @@ public class WordFreq implements Comparable<WordFreq> {
 
     public void incrementFrequency() { frequency ++; }
 
+    @Override
     public String toString() {
         return format(":%s: %s", word, frequency);
     }

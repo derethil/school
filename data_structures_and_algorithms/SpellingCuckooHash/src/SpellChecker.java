@@ -53,7 +53,6 @@ public class SpellChecker {
 
         WordFreq currentFreq = new WordFreq(wordToCheck);
         if (!misspelled.contains(currentFreq)) {
-            currentFreq.incrementFrequency();
             misspelled.insert(currentFreq);
         } else {
             misspelled.find(currentFreq).incrementFrequency();
@@ -100,6 +99,11 @@ public class SpellChecker {
             System.out.println(misspelled.toString(100));
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        if (filename.equals("paragraph3.txt")) { // too lazy to refactor to print dict data at the end
+            System.out.println("The dictionary statistics were");
+            System.out.println(dict.hash.toString(0));
         }
     }
     
