@@ -3,7 +3,7 @@ import java.util.Objects;
 import static java.lang.String.format;
 
 public class WordFreq implements Comparable<WordFreq> {
-    int frequency = 0;
+    private int frequency = 0;
     String word;
 
     public WordFreq(String word) {
@@ -19,5 +19,18 @@ public class WordFreq implements Comparable<WordFreq> {
     @Override
     public int compareTo(WordFreq wordFrequency) {
         return word.compareTo(wordFrequency.word);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WordFreq wordFreq = (WordFreq) o;
+        return Objects.equals(word, wordFreq.word);
+    }
+
+    @Override
+    public int hashCode() {
+        return word.hashCode();
     }
 }

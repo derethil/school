@@ -47,16 +47,16 @@ public class SpellChecker {
         return dp[len1][len2];
     }
 
-    private static void checkWord(String wordToCheck, Dictionary dict, AVLTree<WordFreq> misspelled) {
-        if (dict.avl.contains(wordToCheck) != null) { return; }
+    private static void checkWord(String wordToCheck, Dictionary dict, HashTable<WordFreq> misspelled) {
+        if (dict.hash.contains(wordToCheck)) { return; }
         if (wordToCheck.equals("")) { return; }
 
         WordFreq currentFreq = new WordFreq(wordToCheck);
-        if (misspelled.contains(currentFreq) == null) {
+        if (!misspelled.contains(currentFreq)) {
             currentFreq.incrementFrequency();
             misspelled.insert(currentFreq);
         } else {
-            misspelled.contains(currentFreq).incrementFrequency();
+            misspelled.find(currentFreq).incrementFrequency();
             return;
         }
 
@@ -81,7 +81,7 @@ public class SpellChecker {
 
     private static void checkFile(String filename) {
         Dictionary dict = new Dictionary();
-        AVLTree<WordFreq> misspelled = new AVLTree<>();
+        HashTable<WordFreq> misspelled = new HashTable<>();
 
         try {
             Scanner reader = new Scanner(new File("resources/" + filename));
@@ -96,8 +96,8 @@ public class SpellChecker {
                     checkWord(word, dict, misspelled);
                 }
             }
-            System.out.println();
-            misspelled.printTree("Misspelled words of " + filename);
+            System.out.println("\nMisspelled words of " + filename);
+            System.out.println(misspelled.toString(100));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -105,7 +105,7 @@ public class SpellChecker {
     
     private static class Dictionary {
         ArrayList<String> lst = new ArrayList<>();
-        AVLTree<String> avl = new AVLTree<>();
+        HashTable<String> hash = new HashTable<>();
         
         public Dictionary() {
             try {
@@ -114,7 +114,7 @@ public class SpellChecker {
                 while (reader.hasNextLine()) {
                     String line = reader.nextLine();
                     lst.add(line);
-                    avl.insert(line);
+                    hash.insert(line);
                 }
                 reader.close();
 
