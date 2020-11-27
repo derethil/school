@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SpellingAVL.iml" filepath="$PROJECT_DIR$/SpellingAVL.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SpellingCuckooHash.iml" filepath="$PROJECT_DIR$/SpellingCuckooHash.iml" />
     </modules>
   </component>
 </project>
