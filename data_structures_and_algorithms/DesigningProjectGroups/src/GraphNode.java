@@ -29,6 +29,13 @@ public class GraphNode {
         return sb.toString();
     }
 
+    public EdgeInfo getEdge(int destination) {
+        for (EdgeInfo edge: succ) {
+            if (edge.to == destination) return edge;
+        }
+        return null;
+    }
+
     public void addEdge(int v1, int v2, int capacity,int cost){
         //System.out.println("GraphNode.addEdge " + v1 + "->" + v2 + "(" + capacity + ")");
         succ.addFirst( new EdgeInfo(v1,v2,capacity,cost) );

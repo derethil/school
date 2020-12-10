@@ -15,6 +15,4 @@ public class EdgeInfo {
     int to;          // destination of edge
     int capacity;    // capacity of edge
     int cost;        // cost of edge
-
-
 }
