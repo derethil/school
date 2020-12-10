@@ -117,8 +117,9 @@ public class FlowGraph {
                 int cap = reader.nextInt();
                 int cost = reader.nextInt();
                 graph[v1].addEdge(v1, v2, cap, cost);
-                resGraph[v1].addEdge(v1, v2, cap, -cost);
                 graph[v2].addEdge(v2, v1, 0, -cost);
+                resGraph[v1].addEdge(v1, v2, cap, cost);
+                resGraph[v2].addEdge(v2, v1, 0, -cost);
                 if (v1 == 0) maxFlowFromSource += cap;
                 if (v2 == vertexCt - 1) maxFlowIntoSink += cap;
             }
@@ -194,7 +195,8 @@ public class FlowGraph {
     private int getTotalCost(ArrayList<EdgeInfo> edges) {
         int totalCost = 0;
         for (EdgeInfo edge: edges) {
-            totalCost += edge.cost;
+            int currFlow = edge.capacity - (resGraph[edge.from].getEdge(edge.to).capacity);
+            totalCost += edge.cost * currFlow;
         }
         return totalCost;
     }
@@ -233,7 +235,7 @@ public class FlowGraph {
 
     public static void main(String[] args) {
 //        String[] files = {"group1.txt", "group1.txt", "group4.txt", "group5.txt", "group6.txt", "group7.txt", "group8.txt"};
-        String[] files = {"group6.txt"};
+        String[] files = {"group0.txt"};
 
         for (String filename: files) {
             FlowGraph graph1 = new FlowGraph();
