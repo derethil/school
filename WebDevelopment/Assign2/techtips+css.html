@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+    <h1>Tech Tips - CSS Edition</h1>
+
+    <ol type="i" id="nav">
+        <li><a href="index">Blog</a></li>
+        <li><a href="about">About</a></li>
+        <li><a href="techtips+css">Tech Tips - CSS Edition</a></li>
+        <li><a href="techtips-css">Tech Tips - 90's Edition</a></li>
+        <li><a href="debugging">Debugging</a></li>
+        <li><a href="teapot">Teapot</a></li>
+        <li><a href="forbidden">Forbidden</a></li>
+    </ol>
+
+    <div class="cheatsheet">
+        <h2>HTML Elements Cheatsheet</h2>
+
+
+        <div>
+            <span>&lt;html&gt;</span>
+            <ul>
+                <li>purpose: the top level element of an HTML document; must be unique and all elements must be descendents</li>
+                <li>display: neither</li>
+                <li>parents: none</li>
+                <li>contents:
+                    <ol>
+                        <li><span>&lt;head&gt;</span></li>
+                        <li><span>&lt;body&gt;</span></li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <span>&lt;head&gt;</span>
+            <ul>
+                <li>purpose: container for metadata about the HTML document; not visible</li>
+                <li>display: neither</li>
+                <li>parents: <span>&lt;html&gt;</span></li>
+                <li>contents:
+                    <ol>
+                        <li><span>&lt;title&gt;</span></li>
+                        <li><span>&lt;link&gt;</span></li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <span>&lt;title&gt;</span>
+            <ul>
+                <li>purpose: HTML document title</li>
+                <li>display: neither</li>
+                <li>parents: <span>&lt;head&gt;</span></li>
+                <li>contents: text content</li>
+            </ul>
+        </div>
+
+        <div>
+            <span>&lt;meta&gt;</span>
+            <ul>
+                <li>purpose: define HTML document metadata</li>
+                <li>display: N/A</li>
+                <li>parents:   <span>&lt;head&gt;</span></li>
+                <li>contents: none; data is enemd using attributes</li>
+                <li>attributes:
+                    <ul>
+                        <li><span>&lt;charset&gt;</span>: specifies the charcter encoding for the HTML document</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <span>&lt;link&gt;</span>
+            <ul>
+                <li>purpose: defines the relationship between the current document and an external resource</li>
+                <li>display: neither</li>
+                <li>parents:  <span>&lt;head&gt;</span></li>
+                <li>contents: N/A</li>
+
+            </ul>
+        </div>
+
+        <div>
+            <span>&lt;body&gt;</span>
+            <ul>
+                <li>purpose: defines the document's body; contains the visible document</li>
+                <li>display: block-level</li>
+                <li>parents:  <span>&lt;html&gt;</span></li>
+                <li>contents:
+                    <ol>
+                        <li><span>&lt;div&gt;</span></li>
+                        <li><span>&lt;ul&gt;</span></li>
+                        <li><span>&lt;ol&gt;</span></li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <span>&lt;div&gt;</span>
+            <ul>
+                <li>purpose: defines the document's body; contains the visible document</li>
+                <li>display: block-level</li>
+                <li>parents:  <span>&lt;html&gt;</span></li>
+                <li>contents: any</li>
+            </ul>
+        </div>
+
+        <div>
+            <span>&lt;h1&gt;</span>
+            <ul>
+                <li>purpose: define the most important heading in the document</li>
+                <li>display: block-level</li>
+                <li>parents:  any</li>
+                <li>contents: flow content</li>
+            </ul>
+        </div>
+
+        <div>
+            <span>&lt;ul&gt;</span>
+            <ul>
+                <li>purpose: an unordered list; uses bullet points by default</li>
+                <li>display: block-level</li>
+                <li>parents:  any</li>
+                <li>contents: <span>&lt;li&gt;</span></li>
+            </ul>
+        </div>
+
+        <div>
+            <span>&lt;ol&gt;</span>
+            <ul>
+                <li>purpose: an ordered list; uses numbers by default</li>
+                <li>display: block-level</li>
+                <li>parents:  any</li>
+                <li>contents: <span>&lt;li&gt;</span></li>
+            </ul>
+        </div>
+
+        <div>
+            <span>&lt;li&gt;</span>
+            <ul>
+                <li>purpose: list element in an ordered or unordered list</li>
+                <li>display: block-level</li>
+                <li>parents:
+                    <ol>
+                        <li><span>&lt;ul&gt;</span></li>
+                        <li><span>&lt;ol&gt;</span></li>
+                    </ol>
+                </li>
+                <li>contents: flow content</li>
+            </ul>
+        </div>
+
+        <div>
+            <span>&lt;em&gt;</span>
+            <ul>
+                <li>purpose: define a section of text as formatted em</li>
+                <li>display: in-line</li>
+                <li>parents:  any</li>
+                <li>contents: text content</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="cheatsheet">
+        <h2>HTML Entities Cheatsheet</h2>
+
+        <div>
+            <span>&amp;lt;</span>
+            <ul>
+                <li>name: less than</li>
+                <li>displays as: &lt;</li>
+            </ul>
+        </div>
+
+        <div>
+            <span>&amp;gt;</span>
+            <ul>
+                <li>name: greater than</li>
+                <li>displays as: &gt;</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="cheatsheet">
+        <h2>CSS Selectors Cheatsheet</h2>
+
+        <div>
+            <h3>Element Selector</h3>
+            <ul>
+                <li>purpose: selects all elements that are of type element</li>
+                <li>example: <span>h3 { font-style: italic; }</span></li>
+                <li>used in combination with <span>:nth-of-type(odd)</span> to create zebra stripes as well as with <span>:nth-child(1)</span> to select the first element</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3>Class Selector [.]</h3>
+            <ul>
+                <li>purpose: selects all elements with given class</li>
+                <li>example: <span>.post { padding: 1em; }</span></li>
+                <li>to give an element a class, give it an attribute <span>class</span> like so: <span>&lt;p class="content"&gt;</span></li>
+            </ul>
+        </div>
+
+        <div>
+            <h3>Id Selector [#]</h3>
+            <ul>
+                <li>purpose: selects the element with given id</li>
+                <li>example: <span>#nav { background-color: lightsteelblue; }</span></li>
+                <li>to give an element an id, give it an attribute <span>id</span> like so: <span>&lt;p id="content"&gt;</span></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="cheatsheet">
+        <h2>CSS Properties Cheatsheet</h2>
+
+        <div>
+            <h3><span>background-color</span></h3>
+
+            <ul>
+                <li>purpose: change the background color of selected elements</li>
+                <li>values: hex, rgb, rgba, hsl, hsla, predefined colors</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3><span>color</span></h3>
+
+            <ul>
+                <li>purpose: change the text color of selected elements</li>
+                <li>values: hex, rgb, rgba, hsl, hsla, predefined colors</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3><span>font-family</span></h3>
+
+            <ul>
+                <li>purpose: change the font of selected elements</li>
+                <li>values: predefined fonts, imported fonts</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3><span>font-size</span></h3>
+
+            <ul>
+                <li>purpose: change the text size of selected elements</li>
+                <li>values: pixels, em, rem, percent, etc, plus predefined values such as <span>medium, smaller, larger</span></li>
+            </ul>
+        </div>
+
+        <div>
+            <h3><span>margin</span></h3>
+
+            <ul>
+                <li>purpose: gives margin to selected elements</li>
+                <li>values: pixels, em, rem, percent, etc</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3><span>padding</span></h3>
+
+            <ul>
+                <li>purpose: gives padding to selected elements</li>
+                <li>values: pixels, em, rem, percent, etc</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3><span>list-style-type</span></h3>
+
+            <ul>
+                <li>purpose: change the style of a list</li>
+                <li>values: <span>circle, square, upper-roman, lower-alpha</span>, etc</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3><span>border-radius</span></h3>
+
+            <ul>
+                <li>purpose: defines the radius of the selected element's corners</li>
+                <li>values: pixels</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3><span>width</span></h3>
+
+            <ul>
+                <li>purpose: specifies the width of the selected element</li>
+                <li>values: pixels, em, rem, percent, etc</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3><span>height</span></h3>
+
+            <ul>
+                <li>purpose: change the height of the selected element</li>
+                <li>values: pixels, em, rem, percent, etc</li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>

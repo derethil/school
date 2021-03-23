@@ -1,0 +1,48 @@
+body {
+    background-color:beige;
+    font-family: sans-serif;
+}
+
+#nav {
+    background-color:lightsteelblue;
+}
+
+a {
+    color: inherit;
+}
+
+.post {
+    margin: 1em;
+}
+
+.post p {
+    padding: 0 1em 0 1em;
+}
+
+.post h3 {
+    font-style: italic;
+}
+
+img {
+    border: 1em lightsteelblue solid;
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+}
+
+img:nth-child(1) {
+    border: 1em coral solid;
+}
+
+.cheatsheet {
+    background-color: ivory;
+}
+
+span {
+    font-family: monospace;
+    font-size: 1.2rem;
+}
+
+.cheatsheet div ul > li:nth-of-type(odd) {
+    background-color: bisque;
+}

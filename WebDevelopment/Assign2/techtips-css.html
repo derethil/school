@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+</head>
+<body style="background-color: beige; font-family: sans-serif; " >
+    <h1>Tech Tips - 90's Edition</h1>
+
+    <ol type="i" id="nav" style="background-color: lightsteelblue;">
+        <li><a href="index">Blog</a></li>
+        <li><a href="about">About</a></li>
+        <li><a href="techtips+css">Tech Tips - CSS Edition</a></li>
+        <li><a href="techtips-css">Tech Tips - 90's Edition</a></li>
+        <li><a href="debugging">Debugging</a></li>
+        <li><a href="teapot">Teapot</a></li>
+        <li><a href="forbidden">Forbidden</a></li>
+    </ol>
+
+    <div class="cheatsheet" style="background-color: ivory;">
+        <h2>HTML Elements Cheatsheet</h2>
+
+
+        <div>
+            <code style="font-size: 1.2rem;">&lt;html&gt;</code>
+            <ul>
+                <li style="background-color: bisque;">purpose: the top level element of an HTML document; must be unique and all elements must be descendents</li>
+                <li>display: neither</li>
+                <li style="background-color: bisque;">parents: none</li>
+                <li>contents:
+                    <ol>
+                        <li><code style="font-size: 1.2rem;">&lt;head&gt;</code></li>
+                        <li><code style="font-size: 1.2rem;">&lt;body&gt;</code></li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <code style="font-size: 1.2rem;">&lt;head&gt;</code>
+            <ul>
+                <li style="background-color: bisque;">purpose: container for metadata about the HTML document; not visible</li>
+                <li>display: neither</li>
+                <li style="background-color: bisque;">parents: <code style="font-size: 1.2rem;">&lt;html&gt;</code></li>
+                <li>contents:
+                    <ol>
+                        <li><code style="font-size: 1.2rem;">&lt;title&gt;</code></li>
+                        <li><code style="font-size: 1.2rem;">&lt;link&gt;</code></li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <code style="font-size: 1.2rem;">&lt;title&gt;</code>
+            <ul>
+                <li style="background-color: bisque;">purpose: HTML document title</li>
+                <li>display: neither</li>
+                <li style="background-color: bisque;">parents: <code style="font-size: 1.2rem;">&lt;head&gt;</code></li>
+                <li>contents: text content</li>
+            </ul>
+        </div>
+
+        <div>
+            <code style="font-size: 1.2rem;">&lt;meta&gt;</code>
+            <ul>
+                <li style="background-color: bisque;">purpose: define HTML document metadata</li>
+                <li>display: N/A</li>
+                <li style="background-color: bisque;">parents:   <code style="font-size: 1.2rem;">&lt;head&gt;</code></li>
+                <li>contents: none; data is enemd using attributes</li>
+                <li style="background-color: bisque;">attributes:
+                    <ul>
+                        <li><code style="font-size: 1.2rem;">&lt;charset&gt;</code>: specifies the charcter encoding for the HTML document</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <code style="font-size: 1.2rem;">&lt;link&gt;</code>
+            <ul>
+                <li style="background-color: bisque;">purpose: defines the relationship between the current document and an external resource</li>
+                <li>display: neither</li>
+                <li style="background-color: bisque;">parents:  <code style="font-size: 1.2rem;">&lt;head&gt;</code></li>
+                <li>contents: N/A</li>
+
+            </ul>
+        </div>
+
+        <div>
+            <code style="font-size: 1.2rem;">&lt;body&gt;</code>
+            <ul>
+                <li style="background-color: bisque;">purpose: defines the document's body; contains the visible document</li>
+                <li>display: block-level</li>
+                <li style="background-color: bisque;">parents:  <code style="font-size: 1.2rem;">&lt;html&gt;</code></li>
+                <li>contents:
+                    <ol>
+                        <li><code style="font-size: 1.2rem;">&lt;div&gt;</code></li>
+                        <li><code style="font-size: 1.2rem;">&lt;ul&gt;</code></li>
+                        <li><code style="font-size: 1.2rem;">&lt;ol&gt;</code></li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <code style="font-size: 1.2rem;">&lt;div&gt;</code>
+            <ul>
+                <li style="background-color: bisque;">purpose: defines the document's body; contains the visible document</li>
+                <li>display: block-level</li>
+                <li style="background-color: bisque;">parents:  <code style="font-size: 1.2rem;">&lt;html&gt;</code></li>
+                <li>contents: any</li>
+            </ul>
+        </div>
+
+        <div>
+            <code style="font-size: 1.2rem;">&lt;h1&gt;</code>
+            <ul>
+                <li style="background-color: bisque;">purpose: define the most important heading in the document</li>
+                <li>display: block-level</li>
+                <li style="background-color: bisque;">parents:  any</li>
+                <li>contents: flow content</li>
+            </ul>
+        </div>
+
+        <div>
+            <code style="font-size: 1.2rem;">&lt;ul&gt;</code>
+            <ul>
+                <li style="background-color: bisque;">purpose: an unordered list; uses bullet points by default</li>
+                <li>display: block-level</li>
+                <li style="background-color: bisque;">parents:  any</li>
+                <li>contents: <code style="font-size: 1.2rem;">&lt;li&gt;</code></li>
+            </ul>
+        </div>
+
+        <div>
+            <code style="font-size: 1.2rem;">&lt;ol&gt;</code>
+            <ul>
+                <li style="background-color: bisque;">purpose: an ordered list; uses numbers by default</li>
+                <li>display: block-level</li>
+                <li style="background-color: bisque;">parents:  any</li>
+                <li>contents: <code style="font-size: 1.2rem;">&lt;li&gt;</code></li>
+            </ul>
+        </div>
+
+        <div>
+            <code style="font-size: 1.2rem;">&lt;li&gt;</code>
+            <ul>
+                <li style="background-color: bisque;">purpose: list element in an ordered or unordered list</li>
+                <li>display: block-level</li>
+                <li style="background-color: bisque;">parents:
+                    <ol>
+                        <li><code style="font-size: 1.2rem;">&lt;ul&gt;</code></li>
+                        <li><code style="font-size: 1.2rem;">&lt;ol&gt;</code></li>
+                    </ol>
+                </li>
+                <li>contents: flow content</li>
+            </ul>
+        </div>
+
+        <div>
+            <code style="font-size: 1.2rem;">&lt;em&gt;</code>
+            <ul>
+                <li style="background-color: bisque;">purpose: define a section of text as formatted em</li>
+                <li>display: in-line</li>
+                <li style="background-color: bisque;">parents:  any</li>
+                <li>contents: text content</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="cheatsheet" style="background-color: ivory;">
+        <h2>HTML Entities Cheatsheet</h2>
+
+        <div>
+            <code style="font-size: 1.2rem;">&amp;lt;</code>
+            <ul>
+                <li style="background-color: bisque;">name: less than</li>
+                <li>displays as: &lt;</li>
+            </ul>
+        </div>
+
+        <div>
+            <code style="font-size: 1.2rem;">&amp;gt;</code>
+            <ul>
+                <li style="background-color: bisque;">name: greater than</li>
+                <li>displays as: &gt;</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="cheatsheet" style="background-color: ivory;">
+        <h2>CSS Selectors Cheatsheet</h2>
+
+        <div>
+            <h3>Element Selector</h3>
+            <ul>
+                <li style="background-color: bisque;">purpose: selects all elements that are of type element</li>
+                <li>example: <code style="font-size: 1.2rem;">h3 { font-style: italic; }</code></li>
+                <li style="background-color: bisque;">used in combination with <code style="font-size: 1.2rem;">:nth-of-type(odd)</code> to create zebra stripes as well as with <code style="font-size: 1.2rem;">:nth-child(1)</code> to select the first element</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3>Class Selector [.]</h3>
+            <ul>
+                <li style="background-color: bisque;">purpose: selects all elements with given class</li>
+                <li>example: <code style="font-size: 1.2rem;">.post { padding: 1em; }</code></li>
+                <li style="background-color: bisque;">to give an element a class, give it an attribute <code style="font-size: 1.2rem;">class</code> like so: <code style="font-size: 1.2rem;">&lt;p class="content"&gt;</code></li>
+            </ul>
+        </div>
+
+        <div>
+            <h3>Id Selector [#]</h3>
+            <ul>
+                <li style="background-color: bisque;">purpose: selects the element with given id</li>
+                <li>example: <code style="font-size: 1.2rem;">#nav { background-color: lightsteelblue; }</code></li>
+                <li style="background-color: bisque;">to give an element an id, give it an attribute <code style="font-size: 1.2rem;">id</code> like so: <code style="font-size: 1.2rem;">&lt;p id="content"&gt;</code></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="cheatsheet" style="background-color: ivory;">
+        <h2>CSS Properties Cheatsheet</h2>
+
+        <div>
+            <h3><code style="font-size: 1.2rem;">background-color</code></h3>
+
+            <ul>
+                <li style="background-color: bisque;">purpose: change the background color of selected elements</li>
+                <li>values: hex, rgb, rgba, hsl, hsla, predefined colors</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3><code style="font-size: 1.2rem;">color</code></h3>
+
+            <ul>
+                <li style="background-color: bisque;">purpose: change the text color of selected elements</li>
+                <li>values: hex, rgb, rgba, hsl, hsla, predefined colors</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3><code style="font-size: 1.2rem;">font-family</code></h3>
+
+            <ul>
+                <li style="background-color: bisque;">purpose: change the font of selected elements</li>
+                <li>values: predefined fonts, imported fonts</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3><code style="font-size: 1.2rem;">font-size</code></h3>
+
+            <ul>
+                <li style="background-color: bisque;">purpose: change the text size of selected elements</li>
+                <li>values: pixels, em, rem, percent, etc, plus predefined values such as <code style="font-size: 1.2rem;">medium, smaller, larger</code></li>
+            </ul>
+        </div>
+
+        <div>
+            <h3><code style="font-size: 1.2rem;">margin</code></h3>
+
+            <ul>
+                <li style="background-color: bisque;">purpose: gives margin to selected elements</li>
+                <li>values: pixels, em, rem, percent, etc</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3><code style="font-size: 1.2rem;">padding</code></h3>
+
+            <ul>
+                <li style="background-color: bisque;">purpose: gives padding to selected elements</li>
+                <li>values: pixels, em, rem, percent, etc</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3><code style="font-size: 1.2rem;">list-style-type</code></h3>
+
+            <ul>
+                <li style="background-color: bisque;">purpose: change the style of a list</li>
+                <li>values: <code style="font-size: 1.2rem;">circle, square, upper-roman, lower-alpha</code>, etc</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3><code style="font-size: 1.2rem;">border-radius</code></h3>
+
+            <ul>
+                <li style="background-color: bisque;">purpose: defines the radius of the selected element's corners</li>
+                <li>values: pixels</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3><code style="font-size: 1.2rem;">width</code></h3>
+
+            <ul>
+                <li style="background-color: bisque;">purpose: specifies the width of the selected element</li>
+                <li>values: pixels, em, rem, percent, etc</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3><code style="font-size: 1.2rem;">height</code></h3>
+
+            <ul>
+                <li style="background-color: bisque;">purpose: change the height of the selected element</li>
+                <li>values: pixels, em, rem, percent, etc</li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
