@@ -1,0 +1,19 @@
+# ninja log v5
+24	725	1633297974703849470	CMakeFiles/RandDistributions.dir/main.cpp.o	a2bc4a5712516df8
+3887	3915	1633292826919690590	lib/libgtest_maind.a	e08ccd14d15a89a7
+22	551	1633292823556356172	CMakeFiles/GoogleTestIntro.dir/main.cpp.o	c31c4dcd58e934f7
+0	977	1633292823983022976	googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o	52edd97ebdbc9b41
+0	1477	1633292824479689803	CMakeFiles/UnitTestRunner.dir/TestUtilities.cpp.o	dcd446fe64e8593b
+0	1520	1633297961623835246	CMakeFiles/UnitTestRunner.dir/TestDistributions.cpp.o	6735721b83bb7ad9
+0	24	0	/home/jaren/development/school/cpp/googleTest/build/CMakeFiles/ClangFormat	c69a977c54da6066
+1	836	1633293463099883953	CMakeFiles/UnitTestRunner.dir/distributions.cpp.o	d2ad898afbe5a962
+0	251	1633292823256356075	CMakeFiles/UnitTestRunner.dir/utilities.cpp.o	ceaea8bfd716b88f
+21	225	1633292823229689400	CMakeFiles/GoogleTestIntro.dir/utilities.cpp.o	3ffd6e5782c3275b
+22	771	1633293463036550602	CMakeFiles/RandDistributions.dir/Assignment2.cpp.o	ec7d76764a4fec63
+0	24	0	CMakeFiles/ClangFormat	c69a977c54da6066
+3836	3886	1633292826889690580	lib/libgtestd.a	ef04675ce556f47d
+551	605	1633292823606356188	GoogleTestIntro	15d9d8fa455d826a
+1520	1691	1633297961793835433	UnitTestRunner	4369577a987ef3f5
+725	788	1633297974763849536	RandDistributions	a1726e2cb07152ea
+22	835	1633293463099883953	CMakeFiles/RandDistributions.dir/distributions.cpp.o	899df394a85e2955
+1	3836	1633292826836357230	googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o	658afcbd59046673

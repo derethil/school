@@ -1,0 +1,4 @@
+/home/jaren/development/school/cpp/gameOfLife/build/CMakeFiles/rebuild_cache.dir
+/home/jaren/development/school/cpp/gameOfLife/build/CMakeFiles/edit_cache.dir
+/home/jaren/development/school/cpp/gameOfLife/build/CMakeFiles/ClangFormat.dir
+/home/jaren/development/school/cpp/gameOfLife/build/CMakeFiles/ConwaysLife.dir

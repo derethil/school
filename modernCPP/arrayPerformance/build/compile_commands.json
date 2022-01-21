@@ -1,0 +1,52 @@
+[
+{
+  "directory": "/home/jaren/development/school/cpp/arrayPerformance/build",
+  "command": "/bin/c++ -isystem /home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googletest/include -isystem /home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googletest -g -Wall -Wextra -pedantic -Wl,--stack,10000000 -std=gnu++20 -o CMakeFiles/UnitTestRunner.dir/sortutils.cpp.o -c /home/jaren/development/school/cpp/arrayPerformance/sortutils.cpp",
+  "file": "/home/jaren/development/school/cpp/arrayPerformance/sortutils.cpp"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/arrayPerformance/build",
+  "command": "/bin/c++ -isystem /home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googletest/include -isystem /home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googletest -g -Wall -Wextra -pedantic -Wl,--stack,10000000 -std=gnu++20 -o CMakeFiles/UnitTestRunner.dir/TestPerformance.cpp.o -c /home/jaren/development/school/cpp/arrayPerformance/TestPerformance.cpp",
+  "file": "/home/jaren/development/school/cpp/arrayPerformance/TestPerformance.cpp"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/arrayPerformance/build",
+  "command": "/bin/c++ -DFMT_HEADER_ONLY=1 -I/home/jaren/development/school/cpp/arrayPerformance/build/fmt-src/include -g -Wall -Wextra -pedantic -O2 -Wl,--stack,10000000 -std=gnu++20 -o CMakeFiles/ArrayPerformance.dir/sortutils.cpp.o -c /home/jaren/development/school/cpp/arrayPerformance/sortutils.cpp",
+  "file": "/home/jaren/development/school/cpp/arrayPerformance/sortutils.cpp"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/arrayPerformance/build",
+  "command": "/bin/c++ -DFMT_HEADER_ONLY=1 -I/home/jaren/development/school/cpp/arrayPerformance/build/fmt-src/include -g -Wall -Wextra -pedantic -O2 -Wl,--stack,10000000 -std=gnu++20 -o CMakeFiles/ArrayPerformance.dir/main.cpp.o -c /home/jaren/development/school/cpp/arrayPerformance/main.cpp",
+  "file": "/home/jaren/development/school/cpp/arrayPerformance/main.cpp"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/arrayPerformance/build",
+  "command": "/bin/c++ -isystem /home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googlemock/include -isystem /home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googlemock -isystem /home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googletest/include -isystem /home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googletest -g -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googlemock/src/gmock_main.cc",
+  "file": "/home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googlemock/src/gmock_main.cc"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/arrayPerformance/build",
+  "command": "/bin/c++ -I/home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googlemock/include -I/home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googlemock -isystem /home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googletest/include -isystem /home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googletest -g -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googlemock/src/gmock-all.cc",
+  "file": "/home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googlemock/src/gmock-all.cc"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/arrayPerformance/build",
+  "command": "/bin/c++ -isystem /home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googletest/include -isystem /home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googletest -g -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googletest/src/gtest_main.cc",
+  "file": "/home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googletest/src/gtest_main.cc"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/arrayPerformance/build",
+  "command": "/bin/c++ -I/home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googletest/include -I/home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googletest -g -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googletest/src/gtest-all.cc",
+  "file": "/home/jaren/development/school/cpp/arrayPerformance/build/googletest-src/googletest/src/gtest-all.cc"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/arrayPerformance/build",
+  "command": "/bin/c++ -I/home/jaren/development/school/cpp/arrayPerformance/build/fmt-src/include -g -std=gnu++11 -o fmt-build/CMakeFiles/fmt.dir/src/format.cc.o -c /home/jaren/development/school/cpp/arrayPerformance/build/fmt-src/src/format.cc",
+  "file": "/home/jaren/development/school/cpp/arrayPerformance/build/fmt-src/src/format.cc"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/arrayPerformance/build",
+  "command": "/bin/c++ -I/home/jaren/development/school/cpp/arrayPerformance/build/fmt-src/include -g -std=gnu++11 -o fmt-build/CMakeFiles/fmt.dir/src/os.cc.o -c /home/jaren/development/school/cpp/arrayPerformance/build/fmt-src/src/os.cc",
+  "file": "/home/jaren/development/school/cpp/arrayPerformance/build/fmt-src/src/os.cc"
+}
+]

@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/jaren/development/school/cpp/typeAhead/build/googletest-download/CMakeFiles/fmt"
+		},
+		{
+			"file" : "/home/jaren/development/school/cpp/typeAhead/build/googletest-download/CMakeFiles/fmt.rule"
+		},
+		{
+			"file" : "/home/jaren/development/school/cpp/typeAhead/build/googletest-download/CMakeFiles/fmt-complete.rule"
+		},
+		{
+			"file" : "/home/jaren/development/school/cpp/typeAhead/build/googletest-download/fmt-prefix/src/fmt-stamp/fmt-build.rule"
+		},
+		{
+			"file" : "/home/jaren/development/school/cpp/typeAhead/build/googletest-download/fmt-prefix/src/fmt-stamp/fmt-configure.rule"
+		},
+		{
+			"file" : "/home/jaren/development/school/cpp/typeAhead/build/googletest-download/fmt-prefix/src/fmt-stamp/fmt-download.rule"
+		},
+		{
+			"file" : "/home/jaren/development/school/cpp/typeAhead/build/googletest-download/fmt-prefix/src/fmt-stamp/fmt-install.rule"
+		},
+		{
+			"file" : "/home/jaren/development/school/cpp/typeAhead/build/googletest-download/fmt-prefix/src/fmt-stamp/fmt-mkdir.rule"
+		},
+		{
+			"file" : "/home/jaren/development/school/cpp/typeAhead/build/googletest-download/fmt-prefix/src/fmt-stamp/fmt-patch.rule"
+		},
+		{
+			"file" : "/home/jaren/development/school/cpp/typeAhead/build/googletest-download/fmt-prefix/src/fmt-stamp/fmt-test.rule"
+		},
+		{
+			"file" : "/home/jaren/development/school/cpp/typeAhead/build/googletest-download/fmt-prefix/src/fmt-stamp/fmt-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"fmt"
+		],
+		"name" : "fmt"
+	}
+}

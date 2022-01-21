@@ -1,0 +1,42 @@
+[
+{
+  "directory": "/home/jaren/development/school/cpp/gameOfLife/build",
+  "command": "/bin/c++ -g -Wall -Wextra -pedantic -std=gnu++20 -o CMakeFiles/ConwaysLife.dir/main.cpp.o -c /home/jaren/development/school/cpp/gameOfLife/main.cpp",
+  "file": "/home/jaren/development/school/cpp/gameOfLife/main.cpp"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/gameOfLife/build",
+  "command": "/bin/c++ -g -Wall -Wextra -pedantic -std=gnu++20 -o CMakeFiles/ConwaysLife.dir/LifeSimulator.cpp.o -c /home/jaren/development/school/cpp/gameOfLife/LifeSimulator.cpp",
+  "file": "/home/jaren/development/school/cpp/gameOfLife/LifeSimulator.cpp"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/gameOfLife/build",
+  "command": "/bin/c++ -g -Wall -Wextra -pedantic -std=gnu++20 -o CMakeFiles/ConwaysLife.dir/RendererConsole.cpp.o -c /home/jaren/development/school/cpp/gameOfLife/RendererConsole.cpp",
+  "file": "/home/jaren/development/school/cpp/gameOfLife/RendererConsole.cpp"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/gameOfLife/build",
+  "command": "/bin/c++ -g -Wall -Wextra -pedantic -std=gnu++20 -o CMakeFiles/ConwaysLife.dir/patternfiles/PatternAcorn.cpp.o -c /home/jaren/development/school/cpp/gameOfLife/patternfiles/PatternAcorn.cpp",
+  "file": "/home/jaren/development/school/cpp/gameOfLife/patternfiles/PatternAcorn.cpp"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/gameOfLife/build",
+  "command": "/bin/c++ -g -Wall -Wextra -pedantic -std=gnu++20 -o CMakeFiles/ConwaysLife.dir/patternfiles/PatternBlock.cpp.o -c /home/jaren/development/school/cpp/gameOfLife/patternfiles/PatternBlock.cpp",
+  "file": "/home/jaren/development/school/cpp/gameOfLife/patternfiles/PatternBlock.cpp"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/gameOfLife/build",
+  "command": "/bin/c++ -g -Wall -Wextra -pedantic -std=gnu++20 -o CMakeFiles/ConwaysLife.dir/patternfiles/PatternGlider.cpp.o -c /home/jaren/development/school/cpp/gameOfLife/patternfiles/PatternGlider.cpp",
+  "file": "/home/jaren/development/school/cpp/gameOfLife/patternfiles/PatternGlider.cpp"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/gameOfLife/build",
+  "command": "/bin/c++ -g -Wall -Wextra -pedantic -std=gnu++20 -o CMakeFiles/ConwaysLife.dir/patternfiles/PatternGosperGliderGun.cpp.o -c /home/jaren/development/school/cpp/gameOfLife/patternfiles/PatternGosperGliderGun.cpp",
+  "file": "/home/jaren/development/school/cpp/gameOfLife/patternfiles/PatternGosperGliderGun.cpp"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/gameOfLife/build",
+  "command": "/bin/c++ -g -Wall -Wextra -pedantic -std=gnu++20 -o CMakeFiles/ConwaysLife.dir/patternfiles/PatternBlinker.cpp.o -c /home/jaren/development/school/cpp/gameOfLife/patternfiles/PatternBlinker.cpp",
+  "file": "/home/jaren/development/school/cpp/gameOfLife/patternfiles/PatternBlinker.cpp"
+}
+]

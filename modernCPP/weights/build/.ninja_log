@@ -1,0 +1,12 @@
+# ninja log v5
+1	29	0	/home/jaren/development/school/cpp/weights/build/CMakeFiles/ClangFormat	807c8e876936264a
+3680	3835	1638142392205916140	UnitTestRunner	fb9c9dc22075d2b6
+1	29	0	CMakeFiles/ClangFormat	807c8e876936264a
+3598	3680	1638142392045916954	lib/libgtestd.a	ef04675ce556f47d
+1	1555	1637175297148688542	CMakeFiles/UnitTestRunner.dir/TestWeight.cpp.o	fc8243fe3324042a
+0	1278	1637107435180069159	googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o	c10868d4eb583f12
+25	629	1637175296222021637	CMakeFiles/Weights.dir/main.cpp.o	3eb027a069ec4288
+1	3598	1638142391965917369	googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o	be99d008901232c3
+88	117	1637107444990075738	lib/libgtest_maind.a	e08ccd14d15a89a7
+0	510	1637109214028053415	CMakeFiles/UnitTestRunner.dir/main.cpp.o	3497473dd1c7d1ca
+629	681	1637175296275354985	Weights	1ae36a36bf3c3599

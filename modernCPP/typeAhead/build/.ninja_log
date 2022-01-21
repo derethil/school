@@ -1,0 +1,13 @@
+# ninja log v5
+3893	4035	1636171878017148813	UnitTestRunner	58fe46a3cf13c409
+3865	3893	1636171877877146074	lib/libgtest_maind.a	e08ccd14d15a89a7
+1	3786	1636171877767143923	googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o	276b0d0a5c7672ee
+1076	1154	1636171875140425880	TypeAhead	6801781e4c64192b
+24	1076	1636171875063757713	CMakeFiles/TypeAhead.dir/main.cpp.o	eccc0045959fee91
+22	1038	1635356666615672501	CMakeFiles/TypeAhead.dir/WordTree.cpp.o	82a0367bbe81f477
+1	1016	1636171875003756540	googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o	d2d5319a875a8174
+0	1739	1636171875727104021	CMakeFiles/UnitTestRunner.dir/TestWordTree.cpp.o	52b1e96e33e0ef23
+3786	3865	1636171877843812090	lib/libgtestd.a	ef04675ce556f47d
+0	22	0	CMakeFiles/ClangFormat	4e9b320ca0c3c2bc
+0	22	0	/home/jaren/development/school/cpp/typeAhead/build/CMakeFiles/ClangFormat	4e9b320ca0c3c2bc
+0	1019	1635356666595672690	CMakeFiles/UnitTestRunner.dir/WordTree.cpp.o	7c62adae51cff81e

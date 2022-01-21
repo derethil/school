@@ -1,0 +1,3 @@
+/home/jaren/development/school/cpp/typeAhead/build/fmt-download/CMakeFiles/rebuild_cache.dir
+/home/jaren/development/school/cpp/typeAhead/build/fmt-download/CMakeFiles/edit_cache.dir
+/home/jaren/development/school/cpp/typeAhead/build/fmt-download/CMakeFiles/googletest.dir

@@ -1,0 +1,42 @@
+[
+{
+  "directory": "/home/jaren/development/school/cpp/googleTest/build",
+  "command": "/bin/c++ -isystem /home/jaren/development/school/cpp/googleTest/build/googletest-src/googletest/include -isystem /home/jaren/development/school/cpp/googleTest/build/googletest-src/googletest -g -Wall -Wextra -pedantic -std=gnu++20 -o CMakeFiles/UnitTestRunner.dir/distributions.cpp.o -c /home/jaren/development/school/cpp/googleTest/distributions.cpp",
+  "file": "/home/jaren/development/school/cpp/googleTest/distributions.cpp"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/googleTest/build",
+  "command": "/bin/c++ -isystem /home/jaren/development/school/cpp/googleTest/build/googletest-src/googletest/include -isystem /home/jaren/development/school/cpp/googleTest/build/googletest-src/googletest -g -Wall -Wextra -pedantic -std=gnu++20 -o CMakeFiles/UnitTestRunner.dir/TestDistributions.cpp.o -c /home/jaren/development/school/cpp/googleTest/TestDistributions.cpp",
+  "file": "/home/jaren/development/school/cpp/googleTest/TestDistributions.cpp"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/googleTest/build",
+  "command": "/bin/c++ -g -Wall -Wextra -pedantic -std=gnu++20 -o CMakeFiles/RandDistributions.dir/distributions.cpp.o -c /home/jaren/development/school/cpp/googleTest/distributions.cpp",
+  "file": "/home/jaren/development/school/cpp/googleTest/distributions.cpp"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/googleTest/build",
+  "command": "/bin/c++ -g -Wall -Wextra -pedantic -std=gnu++20 -o CMakeFiles/RandDistributions.dir/main.cpp.o -c /home/jaren/development/school/cpp/googleTest/main.cpp",
+  "file": "/home/jaren/development/school/cpp/googleTest/main.cpp"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/googleTest/build",
+  "command": "/bin/c++ -isystem /home/jaren/development/school/cpp/googleTest/build/googletest-src/googlemock/include -isystem /home/jaren/development/school/cpp/googleTest/build/googletest-src/googlemock -isystem /home/jaren/development/school/cpp/googleTest/build/googletest-src/googletest/include -isystem /home/jaren/development/school/cpp/googleTest/build/googletest-src/googletest -g -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /home/jaren/development/school/cpp/googleTest/build/googletest-src/googlemock/src/gmock_main.cc",
+  "file": "/home/jaren/development/school/cpp/googleTest/build/googletest-src/googlemock/src/gmock_main.cc"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/googleTest/build",
+  "command": "/bin/c++ -I/home/jaren/development/school/cpp/googleTest/build/googletest-src/googlemock/include -I/home/jaren/development/school/cpp/googleTest/build/googletest-src/googlemock -isystem /home/jaren/development/school/cpp/googleTest/build/googletest-src/googletest/include -isystem /home/jaren/development/school/cpp/googleTest/build/googletest-src/googletest -g -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /home/jaren/development/school/cpp/googleTest/build/googletest-src/googlemock/src/gmock-all.cc",
+  "file": "/home/jaren/development/school/cpp/googleTest/build/googletest-src/googlemock/src/gmock-all.cc"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/googleTest/build",
+  "command": "/bin/c++ -isystem /home/jaren/development/school/cpp/googleTest/build/googletest-src/googletest/include -isystem /home/jaren/development/school/cpp/googleTest/build/googletest-src/googletest -g -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /home/jaren/development/school/cpp/googleTest/build/googletest-src/googletest/src/gtest_main.cc",
+  "file": "/home/jaren/development/school/cpp/googleTest/build/googletest-src/googletest/src/gtest_main.cc"
+},
+{
+  "directory": "/home/jaren/development/school/cpp/googleTest/build",
+  "command": "/bin/c++ -I/home/jaren/development/school/cpp/googleTest/build/googletest-src/googletest/include -I/home/jaren/development/school/cpp/googleTest/build/googletest-src/googletest -g -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /home/jaren/development/school/cpp/googleTest/build/googletest-src/googletest/src/gtest-all.cc",
+  "file": "/home/jaren/development/school/cpp/googleTest/build/googletest-src/googletest/src/gtest-all.cc"
+}
+]

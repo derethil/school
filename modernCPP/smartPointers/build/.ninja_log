@@ -1,0 +1,15 @@
+# ninja log v5
+25	748	1638160742583791437	CMakeFiles/SmartPointers.dir/main.cpp.o	2415945c59d63bdc
+1	3832	1638142855856965630	googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o	ed1742630956a65b
+24	712	1638148086611301810	CMakeFiles/smartPointers.dir/main.cpp.o	dd459d7dd9b0e06b
+1	680	1638146363763305770	CMakeFiles/UnitTestRunner.dir/main.cpp.o	58171b3699550346
+1935	2081	1638160743913796893	UnitTestRunner	8f275e8596c818ad
+1	1099	1638142853126976754	googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o	54520f6d234efdb6
+749	816	1638160742650458378	SmartPointers	4e3872572c998140
+57	89	1638142900956781389	lib/libgtest_maind.a	e08ccd14d15a89a7
+1	35	0	/home/jaren/development/school/cpp/smartPointers/build/CMakeFiles/ClangFormat	c1c4e7816ee22084
+1	57	1638142900923448192	lib/libgtestd.a	ef04675ce556f47d
+1	35	0	CMakeFiles/ClangFormat	c1c4e7816ee22084
+1	1935	1638160743767129626	CMakeFiles/UnitTestRunner.dir/TestMemory.cpp.o	d87afa6bee268f9f
+30	758	1638148061047970633	CMakeFiles/d.dir/main.cpp.o	c14b370dfb084923
+28	694	1638146363776639078	CMakeFiles/TypeAhead.dir/main.cpp.o	5cf7b396ef5c53e9

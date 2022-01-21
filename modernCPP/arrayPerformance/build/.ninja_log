@@ -1,0 +1,15 @@
+# ninja log v5
+29	1513	1634087284603086961	CMakeFiles/ArrayPerformance.dir/sortutils.cpp.o	7917e26328f55e70
+1164	1328	1634087284419753471	UnitTestRunner	c31ec5f81b0b144e
+4	1494	1634078963106352673	CMakeFiles/UnitTestRunner.dir/TestPerformance.cpp.o	3a0fddd69ac41bfa
+2	960	1633998901853317952	googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o	27aceb132a3bb25e
+18	38	1633989801894547506	CMakeFiles/RandDistributions.dir/main.cpp.o	776117c4bb35f0fe
+3	3714	1633998904603379127	googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o	9d3ad8889c469e90
+35	1174	1634091370445076230	CMakeFiles/ArrayPerformance.dir/main.cpp.o	50e55a3bccfc1ae6
+18	43	1633989801894547506	CMakeFiles/RandDistributions.dir/sortutils.cpp.o	5f0ba32e21b7aaaf
+1174	1224	1634091370495076291	ArrayPerformance	ae3f795e86a705ab
+1	52	1633998924087145591	lib/libgtestd.a	ef04675ce556f47d
+3	35	0	/home/jaren/development/school/cpp/arrayPerformance/build/CMakeFiles/ClangFormat	4880ca1182fdc46
+3	35	0	CMakeFiles/ClangFormat	4880ca1182fdc46
+1	1164	1634087284256419998	CMakeFiles/UnitTestRunner.dir/sortutils.cpp.o	d6ea3f02f8cfa937
+52	80	1633998924117146257	lib/libgtest_maind.a	e08ccd14d15a89a7

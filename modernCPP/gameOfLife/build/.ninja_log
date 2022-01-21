@@ -1,0 +1,13 @@
+# ninja log v5
+28	762	1636174580995078526	CMakeFiles/ConwaysLife.dir/main.cpp.o	f8d46f6a2747203b
+27	767	1636170161190488000	CMakeFiles/ConwaysLife.dir/LifeSimulator.cpp.o	803cf31cbb4968d2
+762	822	1636174581055078438	ConwaysLife	831f49f0a27359d1
+28	575	1636174580808412141	CMakeFiles/ConwaysLife.dir/RendererConsole.cpp.o	7f68acffc78ae986
+28	134	1636174170101425941	CMakeFiles/ConwaysLife.dir/patternfiles/PatternAcorn.cpp.o	72a5171a538b1d
+28	118	1636174170084759834	CMakeFiles/ConwaysLife.dir/patternfiles/PatternBlock.cpp.o	dff197dc6f878971
+1	28	0	/home/jaren/development/school/cpp/gameOfLife/build/CMakeFiles/ClangFormat	9e38df59710e388e
+1	28	0	CMakeFiles/ClangFormat	9e38df59710e388e
+0	30	0	/home/jaren/development/school/cpp/gameOfLife/build/CMakeFiles/cmake.verify_globs	6a3c27219e1acc1a
+28	155	1636174170124758489	CMakeFiles/ConwaysLife.dir/patternfiles/PatternGlider.cpp.o	4615a36374f0b3c5
+29	122	1636174170088093056	CMakeFiles/ConwaysLife.dir/patternfiles/PatternGosperGliderGun.cpp.o	929160079a2226b5
+29	144	1636174170111425604	CMakeFiles/ConwaysLife.dir/patternfiles/PatternBlinker.cpp.o	afc7760b5ba07648

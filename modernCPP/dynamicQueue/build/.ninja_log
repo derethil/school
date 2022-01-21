@@ -1,0 +1,11 @@
+# ninja log v5
+1	27	0	CMakeFiles/ClangFormat	ecfd54d0ee28c4a
+3808	3866	1638848951459411121	lib/libgtestd.a	ef04675ce556f47d
+1	27	0	/home/jaren/development/school/cpp/dynamicQueue/build/CMakeFiles/ClangFormat	ecfd54d0ee28c4a
+1	1101	1638848948696077935	googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o	14ec6c79ec44e491
+1	3808	1638848951402744458	googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o	1cc68cc1f52b78df
+3866	3899	1638848951496077786	lib/libgtest_maind.a	e08ccd14d15a89a7
+1	1727	1638920859082380244	CMakeFiles/UnitTestRunner.dir/TestPriorityQueue.cpp.o	41ed7aad7560e29e
+29	1038	1638920858392379828	CMakeFiles/DynamicPriorityQueue.dir/main.cpp.o	cc492049efa87660
+1727	1859	1638920859212380321	UnitTestRunner	3cf87bdc2f494de3
+1038	1095	1638920858449046529	DynamicPriorityQueue	2946c38d6f20bfe9
