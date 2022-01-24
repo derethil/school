@@ -1,0 +1,31 @@
+/min {
+    /num1 exch def
+    /num2 exch def
+
+    num1 num2 gt
+        {num2}
+    if
+
+    num1 num2 lt
+        {num1}
+    if
+
+    num1 num2 eq
+        {num1}
+    if
+} def
+
+
+/reverseTopK {
+    1 dict begin
+    count 0 ne {
+        /K exch def
+        count K min % repeat K times up to number of items on stack
+        {
+            K 1 roll % move current num to its reversed position
+            /K K 1 sub def
+        } repeat
+    }
+    if
+    end
+} def

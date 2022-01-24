@@ -1,0 +1,16 @@
+/remove {
+    2 dict begin
+    count 0 ne {
+        /toRemove exch def
+        count % repeat for every item on stack
+        {
+            count -1 roll % move bottom number on stack to the top
+            /toTest exch def
+            toTest toRemove ne % only leave number on stack if != to toRemove
+                { toTest }
+            if
+        } repeat
+    }
+    if
+    end
+} def
