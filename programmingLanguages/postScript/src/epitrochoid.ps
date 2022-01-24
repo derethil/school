@@ -1,3 +1,26 @@
 /epitrochoid {
+    5 dict begin
+    count 4 ge
+    {
+        /r exch def
+        /d exch def
+        /b exch def
+        /a exch def
 
+        newpath
+        a b add d add 0 moveto
+
+        1 1 360 r mul
+        {
+            /t exch def
+            /x a b add t cos mul a b add t mul b div cos d mul add def
+            /y a b add t sin mul a b add t mul b div sin d mul sub def
+
+            r 360 mod 0 eq
+                {a b add d add 0 moveto}
+                {x y lineto}
+            ifelse
+        } for
+    } if
+    end
 } def
