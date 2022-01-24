@@ -3,16 +3,9 @@
     /num2 exch def
 
     num1 num2 gt
-        {num2}
-    if
-
-    num1 num2 lt
-        {num1}
-    if
-
-    num1 num2 eq
-        {num1}
-    if
+        {num2} % num1 > num2, return num2
+        {num1} % num1 < num2, return num1 and num1 == num2, so return num1
+    ifelse
 } def
 
 
@@ -22,8 +15,8 @@
         /K exch def
         count K min % repeat K times up to number of items on stack
         {
-            K 1 roll % move current num to its reversed position
-            /K K 1 sub def
+            K 1 roll % move top number to its reversed position K
+            /K K 1 sub def % subtract one from K for next iteration
         } repeat
     }
     if
