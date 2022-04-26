@@ -1,36 +1,30 @@
-use std::env;
+use clap::Parser;
+
 use std::error::Error;
 use std::fs;
 
-pub struct Config {
+/// ------ ARGUMENT PARSING ------
+
+#[derive(Parser, Debug)]
+#[clap(author, version, about, long_about=None)]
+pub struct Args {
+    /// Pattern to search for
     pub query: String,
+
+    /// File to search
     pub filename: String,
-    pub case_sensitive: bool,
+
+    /// Ignore case distinctions in patterns and data
+    #[clap(short, long)]
+    pub ignore_case: bool,
 }
 
-impl Config {
-    pub fn new(args: &[String]) -> Result<Config, &'static str> {
-        if args.len() < 3 {
-            return Err("not enough arguments");
-        }
+/// ------ PROGRAM LOGIC ------
 
-        let query = args[1].clone();
-        let filename = args[2].clone();
+pub fn run(args: Args) -> Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(args.filename)?;
 
-        let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
-
-        Ok(Config {
-            query,
-            filename,
-            case_sensitive,
-        })
-    }
-}
-
-pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let contents = fs::read_to_string(config.filename)?;
-
-    let results = search(&config.query, &contents, &config.case_sensitive);
+    let results = search(&args.query, &contents, &args.ignore_case);
 
     for line in results {
         println!("{}", line);
@@ -39,13 +33,13 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-pub fn search<'a>(query: &str, contents: &'a str, case_insensitive: &bool) -> Vec<&'a str> {
+pub fn search<'a>(query: &str, contents: &'a str, ignore_case: &bool) -> Vec<&'a str> {
     let mut results = Vec::new();
 
     for line in contents.lines() {
         let lowercase_line = line.to_lowercase();
 
-        let line_query = if *case_insensitive {
+        let line_query = if *ignore_case {
             lowercase_line.as_str()
         } else {
             line
@@ -59,12 +53,14 @@ pub fn search<'a>(query: &str, contents: &'a str, case_insensitive: &bool) -> Ve
     results
 }
 
+/// ------ TESTING ------
+
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
-    fn case_sensitive() {
+    fn ignore_case() {
         let query = "duct";
         let contents = "\
 Rust:
