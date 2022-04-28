@@ -35,17 +35,22 @@ pub fn run(args: Args) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-pub fn search<'a>(query: &str, contents: &str, ignore_case: bool) -> Vec<String> {
+pub fn search(query: &str, contents: &str, ignore_case: bool) -> Vec<String> {
     let mut results = Vec::new();
 
-    for line in contents.lines() {
-        let query = RegexBuilder::new(query)
-            .case_insensitive(ignore_case)
-            .build()
-            .expect("Invalid Regex");
+    let query = RegexBuilder::new(query)
+        .case_insensitive(ignore_case)
+        .build()
+        .expect("Invalid Regex");
 
+    for line in contents.lines() {
+        let mut colored_line = String::from(line);
         for regex_match in query.find_iter(line) {
-            results.push(colorize(&line, regex_match))
+            colored_line = colorize(&colored_line, regex_match);
+        }
+
+        if query.find(line) != None {
+            results.push(colored_line)
         }
     }
 
