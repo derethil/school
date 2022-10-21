@@ -1,0 +1,4 @@
+.envrc
+.vscode/
+__pycache__/
+readme.md
