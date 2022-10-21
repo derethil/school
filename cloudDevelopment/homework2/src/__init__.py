@@ -1,1 +1,1 @@
-from .consumer import main
+from .cli import main
