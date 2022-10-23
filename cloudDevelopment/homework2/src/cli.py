@@ -1,5 +1,6 @@
 import click
 import boto3
+import logging
 
 from .processor import Processor, S3Processor, DynamoDBProcessor
 from .retriever import Retriever
@@ -8,13 +9,14 @@ from .poller import Poller
 
 @click.group()
 def cli():
-    pass
+    logging.basicConfig(level=logging.INFO)
 
 @cli.command(help="Consume requests and store them in S3")
 @click.option("--request-bucket", "-rb", "rb_str", required=True, help="Name of bucket that will contain requests")
 @click.option("--widget-bucket", "-wb", "wb_str", required=True, help="Name of the S3 bucket that holds the widgets")
 def process_s3(rb_str: str, wb_str: str):
     s3 = boto3.resource("s3", region_name="us-east-1")
+    logging.info("Successfully connected to S3")
 
     request_bucket = s3.Bucket(rb_str)
     retriever = Retriever(request_bucket)
