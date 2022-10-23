@@ -1,4 +1,3 @@
-from time import sleep
 import click
 import boto3
 
@@ -41,4 +40,3 @@ def process_ddb(rb_str: str, dwt_str: str):
 
     poller = Poller(retriever, processor)
     poller.execute()
-
