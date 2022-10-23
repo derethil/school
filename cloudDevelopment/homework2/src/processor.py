@@ -18,7 +18,7 @@ class Processor(ABC):
             self._process_delete(request_content)
 
     @abstractmethod
-    def _process_create(self, request):
+    def _process_create(self):
         pass
 
     @abstractmethod
