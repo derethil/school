@@ -2,6 +2,8 @@ from abc import ABC, abstractmethod
 import json
 import logging
 
+from botocore.exceptions import ClientError
+
 
 class Processor(ABC):
     def process(self, request):
@@ -51,7 +53,7 @@ class S3Processor(Processor):
 
         try:
             widget = json.loads(self.response_bucket.Object(key).get()["Body"].read())
-        except Exception:
+        except ClientError:
             logging.warning(f"Could not find widget {request['widgetId']} to update")
             return
 
@@ -65,7 +67,7 @@ class S3Processor(Processor):
 
         try:
             self.response_bucket.Object(key).delete()
-        except Exception:
+        except ClientError:
             logging.warning(f"Could not find widget {request['widgetId']} to delete")
             return
 
@@ -113,7 +115,7 @@ class DynamoDBProcessor(Processor):
 
         try:
             widget = self.response_table.get_item(Key={"id": request["widgetId"]})
-        except Exception:
+        except ClientError:
             logging.warning(f"Could not find widget {request['widgetId']} to update")
             return
 
@@ -127,7 +129,7 @@ class DynamoDBProcessor(Processor):
 
         try:
             self.response_table.delete_item(Key={"id": request["widgetId"]})
-        except Exception:
+        except ClientError:
             logging.warning(f"Could not find widget {request['widgetId']} to delete")
             return
 

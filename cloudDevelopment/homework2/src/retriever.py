@@ -1,6 +1,9 @@
 from abc import ABC, abstractmethod
 from enum import Enum
 import json
+import logging
+
+from botocore.exceptions import ClientError
 
 
 class Retriever(ABC):
@@ -23,7 +26,14 @@ class S3Retriever(Retriever):
             return None
         else:
             request = sorted(objects, key=lambda x: int(x.key))[0]
-            request_content = json.loads(request.get()["Body"].read())
+
+            try:
+                request_content = json.loads(request.get()["Body"].read())
+
+            except ClientError:
+                logging.warning(f"Could not find request {request.key} to retrieve")
+                return
+
             return (request.delete, request_content)
 
 
@@ -33,7 +43,6 @@ class SQSRetriever(S3Retriever):
         self.request_cache = []
 
     def get_one(self):
-        print(self.request_cache)
         if len(self.request_cache) == 0:
             self.request_cache = self.request_queue.receive_messages(
                 MaxNumberOfMessages=10
