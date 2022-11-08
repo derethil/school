@@ -2,8 +2,6 @@ from abc import ABC, abstractmethod
 import json
 import logging
 
-from .retriever import Retriever
-
 
 class Processor(ABC):
     def process(self, request):

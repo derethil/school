@@ -1,19 +1,20 @@
 import json
 import os
-from sqlite3 import dbapi2
 import unittest
 
 import boto3
 
 from processor import S3Processor, DynamoDBProcessor
-from retriever import S3Retriever
+from retriever import S3Retriever, SQSRetriever
 
 REQUEST_BUCKET = "usu-cs5260-push-requests"
+REQUEST_QUEUE = "cs5260-requests"
 WIDGET_BUCKET = "usu-cs5260-push-web"
 WIDGET_TABLE = "widgets"
 
 s3 = boto3.resource("s3", region_name="us-east-1")
 ddb = boto3.resource("dynamodb", region_name="us-east-1")
+sqs = boto3.resource("sqs", region_name="us-east-1")
 
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 SAMPLES_DIR = os.path.join(SCRIPT_DIR, "samples")
@@ -88,6 +89,16 @@ class TestS3Retriever(unittest.TestCase):
         retriever = S3Retriever(self.request_bucket)
         newest_request = retriever.get_one()
         self.assertIsNotNone(newest_request)
+
+
+class TestSQSRetriever(unittest.TestCase):
+    def setUp(self):
+        self.request_queue = sqs.get_queue_by_name(QueueName=REQUEST_QUEUE)
+
+    def test_get_one(self):
+        retriever = SQSRetriever(self.request_queue)
+        request = retriever.get_one()
+        self.assertIsNotNone(request)
 
 
 if __name__ == "__main__":
