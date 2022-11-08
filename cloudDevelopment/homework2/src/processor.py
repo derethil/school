@@ -2,23 +2,25 @@ from abc import ABC, abstractmethod
 import json
 import logging
 
+from .retriever import Retriever
+
 
 class Processor(ABC):
     def process(self, request):
-        request_content = json.loads(request.get()["Body"].read())
-        request.delete()
+        (delete_request, request) = request
 
-        if request_content["type"] == "create":
-            self._process_create(request_content)
+        match request["type"]:
+            case "create":
+                self._process_create(request)
+            case "update":
+                self._process_update(request)
+            case "delete":
+                self._process_delete(request)
 
-        elif request_content["type"] == "update":
-            self._process_update(request_content)
-
-        elif request_content["type"] == "delete":
-            self._process_delete(request_content)
+        delete_request()
 
     @abstractmethod
-    def _process_create(self):
+    def _process_create(self, request):
         pass
 
     @abstractmethod

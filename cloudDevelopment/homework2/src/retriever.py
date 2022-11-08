@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+from enum import Enum
+import json
 
 
 class Retriever(ABC):
@@ -20,18 +22,25 @@ class S3Retriever(Retriever):
         if len(objects) == 0:
             return None
         else:
-            return sorted(objects, key=lambda x: int(x.key))[0]
+            request = sorted(objects, key=lambda x: int(x.key))[0]
+            request_content = json.loads(request.get()["Body"].read())
+            return (request.delete, request_content)
 
 
 class SQSRetriever(S3Retriever):
     def __init__(self, request_queue):
         self.request_queue = request_queue
-        self.message_cache = []
+        self.request_cache = []
 
     def get_one(self):
-        if len(self.message_cache) == 0:
-            self.message_cache = self.request_queue.receive_messages(
+        print(self.request_cache)
+        if len(self.request_cache) == 0:
+            self.request_cache = self.request_queue.receive_messages(
                 MaxNumberOfMessages=10
             )
 
-        return self.message_cache.pop(0) if len(self.message_cache) > 0 else None
+        if len(self.request_cache) == 0:
+            return None
+
+        request = self.request_cache.pop()
+        return (request.delete, json.loads(request.body))
