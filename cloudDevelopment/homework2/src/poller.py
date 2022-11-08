@@ -5,7 +5,7 @@ from .retriever import Retriever
 from .processor import Processor
 
 
-class Poller():
+class Poller:
     def __init__(self, retriever: Retriever, processor: Processor) -> None:
         self.retriever = retriever
         self.processor = processor
@@ -13,7 +13,7 @@ class Poller():
     def execute(self) -> None:
         while True:
             logging.info("Polling for requests")
-            newest_request = self.retriever.get_newest()
+            newest_request = self.retriever.get_one()
 
             if newest_request is None:
                 logging.info("No requests found, waiting")
