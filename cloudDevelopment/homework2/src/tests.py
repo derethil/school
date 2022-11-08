@@ -29,8 +29,8 @@ def _get_sample(name):
 class TestS3Processor(unittest.TestCase):
     def setUp(self):
         self.create_request = _get_sample("create.json")
-        # self.update_request = _get_sample("update.json")
-        # self.delete_request = _get_sample("delete.json")
+        self.update_request = _get_sample("update.json")
+        self.delete_request = _get_sample("delete.json")
 
         self.bucket = s3.Bucket(WIDGET_BUCKET)
         self.processor = S3Processor(self.bucket)
@@ -50,17 +50,35 @@ class TestS3Processor(unittest.TestCase):
         self.assertEqual(widget_count + 1, widget_count_after)
 
     def test_update(self):
-        pass
+        self.processor._process_create(self.create_request)
+        self.bucket.load()
+
+        widget_count = len(list(self.bucket.objects.all()))
+
+        self.processor._process_update(self.update_request)
+        self.bucket.load()
+
+        widget_count_after = len(list(self.bucket.objects.all()))
+        self.assertEqual(widget_count, widget_count_after)
 
     def test_delete(self):
-        pass
+        self.processor._process_create(self.create_request)
+        self.bucket.load()
+
+        widget_count = len(list(self.bucket.objects.all()))
+
+        self.processor._process_delete(self.delete_request)
+        self.bucket.load()
+
+        widget_count_after = len(list(self.bucket.objects.all()))
+        self.assertEqual(widget_count - 1, widget_count_after)
 
 
 class TestDynamoDBProcessor(unittest.TestCase):
     def setUp(self):
         self.create_request = _get_sample("create.json")
-        # self.update_request = _get_sample("update.json")
-        # self.delete_request = _get_sample("delete.json")
+        self.update_request = _get_sample("update.json")
+        self.delete_request = _get_sample("delete.json")
 
         self.table = ddb.Table(WIDGET_TABLE)
         self.processor = DynamoDBProcessor(self.table)
@@ -75,20 +93,54 @@ class TestDynamoDBProcessor(unittest.TestCase):
         self.assertEqual(widget_count + 1, widget_count_after)
 
     def test_update(self):
-        pass
+        self.processor._process_create(self.create_request)
+        widget_count = len(self.table.scan()["Items"])
+
+        self.processor._process_update(self.update_request)
+
+        widget_count_after = len(self.table.scan()["Items"])
+        self.assertEqual(widget_count, widget_count_after)
 
     def test_delete(self):
-        pass
+        self.processor._process_create(self.create_request)
+        widget_count = len(self.table.scan()["Items"])
+
+        self.processor._process_delete(self.delete_request)
+
+        widget_count_after = len(self.table.scan()["Items"])
+        self.assertEqual(widget_count - 1, widget_count_after)
 
 
 class TestS3Retriever(unittest.TestCase):
     def setUp(self):
         self.request_bucket = s3.Bucket(REQUEST_BUCKET)
+        self.create_request = _get_sample("create.json")
 
     def test_get_one(self):
+        widget_count = len(list(self.request_bucket.objects.all()))
+
+        if widget_count == 0:
+            raise Exception("Please add a request to the request bucket before testing")
+
         retriever = S3Retriever(self.request_bucket)
         newest_request = retriever.get_one()
         self.assertIsNotNone(newest_request)
+
+    def test_when_empty(self):
+        widget_count = len(list(self.request_bucket.objects.all()))
+
+        if widget_count > 0:
+            self.request_bucket.delete_objects(
+                Delete={
+                    "Objects": [
+                        {"Key": obj.key} for obj in self.request_bucket.objects.all()
+                    ]
+                }
+            )
+
+        retriever = S3Retriever(self.request_bucket)
+        newest_request = retriever.get_one()
+        self.assertIsNone(newest_request)
 
 
 class TestSQSRetriever(unittest.TestCase):
