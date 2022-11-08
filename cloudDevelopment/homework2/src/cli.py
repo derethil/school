@@ -6,16 +6,13 @@ from .processor import Processor, S3Processor, DynamoDBProcessor
 from .retriever import Retriever
 from .poller import Poller
 
+logging.basicConfig(level=logging.INFO)
 
-@click.group()
-def cli():
-    logging.basicConfig(level=logging.INFO)
-
-@cli.command(help="Consume requests and store them in S3")
+@click.command(help="Consume requests and store them in S3")
 @click.option("--request-bucket", "-rb", "rb_str", help="Name of bucket that will contain requests")
 @click.option("--widget-bucket", "-wb", "wb_str", help="Name of the S3 bucket that holds the widgets")
 @click.option("--dynamodb-widget-table","-dwt", "dwt_str", help="Name of the DynamoDB table that holds the widgets")
-def process_s3(rb_str: str, wb_str: str, dwt_str: str):
+def main(rb_str: str, wb_str: str, dwt_str: str):
     s3 = boto3.resource("s3", region_name="us-east-1")
     dynamodb = boto3.resource("dynamodb", region_name='us-east-1')
     logging.info("Successfully connected to S3 and DynamoDB")
