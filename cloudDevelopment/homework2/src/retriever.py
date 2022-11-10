@@ -37,7 +37,7 @@ class S3Retriever(Retriever):
             return (request.delete, request_content)
 
 
-class SQSRetriever(S3Retriever):
+class SQSRetriever(Retriever):
     def __init__(self, request_queue):
         self.request_queue = request_queue
         self.request_cache = []
