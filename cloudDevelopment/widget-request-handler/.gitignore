@@ -2,3 +2,4 @@
 *.zip
 package/
 __pycache__/
+samples/
