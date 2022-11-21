@@ -38,6 +38,3 @@ class Validator:
             logging.error("Invalid Request: %s", error)
             return False
         return True
-
-
-breakpoint()
