@@ -1,3 +1,4 @@
+import os
 from validate import Validator
 from processor import Processor
 
@@ -17,5 +18,5 @@ class RequestHandler:
         request = Validator(self.event)
 
         if request.validate():
-            processor = Processor("widgets")
+            processor = Processor(os.environ.get["WIDGET_QUEUE_NAME"])
             processor.process(self.event)
