@@ -18,5 +18,5 @@ class RequestHandler:
         request = Validator(self.event)
 
         if request.validate():
-            processor = Processor(os.environ.get["WIDGET_QUEUE_NAME"])
+            processor = Processor(os.environ["WIDGET_QUEUE_NAME"])
             processor.process(self.event)

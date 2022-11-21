@@ -1,3 +1,4 @@
 .venv/
 *.zip
 package/
+__pycache__/
