@@ -1,3 +1,8 @@
+section#quotes {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .quote-card {
   background-color: #fff7f3;
   margin: 0.5rem 0;
@@ -20,4 +25,9 @@
 .quote-card .quote-author {
   margin-left: auto;
   margin-top: 0.25rem;
+}
+
+#quotes.random .quote-card {
+  background-color: transparent;
+  border: 2px solid transparent;
 }
