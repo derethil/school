@@ -13,6 +13,12 @@
   margin-top: 25vh;
 
   max-width: 720px;
+  width: 100%;
+}
+
+#wrapper form {
+  box-sizing: border-box;
+  width: 100%;
 }
 
 #wrapper.top {
@@ -40,6 +46,9 @@
 }
 
 #search-container input {
+  width: 100%;
+  box-sizing: border-box;
+
   padding: 10px 5px 10px 40px;
   border-radius: 10px;
   border: 2px solid transparent;
