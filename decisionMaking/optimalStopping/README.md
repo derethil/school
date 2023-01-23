@@ -1,5 +1,9 @@
 # Code Guide
 
+## Setup
+
+The code expects numpy and matplotlib to be available.
+
 ## Part 1
 
 - To run the experiment: `HW1_Glenn_Jaren.py part1`
