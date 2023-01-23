@@ -20,9 +20,11 @@ The script also prints help if you enter bad input.
 
 ## Part 1
 
+My code runs successfully on the tests; it finds that a good stopping point is index 9 on Scenario 1 and index 3 on Scenario 2. However, this does not follow the general 37% rule as it is only one candidate instead of thousands. When running the general optimum 37% rule, since the algorithm does not account for already having seen the largest value, no choice is found.
+
 ![Part 1 Result](./images/Part1.png)
 
-The above graph matches up very well with what we would expect. It peaks around 37% and continues to decrease afterwards.
+When running the general experiment code over thousands of candidates, it results in the above graph. it matches up very well with what we would expect since it peaks around 37% and continues to decrease afterwards.
 
 ## Part 2
 
