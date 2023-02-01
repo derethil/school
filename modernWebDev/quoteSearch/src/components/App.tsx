@@ -23,6 +23,7 @@ function App() {
         setError("");
         setQuotes(
           data.results.map((quote: any) => ({
+            id: quote._id,
             content: quote.content,
             author: quote.author,
           }))
@@ -39,6 +40,7 @@ function App() {
 
     setQuotes([
       {
+        id: data._id,
         content: data.content,
         author: data.author,
         isRandom: true,
@@ -73,8 +75,8 @@ function App() {
       </form>
 
       <section id="quotes" className={quotes[0]?.isRandom ? "random" : "searched"}>
-        {quotes.map((quote, index) => (
-          <QuoteCard quote={quote} key={index} />
+        {quotes.map((quote) => (
+          <QuoteCard quote={quote} key={quote.id} />
         ))}
       </section>
     </main>
