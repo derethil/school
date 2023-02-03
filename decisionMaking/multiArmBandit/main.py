@@ -1,4 +1,4 @@
-import sys
+import argparse
 from abc import ABC, abstractmethod
 
 import numpy as np
@@ -122,6 +122,9 @@ class Solver(ABC):
         raise NotImplementedError
 
     def run(self, verbose=False):
+        if verbose:
+            print(f"Running {self.__class__.__name__}...")
+
         R = np.zeros((self.num_pulls,))
         Q = np.zeros((self.num_pulls,))
         A = np.zeros((self.num_pulls, len(self.rewards())))
@@ -132,7 +135,7 @@ class Solver(ABC):
             fraction = self.num_experiments / 1
             if verbose and ((i + 1) % (self.num_experiments / fraction) == 0):
                 print(
-                    f"[Experiment {i+1}/{self.num_experiments}] "
+                    f"[Experiment {i+1:02}/{self.num_experiments:2}] "
                     + f"num_pulls = {self.num_pulls} | eps = {self.eps} "
                     + f"| avg_reward = {np.mean(rewards):.2f}"
                 )
@@ -211,7 +214,9 @@ class Experiment(ABC):
 
 
 class ExperimentEpsilon(Experiment):
-    def __init__(self, epsilons, num_experiments=1, num_pulls=10000, verbose=False):
+    def __init__(
+        self, epsilons, num_experiments=1, num_pulls=10000, verbose=False, drift=False
+    ):
         super().__init__(num_experiments, num_pulls, verbose)
         self.epsilons = epsilons
 
@@ -236,14 +241,14 @@ class ExperimentEpsilon(Experiment):
                 + f"experiments = {self.num_experiments} | "
                 + f"pulls = {self.num_pulls} | "
                 + f"avg_reward = {np.mean(average):.4f} | "
-                f"best_reward = {np.mean(best):.4f}"
+                f"best_reward_estimate = {np.mean(best):.4f}"
             )
 
         self.show_plot("Epsilon-Greedy")
 
 
 class ExperimentThompson(Experiment):
-    def __init__(self, num_experiments=1, num_pulls=10000, verbose=False):
+    def __init__(self, num_experiments=1, num_pulls=10000, verbose=False, drift=False):
         super().__init__(num_experiments, num_pulls, verbose)
 
     def find_convergences(self):
@@ -261,7 +266,7 @@ class ExperimentThompson(Experiment):
                 + f"experiments = {self.num_experiments} | "
                 + f"pulls = {self.num_pulls} | "
                 + f"avg_reward = {np.mean(average):.4f} | "
-                f"best_reward = {np.mean(best):.4f}"
+                f"best_reward_estimate = {np.mean(best):.4f}"
             )
 
         self.show_plot("Thompson Sampling")
@@ -270,17 +275,35 @@ class ExperimentThompson(Experiment):
 # Main CLI
 
 if __name__ == "__main__":
-    epsilons = [0.01, 0.05, 0.1, 0.4]
-    match sys.argv[1:]:
-        case ["epsilon_greedy"]:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "algorithm",
+        help="algorithm to perform experiments with",
+        choices=["epsilon_greedy", "thompson_sampling"],
+    )
+    parser.add_argument(
+        "-v", "--verbose", action="store_true", help="increase output verbosity"
+    )
+
+    parser.add_argument(
+        "-d", "--drift", action="store_true", help="enable drift in rewards"
+    )
+
+    args = parser.parse_args()
+
+    match vars(args):
+        case {"algorithm": "epsilon_greedy", "verbose": verbose, "drift": drift}:
+            epsilons = [0.01, 0.05, 0.1, 0.4]
             experiment_epsilon = ExperimentEpsilon(
-                epsilons, num_experiments=10, verbose=False
+                epsilons, num_experiments=10, verbose=verbose, drift=drift
             )
             experiment_epsilon.plot_convergences()
 
-        case ["thompson_sampling"]:
-            experiment_thompson = ExperimentThompson(num_experiments=10, verbose=False)
+        case {"algorithm": "thompson_sampling", "verbose": verbose, "drift": drift}:
+            experiment_thompson = ExperimentThompson(
+                num_experiments=10, verbose=verbose, drift=drift
+            )
             experiment_thompson.plot_convergences()
 
         case _:
-            print("Usage: python3 bandit.py epsilon_greedy|thomson_sampling")
+            print("Invalid arguments")
