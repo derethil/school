@@ -9,12 +9,37 @@ import matplotlib.pyplot as plt
 
 
 class Environment:
-    def __init__(self, rewards):
-        self.rewards = rewards
+    def __init__(self):
+        self.num_actions = len(self.gen_rewards())
 
     def reward(self, action):
-        rewards = self.rewards()
+        rewards = self.gen_rewards()
         return rewards[action]
+
+    def gen_rewards(self):
+        return [
+            np.random.normal(0, 5),
+            np.random.normal(-0.5, 12),
+            np.random.normal(2, 3.9),
+            np.random.normal(-0.5, 7),
+            np.random.normal(-1.2, 8),
+            np.random.normal(-3, 7),
+            np.random.normal(-10, 20),
+            np.random.normal(-0.5, 1),
+            np.random.normal(-1, 2),
+            np.random.normal(1, 6),
+            np.random.normal(0.7, 4),
+            np.random.normal(-6, 11),
+            np.random.normal(-7, 1),
+            np.random.normal(-0.5, 2),
+            np.random.normal(-6.5, 1),
+            np.random.normal(-3, 6),
+            np.random.normal(0, 8),
+            np.random.normal(2, 3.9),
+            np.random.normal(-9, 12),
+            np.random.normal(-1, 6),
+            np.random.normal(-4.5, 8),
+        ]
 
 
 # Agent
@@ -26,7 +51,7 @@ class Agent(ABC):
         self.num_actions = num_actions
 
     @abstractmethod
-    def choose_action(self):
+    def choose_action(self, environment):
         raise NotImplementedError
 
     @property
@@ -45,11 +70,14 @@ class EpsilonGreedyAgent(Agent):
         self.n[action] += 1
         self.Q[action] += (1.0 / self.n[action]) * (reward - self.Q[action])
 
-    def choose_action(self):
+    def choose_action(self, environment):
         if np.random.random() < self.eps:
-            return np.random.randint(self.num_actions)
+            action = np.random.randint(self.num_actions)
         else:
-            return np.random.choice(np.flatnonzero(self.Q == self.Q.max()))
+            action = np.random.choice(np.flatnonzero(self.Q == self.Q.max()))
+
+        reward = environment.reward(action)
+        return action, reward
 
     @property
     def estimated_best_reward(self):
@@ -76,7 +104,7 @@ class ThompsonSamplingAgent(Agent):
         self.reward_As[action] += reward
         self.reward_Bs[action] += 1 - reward
 
-        return action
+        return action, reward
 
     @property
     def estimated_best_reward(self):
@@ -88,34 +116,10 @@ class ThompsonSamplingAgent(Agent):
 
 
 class Solver(ABC):
-    def rewards(self, drift=0):
-        return [
-            np.random.normal(0, 5),
-            np.random.normal(-0.5, 12),
-            np.random.normal(2, 3.9),
-            np.random.normal(-0.5, 7),
-            np.random.normal(-1.2, 8),
-            np.random.normal(-3, 7),
-            np.random.normal(-10, 20),
-            np.random.normal(-0.5, 1),
-            np.random.normal(-1, 2),
-            np.random.normal(1, 6),
-            np.random.normal(0.7, 4),
-            np.random.normal(-6, 11),
-            np.random.normal(-7, 1),
-            np.random.normal(-0.5, 2),
-            np.random.normal(-6.5, 1),
-            np.random.normal(-3, 6),
-            np.random.normal(0, 8),
-            np.random.normal(2, 3.9),
-            np.random.normal(-9, 12),
-            np.random.normal(-1, 6),
-            np.random.normal(-4.5, 8),
-        ]
-
-    def __init__(self, num_experiments, num_pulls):
+    def __init__(self, num_experiments, num_pulls, drift=False):
         self.num_experiments = num_experiments
         self.num_pulls = num_pulls
+        self.drift = drift
 
     @abstractmethod
     def experiment(self):
@@ -125,18 +129,22 @@ class Solver(ABC):
         if verbose:
             print(f"Running {self.__class__.__name__}...")
 
+        env = Environment()
+
         R = np.zeros((self.num_pulls,))
         Q = np.zeros((self.num_pulls,))
-        A = np.zeros((self.num_pulls, len(self.rewards())))
+        A = np.zeros((self.num_pulls, env.num_actions))
 
         for i in range(self.num_experiments):
             actions, rewards, estimated = self.experiment()
 
             fraction = self.num_experiments / 1
             if verbose and ((i + 1) % (self.num_experiments / fraction) == 0):
+                eps_str = f"| eps = {self.eps:.2f} " if hasattr(self, "eps") else ""
                 print(
                     f"[Experiment {i+1:02}/{self.num_experiments:2}] "
-                    + f"num_pulls = {self.num_pulls} | eps = {self.eps} "
+                    + f"num_pulls = {self.num_pulls} "
+                    + eps_str
                     + f"| avg_reward = {np.mean(rewards):.2f}"
                 )
 
@@ -149,18 +157,17 @@ class Solver(ABC):
 
 
 class EpsilonGreedy(Solver):
-    def __init__(self, num_experiments, num_pulls, eps):
-        super().__init__(num_experiments, num_pulls)
+    def __init__(self, eps, *args):
+        super().__init__(*args)
         self.eps = eps
 
     def experiment(self):
-        env = Environment(self.rewards)
-        agent = EpsilonGreedyAgent(len(env.rewards()), self.eps)
+        env = Environment()
+        agent = EpsilonGreedyAgent(env.num_actions, self.eps)
         actions, rewards, estimated = [], [], []
 
         for _ in range(self.num_pulls):
-            action = agent.choose_action()
-            reward = env.reward(action)
+            action, reward = agent.choose_action(env)
             agent.update_Q(action, reward)
             actions.append(action)
             rewards.append(reward)
@@ -171,12 +178,12 @@ class EpsilonGreedy(Solver):
 
 class ThomsonSampling(Solver):
     def experiment(self):
-        env = Environment(self.rewards)
-        agent = ThompsonSamplingAgent(len(env.rewards()))
+        env = Environment()
+        agent = ThompsonSamplingAgent(env.num_actions)
         actions, rewards, estimated = [], [], []
 
         for _ in range(self.num_pulls):
-            action = agent.choose_action(env)
+            action, reward = agent.choose_action(env)
             reward = env.reward(action)
             actions.append(action)
             rewards.append(reward)
@@ -190,10 +197,11 @@ class ThomsonSampling(Solver):
 
 
 class Experiment(ABC):
-    def __init__(self, num_experiments=1, num_pulls=10000, verbose=False):
+    def __init__(self, num_experiments=1, num_pulls=10000, verbose=False, drift=False):
         self.num_experiments = num_experiments
         self.num_pulls = num_pulls
         self.verbose = verbose
+        self.drift = drift
 
     @abstractmethod
     def find_convergences(self):
@@ -214,17 +222,17 @@ class Experiment(ABC):
 
 
 class ExperimentEpsilon(Experiment):
-    def __init__(
-        self, epsilons, num_experiments=1, num_pulls=10000, verbose=False, drift=False
-    ):
-        super().__init__(num_experiments, num_pulls, verbose)
+    def __init__(self, epsilons, **kwargs):
+        super().__init__(**kwargs)
         self.epsilons = epsilons
 
     def find_convergences(self):
         estimated_convergences = []
 
         for eps in self.epsilons:
-            algorithm = EpsilonGreedy(self.num_experiments, self.num_pulls, eps)
+            algorithm = EpsilonGreedy(
+                eps, self.num_experiments, self.num_pulls, self.drift
+            )
             result = algorithm.run(self.verbose)
             estimated_convergences.append(result)
 
@@ -248,11 +256,8 @@ class ExperimentEpsilon(Experiment):
 
 
 class ExperimentThompson(Experiment):
-    def __init__(self, num_experiments=1, num_pulls=10000, verbose=False, drift=False):
-        super().__init__(num_experiments, num_pulls, verbose)
-
     def find_convergences(self):
-        algorithm = ThomsonSampling(self.num_experiments, self.num_pulls)
+        algorithm = ThomsonSampling(self.num_experiments, self.num_pulls, self.drift)
         result = algorithm.run(self.verbose)
         return [result]
 
@@ -289,21 +294,32 @@ if __name__ == "__main__":
         "-d", "--drift", action="store_true", help="enable drift in rewards"
     )
 
+    parser.add_argument(
+        "-e",
+        "--epsilons",
+        type=float,
+        nargs="+",
+        help="list of epsilons to use",
+        default=[0.01, 0.05, 0.1, 0.4],
+    )
+
     args = parser.parse_args()
 
     match vars(args):
-        case {"algorithm": "epsilon_greedy", "verbose": verbose, "drift": drift}:
-            epsilons = [0.01, 0.05, 0.1, 0.4]
+        case {"algorithm": "epsilon_greedy"}:
             experiment_epsilon = ExperimentEpsilon(
-                epsilons, num_experiments=10, verbose=verbose, drift=drift
+                args.epsilons,
+                num_experiments=10,
+                verbose=args.verbose,
+                drift=args.drift,
             )
             experiment_epsilon.plot_convergences()
 
-        case {"algorithm": "thompson_sampling", "verbose": verbose, "drift": drift}:
+        case {"algorithm": "thompson_sampling"}:
             experiment_thompson = ExperimentThompson(
-                num_experiments=10, verbose=verbose, drift=drift
+                num_experiments=10, verbose=args.verbose, drift=args.drift
             )
             experiment_thompson.plot_convergences()
 
         case _:
-            print("Invalid arguments")
+            parser.print_usage()
