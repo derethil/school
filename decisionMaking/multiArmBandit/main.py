@@ -4,6 +4,8 @@ from abc import ABC, abstractmethod
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Environment
+# Handles the rewards for each action
 
 class Environment:
     def __init__(self, rewards):
@@ -13,6 +15,8 @@ class Environment:
         rewards = self.rewards()
         return rewards[action]
 
+# Agent
+# Handles the logic for choosing an action
 
 class Agent(ABC):
     def __init__(self, num_actions):
@@ -23,7 +27,7 @@ class Agent(ABC):
         raise NotImplementedError
 
     @property
-    def estimated_reward(self):
+    def estimated_best_reward(self):
         raise NotImplementedError
 
 
@@ -45,7 +49,7 @@ class EpsilonGreedyAgent(Agent):
             return np.random.choice(np.flatnonzero(self.Q == self.Q.max()))
 
     @property
-    def estimated_reward(self):
+    def estimated_best_reward(self):
         return self.Q.max()
 
 
@@ -55,24 +59,28 @@ class ThompsonSamplingAgent(Agent):
         self.As = np.full(num_actions, init_As, dtype=np.float64)
         self.Bs = np.full(num_actions, init_Bs, dtype=np.float64)
 
+        self.reward_As = np.full(num_actions, init_As, dtype=np.float64)
+        self.reward_Bs = np.full(num_actions, init_Bs, dtype=np.float64)
+
     def choose_action(self, environment):
-        action = np.argmax(
-            [np.random.beta(self.As[i], self.Bs[i]) for i in range(self.num_actions)]
-        )
-
+        action = np.argmax(np.random.beta(self.As, self.Bs))
         reward = environment.reward(action)
+        sigmoided = 1 / (1 + np.exp(-reward))
 
-        print(f"pulled lever {action} for {reward}")
+        self.As[action] += sigmoided
+        self.Bs[action] += 1 - sigmoided
 
-        self.As[action] += reward
-        self.Bs[action] += 1 - reward
+        self.reward_As[action] += reward
+        self.reward_Bs[action] += 1 - reward
 
         return action
 
     @property
-    def estimated_reward(self):
-        return np.max(self.As / (self.As + self.Bs))
+    def estimated_best_reward(self):
+        return np.max(self.reward_As / (self.reward_As + self.reward_Bs))
 
+# Solver
+# Handles the logic for running an algorithm
 
 class Solver(ABC):
     def rewards(self, drift=0):
@@ -100,8 +108,7 @@ class Solver(ABC):
             np.random.normal(-4.5, 8),
         ]
 
-    def __init__(self, eps, num_experiments, num_pulls):
-        self.eps = eps
+    def __init__(self, num_experiments, num_pulls):
         self.num_experiments = num_experiments
         self.num_pulls = num_pulls
 
@@ -134,6 +141,10 @@ class Solver(ABC):
 
 
 class EpsilonGreedy(Solver):
+    def __init__(self, num_experiments, num_pulls, eps):
+        super().__init__(num_experiments, num_pulls)
+        self.eps = eps
+
     def experiment(self):
         env = Environment(self.rewards)
         agent = EpsilonGreedyAgent(len(env.rewards()), self.eps)
@@ -145,7 +156,7 @@ class EpsilonGreedy(Solver):
             agent.update_Q(action, reward)
             actions.append(action)
             rewards.append(reward)
-            estimated.append(agent.estimated_reward)
+            estimated.append(agent.estimated_best_reward)
 
         return np.array(actions), np.array(rewards), np.array(estimated)
 
@@ -161,44 +172,102 @@ class ThomsonSampling(Solver):
             reward = env.reward(action)
             actions.append(action)
             rewards.append(reward)
-            estimated.append(agent.estimated_reward)
+            estimated.append(agent.estimated_best_reward)
 
         return np.array(actions), np.array(rewards), np.array(estimated)
 
+# Experiment
+# Handles the logic for running an experiment
 
-def find_convergence(eps, type, verbose=False):
-    algorithm_cls = EpsilonGreedy if type == "epsilon" else ThomsonSampling
-    algorithm = algorithm_cls(eps, num_experiments=1, num_pulls=10000)
+class Experiment(ABC):
+    def __init__(self, num_experiments=1, num_pulls=10000, verbose=False):
+        self.num_experiments = num_experiments
+        self.num_pulls = num_pulls
+        self.verbose = verbose
 
-    averaged_rewards, estimated_rewards = algorithm.run(verbose)
-    print(
-        f"[eps={eps:.2f}] average_reward = {np.mean(averaged_rewards):.4f}, "
-        + f"estimated_reward = {np.mean(estimated_rewards):.4f}"
-    )
+    @abstractmethod
+    def find_convergences(self):
+        raise NotImplementedError
 
-    return averaged_rewards, estimated_rewards
+    @abstractmethod
+    def plot_convergences(self):
+        raise NotImplementedError
+
+    def show_plot(self, title):
+        plt.title(f"Convergence of {title}")
+        plt.xlabel("Pulls")
+        plt.ylabel("Best Estimated Reward")
+        plt.legend()
+        plt.ylim(1.5, 2.5)
+        plt.grid()
+        plt.show()
 
 
-def compare_convergences(epsilons, type, verbose=False):
-    for eps in epsilons:
-        rewards, estimated = find_convergence(eps, type, verbose)
-        plt.plot(estimated, label=f"eps={eps:.2f}")
+class ExperimentEpsilon(Experiment):
+    def __init__(self, epsilons, num_experiments=1, num_pulls=10000, verbose=False):
+        super().__init__(num_experiments, num_pulls, verbose)
+        self.epsilons = epsilons
 
-    plt.title("Convergence of Epsilon-Greedy")
-    plt.xlabel("Pulls")
-    plt.ylabel("Estimated Reward")
-    plt.ylim(1.5, 2.5)
-    plt.legend()
-    plt.grid()
-    plt.show()
+    def find_convergences(self):
+        estimated_convergences = []
 
+        for eps in self.epsilons:
+            algorithm = EpsilonGreedy(self.num_experiments, self.num_pulls, eps)
+            result = algorithm.run(self.verbose)
+            estimated_convergences.append(result)
+
+        return estimated_convergences
+
+    def plot_convergences(self):
+        convergences = self.find_convergences()
+
+        for eps, (average, best) in zip(self.epsilons, convergences):
+            plt.plot(best, label=f"$\\epsilon$={eps:.2f}")
+            print(f"[Epsilon Greedy] " +
+                f"eps = {eps:.2f} | " +
+                f"experiments = {self.num_experiments} | " +
+                f"pulls = {self.num_pulls} | " +
+                f"avg_reward = {np.mean(average):.4f} | "
+                f"best_reward = {np.mean(best):.4f}"
+            )
+
+        self.show_plot("Epsilon-Greedy")
+
+class ExperimentThompson(Experiment):
+    def __init__(self, num_experiments=1, num_pulls=10000, verbose=False):
+        super().__init__(num_experiments, num_pulls, verbose)
+
+    def find_convergences(self):
+        algorithm = ThomsonSampling(self.num_experiments, self.num_pulls)
+        result = algorithm.run(self.verbose)
+        return [result]
+
+    def plot_convergences(self):
+        convergences = self.find_convergences()
+
+        for (average, best) in convergences:
+            plt.plot(best, label="Thompson Sampling")
+            print(f"[Thompson Sampling] " +
+                    f"experiments = {self.num_experiments} | " +
+                    f"pulls = {self.num_pulls} | " +
+                    f"avg_reward = {np.mean(average):.4f} | "
+                    f"best_reward = {np.mean(best):.4f}"
+                )
+
+        self.show_plot("Thompson Sampling")
+
+# Main CLI
 
 if __name__ == "__main__":
     epsilons = [0.01, 0.05, 0.1, 0.4]
     match sys.argv[1:]:
         case ["epsilon_greedy"]:
-            compare_convergences(epsilons, "epsilon", verbose=False)
+            experiment_epsilon = ExperimentEpsilon(epsilons, num_experiments=10, verbose=False)
+            experiment_epsilon.plot_convergences()
+
         case ["thompson_sampling"]:
-            compare_convergences(epsilons, "thomson", verbose=False)
+            experiment_thompson = ExperimentThompson(num_experiments=10, verbose=False)
+            experiment_thompson.plot_convergences()
+
         case _:
             print("Usage: python3 bandit.py epsilon_greedy|thomson_sampling")
