@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 # Environment
 # Handles the rewards for each action
 
+
 class Environment:
     def __init__(self, rewards):
         self.rewards = rewards
@@ -15,8 +16,10 @@ class Environment:
         rewards = self.rewards()
         return rewards[action]
 
+
 # Agent
 # Handles the logic for choosing an action
+
 
 class Agent(ABC):
     def __init__(self, num_actions):
@@ -79,8 +82,10 @@ class ThompsonSamplingAgent(Agent):
     def estimated_best_reward(self):
         return np.max(self.reward_As / (self.reward_As + self.reward_Bs))
 
+
 # Solver
 # Handles the logic for running an algorithm
+
 
 class Solver(ABC):
     def rewards(self, drift=0):
@@ -176,8 +181,10 @@ class ThomsonSampling(Solver):
 
         return np.array(actions), np.array(rewards), np.array(estimated)
 
+
 # Experiment
 # Handles the logic for running an experiment
+
 
 class Experiment(ABC):
     def __init__(self, num_experiments=1, num_pulls=10000, verbose=False):
@@ -223,15 +230,17 @@ class ExperimentEpsilon(Experiment):
 
         for eps, (average, best) in zip(self.epsilons, convergences):
             plt.plot(best, label=f"$\\epsilon$={eps:.2f}")
-            print(f"[Epsilon Greedy] " +
-                f"eps = {eps:.2f} | " +
-                f"experiments = {self.num_experiments} | " +
-                f"pulls = {self.num_pulls} | " +
-                f"avg_reward = {np.mean(average):.4f} | "
+            print(
+                f"[Epsilon Greedy] "
+                + f"eps = {eps:.2f} | "
+                + f"experiments = {self.num_experiments} | "
+                + f"pulls = {self.num_pulls} | "
+                + f"avg_reward = {np.mean(average):.4f} | "
                 f"best_reward = {np.mean(best):.4f}"
             )
 
         self.show_plot("Epsilon-Greedy")
+
 
 class ExperimentThompson(Experiment):
     def __init__(self, num_experiments=1, num_pulls=10000, verbose=False):
@@ -245,16 +254,18 @@ class ExperimentThompson(Experiment):
     def plot_convergences(self):
         convergences = self.find_convergences()
 
-        for (average, best) in convergences:
+        for average, best in convergences:
             plt.plot(best, label="Thompson Sampling")
-            print(f"[Thompson Sampling] " +
-                    f"experiments = {self.num_experiments} | " +
-                    f"pulls = {self.num_pulls} | " +
-                    f"avg_reward = {np.mean(average):.4f} | "
-                    f"best_reward = {np.mean(best):.4f}"
-                )
+            print(
+                f"[Thompson Sampling] "
+                + f"experiments = {self.num_experiments} | "
+                + f"pulls = {self.num_pulls} | "
+                + f"avg_reward = {np.mean(average):.4f} | "
+                f"best_reward = {np.mean(best):.4f}"
+            )
 
         self.show_plot("Thompson Sampling")
+
 
 # Main CLI
 
@@ -262,7 +273,9 @@ if __name__ == "__main__":
     epsilons = [0.01, 0.05, 0.1, 0.4]
     match sys.argv[1:]:
         case ["epsilon_greedy"]:
-            experiment_epsilon = ExperimentEpsilon(epsilons, num_experiments=10, verbose=False)
+            experiment_epsilon = ExperimentEpsilon(
+                epsilons, num_experiments=10, verbose=False
+            )
             experiment_epsilon.plot_convergences()
 
         case ["thompson_sampling"]:
