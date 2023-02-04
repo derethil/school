@@ -24,7 +24,8 @@ class Environment:
 
     def gen_rewards(self, current_pull=None):
         drift = -0.001 * current_pull if current_pull is not None else 0
-        shift = self.shifts * (current_pull // 3000) if current_pull is not None else 0
+        shift = self.shifts if current_pull and current_pull >= 3000 else 0
+
         return np.random.normal(self.means + drift + shift, self.std_devs)
 
 
@@ -73,11 +74,21 @@ class EpsilonGreedyAgent(Agent):
 class ThompsonSamplingAgent(Agent):
     def __init__(self, num_actions, init_As=1, init_Bs=1):
         super().__init__(num_actions)
+        self.init_As = init_As
+        self.init_Bs = init_Bs
+
         self.As = np.full(num_actions, init_As, dtype=np.float64)
         self.Bs = np.full(num_actions, init_Bs, dtype=np.float64)
 
         self.reward_As = np.full(num_actions, init_As, dtype=np.float64)
         self.reward_Bs = np.full(num_actions, init_Bs, dtype=np.float64)
+
+    def reset_params(self):
+        self.As = np.full(self.num_actions, self.init_As, dtype=np.float64)
+        self.Bs = np.full(self.num_actions, self.init_Bs, dtype=np.float64)
+
+        self.reward_As = np.full(self.num_actions, self.init_As, dtype=np.float64)
+        self.reward_Bs = np.full(self.num_actions, self.init_Bs, dtype=np.float64)
 
     def choose_action(self, environment, current_pull=None):
         action = np.argmax(np.random.beta(self.As, self.Bs))
@@ -163,6 +174,10 @@ class EpsilonGreedy(Solver):
 
 
 class ThomsonSampling(Solver):
+    def __init__(self, restart, *args):
+        super().__init__(*args)
+        self.restart = restart
+
     def experiment(self):
         env = Environment()
         agent = ThompsonSamplingAgent(env.num_actions)
@@ -174,6 +189,9 @@ class ThomsonSampling(Solver):
             actions.append(action)
             rewards.append(reward)
             estimated.append(agent.estimated_best_reward)
+
+            if self.restart and pull == 3000:
+                agent.reset_params()
 
         return np.array(actions), np.array(rewards), np.array(estimated)
 
@@ -197,14 +215,24 @@ class Experiment(ABC):
     def plot_convergences(self):
         raise NotImplementedError
 
-    def show_plot(self, title):
+    def show_plot(self, title, limit=True):
         plt.title(f"Convergence of {title}")
         plt.xlabel("Pulls")
         plt.ylabel("Best Estimated Reward")
         plt.legend()
-        # plt.ylim(1.5, 2.5)
+
+        if limit:
+            plt.ylim(1.5, 2.5)
+
         plt.grid()
         plt.show()
+
+    def remove_some_data(self, data, percentage):
+        to_skip = int(1 / percentage)
+        copy = np.zeros(data.shape)
+        copy[::to_skip] = data[::to_skip]
+        copy[copy == 0] = np.nan
+        return copy
 
 
 class ExperimentEpsilon(Experiment):
@@ -240,8 +268,14 @@ class ExperimentEpsilon(Experiment):
 
 
 class ExperimentThompson(Experiment):
+    def __init__(self, restart, **kwargs):
+        super().__init__(**kwargs)
+        self.restart = restart
+
     def find_convergences(self):
-        algorithm = ThomsonSampling(self.num_experiments, self.num_pulls, self.drift)
+        algorithm = ThomsonSampling(
+            self.restart, self.num_experiments, self.num_pulls, self.drift
+        )
         result = algorithm.run(self.verbose)
         return [result]
 
@@ -249,7 +283,8 @@ class ExperimentThompson(Experiment):
         convergences = self.find_convergences()
 
         for average, best in convergences:
-            plt.plot(best, label="Thompson Sampling")
+            restart_str = " w/ restart" if self.restart else ""
+            plt.plot(best, label=f"Thompson Sampling {restart_str}")
             print(
                 f"[Thompson Sampling] "
                 + f"experiments = {self.num_experiments} | "
@@ -260,6 +295,31 @@ class ExperimentThompson(Experiment):
 
 
 # Main CLI
+
+
+def run_epsilon(epsilons, verbose, drift):
+    experiment = ExperimentEpsilon(
+        epsilons, num_experiments=10, verbose=verbose, drift=drift
+    )
+    experiment.plot_convergences()
+
+    return experiment
+
+
+def run_thompson(restart, verbose, drift):
+    experiment = ExperimentThompson(
+        restart, num_experiments=10, verbose=verbose, drift=drift
+    )
+    experiment.plot_convergences()
+
+    if restart:
+        experiment = ExperimentThompson(
+            not restart, num_experiments=10, verbose=verbose, drift=drift
+        )
+        experiment.plot_convergences()
+
+    return experiment
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -285,42 +345,28 @@ if __name__ == "__main__":
         default=[0.01, 0.05, 0.1, 0.4],
     )
 
+    parser.add_argument(
+        "-rt",
+        "--restart-thompson",
+        action="store_true",
+        help="restart thompson sampling at pull 3000",
+    )
+
     args = parser.parse_args()
 
     match vars(args):
         case {"algorithm": "epsilon_greedy"}:
-            experiment_epsilon = ExperimentEpsilon(
-                args.epsilons,
-                num_experiments=10,
-                verbose=args.verbose,
-                drift=args.drift,
-            )
-            experiment_epsilon.plot_convergences()
-            experiment_epsilon.show_plot("Epsilon-Greedy")
+            e = run_epsilon(args.epsilons, args.verbose, args.drift)
+            e.show_plot("Epsilon-Greedy", limit=not args.drift)
 
         case {"algorithm": "thompson_sampling"}:
-            experiment_thompson = ExperimentThompson(
-                num_experiments=10, verbose=args.verbose, drift=args.drift
-            )
-            experiment_thompson.plot_convergences()
-            experiment_thompson.show_plot("Thompson Sampling")
+            e = run_thompson(args.restart_thompson, args.verbose, args.drift)
+            e.show_plot("Thompson Sampling", limit=not args.drift)
 
         case {"algorithm": "all"}:
-            experiment_epsilon = ExperimentEpsilon(
-                args.epsilons,
-                num_experiments=10,
-                verbose=args.verbose,
-                drift=args.drift,
-            )
-
-            experiment_thompson = ExperimentThompson(
-                num_experiments=10, verbose=args.verbose, drift=args.drift
-            )
-
-            experiment_epsilon.plot_convergences()
-            experiment_thompson.plot_convergences()
-
-            experiment_epsilon.show_plot("All Algorithms Comparison")
+            e_eps = run_epsilon(args.epsilons, args.verbose, args.drift)
+            e_thompson = run_thompson(args.restart_thompson, args.verbose, args.drift)
+            e_eps.show_plot("All Algorithms Comparison", limit=not args.drift)
 
         case _:
             parser.print_usage()
