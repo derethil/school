@@ -9,37 +9,23 @@ import matplotlib.pyplot as plt
 
 
 class Environment:
-    def __init__(self):
-        self.num_actions = len(self.gen_rewards())
+    # fmt: off
+    means = np.array([0, -0.5, 2, -0.5, -1.2, -3, -10, -0.5, -1, 1, 0.7, -6, -7, -0.5, -6.5, -3, 0, 2, -9, -1, -4.5])
+    std_devs = np.array([5, 12, 3.9, 7, 8, 7, 20, 1, 2, 6, 4, 11, 1, 2, 1, 6, 8, 3.9, 12, 6, 8])
+    shifts = np.array([5, 0, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0])
+    # fmt: on
 
-    def reward(self, action):
-        rewards = self.gen_rewards()
+    def __init__(self):
+        self.num_actions = len(self.means)
+
+    def reward(self, action, current_pull=0):
+        rewards = self.gen_rewards(current_pull)
         return rewards[action]
 
-    def gen_rewards(self):
-        return [
-            np.random.normal(0, 5),
-            np.random.normal(-0.5, 12),
-            np.random.normal(2, 3.9),
-            np.random.normal(-0.5, 7),
-            np.random.normal(-1.2, 8),
-            np.random.normal(-3, 7),
-            np.random.normal(-10, 20),
-            np.random.normal(-0.5, 1),
-            np.random.normal(-1, 2),
-            np.random.normal(1, 6),
-            np.random.normal(0.7, 4),
-            np.random.normal(-6, 11),
-            np.random.normal(-7, 1),
-            np.random.normal(-0.5, 2),
-            np.random.normal(-6.5, 1),
-            np.random.normal(-3, 6),
-            np.random.normal(0, 8),
-            np.random.normal(2, 3.9),
-            np.random.normal(-9, 12),
-            np.random.normal(-1, 6),
-            np.random.normal(-4.5, 8),
-        ]
+    def gen_rewards(self, current_pull=None):
+        drift = -0.001 * current_pull if current_pull is not None else 0
+        shift = self.shifts * (current_pull // 3000) if current_pull is not None else 0
+        return np.random.normal(self.means + drift + shift, self.std_devs)
 
 
 # Agent
@@ -70,13 +56,13 @@ class EpsilonGreedyAgent(Agent):
         self.n[action] += 1
         self.Q[action] += (1.0 / self.n[action]) * (reward - self.Q[action])
 
-    def choose_action(self, environment):
+    def choose_action(self, environment, current_pull=None):
         if np.random.random() < self.eps:
             action = np.random.randint(self.num_actions)
         else:
             action = np.random.choice(np.flatnonzero(self.Q == self.Q.max()))
 
-        reward = environment.reward(action)
+        reward = environment.reward(action, current_pull)
         return action, reward
 
     @property
@@ -93,9 +79,9 @@ class ThompsonSamplingAgent(Agent):
         self.reward_As = np.full(num_actions, init_As, dtype=np.float64)
         self.reward_Bs = np.full(num_actions, init_Bs, dtype=np.float64)
 
-    def choose_action(self, environment):
+    def choose_action(self, environment, current_pull=None):
         action = np.argmax(np.random.beta(self.As, self.Bs))
-        reward = environment.reward(action)
+        reward = environment.reward(action, current_pull)
         sigmoided = 1 / (1 + np.exp(-reward))
 
         self.As[action] += sigmoided
@@ -166,8 +152,8 @@ class EpsilonGreedy(Solver):
         agent = EpsilonGreedyAgent(env.num_actions, self.eps)
         actions, rewards, estimated = [], [], []
 
-        for _ in range(self.num_pulls):
-            action, reward = agent.choose_action(env)
+        for pull in range(self.num_pulls):
+            action, reward = agent.choose_action(env, pull if self.drift else None)
             agent.update_Q(action, reward)
             actions.append(action)
             rewards.append(reward)
@@ -182,8 +168,8 @@ class ThomsonSampling(Solver):
         agent = ThompsonSamplingAgent(env.num_actions)
         actions, rewards, estimated = [], [], []
 
-        for _ in range(self.num_pulls):
-            action, reward = agent.choose_action(env)
+        for pull in range(self.num_pulls):
+            action, reward = agent.choose_action(env, pull if self.drift else None)
             reward = env.reward(action)
             actions.append(action)
             rewards.append(reward)
@@ -216,7 +202,7 @@ class Experiment(ABC):
         plt.xlabel("Pulls")
         plt.ylabel("Best Estimated Reward")
         plt.legend()
-        plt.ylim(1.5, 2.5)
+        # plt.ylim(1.5, 2.5)
         plt.grid()
         plt.show()
 
@@ -242,7 +228,7 @@ class ExperimentEpsilon(Experiment):
         convergences = self.find_convergences()
 
         for eps, (average, best) in zip(self.epsilons, convergences):
-            plt.plot(best, label=f"$\\epsilon$={eps:.2f}")
+            plt.plot(best, label=f"$\\epsilon$-Greedy: $\\epsilon$={eps:.2f}")
             print(
                 f"[Epsilon Greedy] "
                 + f"eps = {eps:.2f} | "
@@ -251,8 +237,6 @@ class ExperimentEpsilon(Experiment):
                 + f"avg_reward = {np.mean(average):.4f} | "
                 f"best_reward_estimate = {np.mean(best):.4f}"
             )
-
-        self.show_plot("Epsilon-Greedy")
 
 
 class ExperimentThompson(Experiment):
@@ -274,8 +258,6 @@ class ExperimentThompson(Experiment):
                 f"best_reward_estimate = {np.mean(best):.4f}"
             )
 
-        self.show_plot("Thompson Sampling")
-
 
 # Main CLI
 
@@ -284,7 +266,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "algorithm",
         help="algorithm to perform experiments with",
-        choices=["epsilon_greedy", "thompson_sampling"],
+        choices=["epsilon_greedy", "thompson_sampling", "all"],
     )
     parser.add_argument(
         "-v", "--verbose", action="store_true", help="increase output verbosity"
@@ -314,12 +296,31 @@ if __name__ == "__main__":
                 drift=args.drift,
             )
             experiment_epsilon.plot_convergences()
+            experiment_epsilon.show_plot("Epsilon-Greedy")
 
         case {"algorithm": "thompson_sampling"}:
             experiment_thompson = ExperimentThompson(
                 num_experiments=10, verbose=args.verbose, drift=args.drift
             )
             experiment_thompson.plot_convergences()
+            experiment_thompson.show_plot("Thompson Sampling")
+
+        case {"algorithm": "all"}:
+            experiment_epsilon = ExperimentEpsilon(
+                args.epsilons,
+                num_experiments=10,
+                verbose=args.verbose,
+                drift=args.drift,
+            )
+
+            experiment_thompson = ExperimentThompson(
+                num_experiments=10, verbose=args.verbose, drift=args.drift
+            )
+
+            experiment_epsilon.plot_convergences()
+            experiment_thompson.plot_convergences()
+
+            experiment_epsilon.show_plot("All Algorithms Comparison")
 
         case _:
             parser.print_usage()
