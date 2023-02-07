@@ -13,6 +13,10 @@ public class Scanner {
   // your tables. Also declare the start state.
   //------------------------------------------------------------
 
+    private final HashMap<Character, String> categoryTable = new HashMap<Character, String>();
+    private final HashMap<String, HashMap<String, String>> transitionTable = new HashMap<String, HashMap<String, String>>();
+    private final HashMap<String, String> tokenTypeTable = new HashMap<String, String>();
+
 
   //------------------------------------------------------------
   // TODO: build your tables in the constructor and implement
@@ -30,21 +34,22 @@ public class Scanner {
 
     // Build catMap, mapping a character to a category.
     for (TableReader.CharCat cat : tableReader.getClassifier()) {
-      System.out.println("Character " + cat.getC() + " is of category "
-              + cat.getCategory());
+      categoryTable.put(cat.getC(), cat.getCategory());
     }
 
     // Build the transition table. Given a state and a character category,
     // give a new state.
     for (TableReader.Transition t : tableReader.getTransitions()) {
-      System.out.println(t.getFromStateName() + " -- " + t.getCategory()
-              + " --> " + t.getToStateName());
+      HashMap<String, String> toStates = transitionTable.get(t.getFromStateName());
+      if (toStates == null) toStates = new HashMap<String, String>();
+
+      toStates.put(t.getCategory(), t.getToStateName());
+      transitionTable.put(t.getFromStateName(), toStates);
     }
 
     // Build the token types table
     for (TableReader.TokenType tt : tableReader.getTokens()) {
-      System.out.println("State " + tt.getState()
-              + " accepts with the lexeme being of type " + tt.getType());
+      tokenTypeTable.put(tt.getState(), tt.getType());
     }
 
   }
@@ -55,7 +60,11 @@ public class Scanner {
    * or two. You should not have any character literals in here such as 'r' or '3'.
    */
   public String getCategory(Character c) {
-    return "";
+    String category = this.categoryTable.get(c);
+    if (category == null) {
+      return "not in alphabet";
+    }
+    return category;
   }
 
   /**
@@ -65,7 +74,13 @@ public class Scanner {
    * table lookups here.
    */
   public String getNewState(String state, String category) {
-    return "";
+    HashMap<String, String> toStates = this.transitionTable.get(state);
+    if (toStates == null) return "error";
+
+    String newState = toStates.get(category);
+    if (newState == null) return "error";
+
+    return newState;
   }
 
   /**
@@ -74,7 +89,9 @@ public class Scanner {
    * Do not hardcode any state names or token types.
    */
   public String getTokenType(String state) {
-    return "";
+    String tokenType = this.tokenTypeTable.get(state);
+    if (tokenType == null) return "error";
+    return tokenType;
   }
 
   //------------------------------------------------------------
@@ -84,10 +101,43 @@ public class Scanner {
   /**
    * Return the next token or null if there's a lexical error.
    */
+
+  private boolean isAccepting(String state) {
+    return this.tokenTypeTable.containsKey(state);
+  }
   public Token nextToken(ScanStream ss) {
     // TODO: get a single token. This is an implementation of the nextToken
     // algorithm given in class. You may *not* use TableReader in this
     // function. Return null if there is a lexical error.
+
+    Stack<String> stack = new Stack<>();
+    String state = "s0";
+    StringBuilder lexeme = new StringBuilder();
+
+    stack.push("bad");
+
+    while (!state.equals("error") && !ss.eof()) {
+      char c = ss.next();
+      lexeme.append(c);
+
+      if (isAccepting(state)) stack.clear();
+
+      stack.push(state);
+      String category = getCategory(c);
+      state = getNewState(state, category);
+    }
+
+    while (!isAccepting(state) && !state.equals("bad")) {
+      state = stack.pop();
+      if (lexeme.length() > 0) lexeme.deleteCharAt(lexeme.length() - 1);
+      ss.rollback();
+    }
+
+    if (isAccepting(state)) {
+      String tokenType = getTokenType(state);
+      return new Token(tokenType, lexeme.toString());
+    }
+
     return null;
   }
 

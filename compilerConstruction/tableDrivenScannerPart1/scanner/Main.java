@@ -49,24 +49,24 @@ public class Main {
     TableReader tableReader = new TableReader(tableFile);
     Scanner scanner = new Scanner(tableReader);
 
-//    tests.test(scanner.getCategory('r').equals("register"));
-//    tests.test(scanner.getCategory('3').equals("digit"));
-//    tests.test(scanner.getCategory('8').equals("digit"));
-//    tests.test(scanner.getCategory(' ').equals("whitespace"));
-//    tests.test(scanner.getCategory('x').equals("not in alphabet"));
-//
-//    tests.test(scanner.getNewState("s0", "register").equals("s1"));
-//    tests.test(scanner.getNewState("s1", "digit").equals("s2"));
-//    tests.test(scanner.getNewState("s2", "digit").equals("s2"));
-//    tests.test(scanner.getNewState("s0", "whitespace").equals("s3"));
-//    tests.test(scanner.getNewState("s0", "digit").equals("error"));
-//    tests.test(scanner.getNewState("s1", "register").equals("error"));
-//    tests.test(scanner.getNewState("s2", "register").equals("error"));
-//
-//    tests.test(scanner.getTokenType("s0").equals("error"));
-//    tests.test(scanner.getTokenType("s1").equals("error"));
-//    tests.test(scanner.getTokenType("s2").equals("register"));
-//    tests.test(scanner.getTokenType("s3").equals("ignore"));
+    tests.test(scanner.getCategory('r').equals("register"));
+    tests.test(scanner.getCategory('3').equals("digit"));
+    tests.test(scanner.getCategory('8').equals("digit"));
+    tests.test(scanner.getCategory(' ').equals("whitespace"));
+    tests.test(scanner.getCategory('x').equals("not in alphabet"));
+
+    tests.test(scanner.getNewState("s0", "register").equals("s1"));
+    tests.test(scanner.getNewState("s1", "digit").equals("s2"));
+    tests.test(scanner.getNewState("s2", "digit").equals("s2"));
+    tests.test(scanner.getNewState("s0", "whitespace").equals("s3"));
+    tests.test(scanner.getNewState("s0", "digit").equals("error"));
+    tests.test(scanner.getNewState("s1", "register").equals("error"));
+    tests.test(scanner.getNewState("s2", "register").equals("error"));
+
+    tests.test(scanner.getTokenType("s0").equals("error"));
+    tests.test(scanner.getTokenType("s1").equals("error"));
+    tests.test(scanner.getTokenType("s2").equals("register"));
+    tests.test(scanner.getTokenType("s3").equals("ignore"));
 
     //------------------------------------------------------------
     // The following tests should pass once you have
@@ -74,25 +74,25 @@ public class Main {
     //------------------------------------------------------------
     {
       ScanStream ss = getDataStream("data/test1-reg.txt");
-//      testToken(scanner, ss, "register", "r302");
-//      testToken(scanner, ss, "ignore");
-//      testToken(scanner, ss, "register", "r02");
-//      testToken(scanner, ss, "ignore");
-//      testToken(scanner, ss, "register", "r233987");
+      testToken(scanner, ss, "register", "r302");
+      testToken(scanner, ss, "ignore");
+      testToken(scanner, ss, "register", "r02");
+      testToken(scanner, ss, "ignore");
+      testToken(scanner, ss, "register", "r233987");
     }
-//    {
-//      ScanStream ss = getDataStream("data/err1-reg.txt");
-//      testToken(scanner, ss, null);
-//    }
-//    {
-//      ScanStream ss = getDataStream("data/err2-reg.txt");
-//      testToken(scanner, ss, null);
-//    }
-//    {
-//      ScanStream ss = getDataStream("data/err3-reg.txt");
-//      testToken(scanner, ss, "register", "r33");
-//      testToken(scanner, ss, null);
-//    }
+    {
+      ScanStream ss = getDataStream("data/err1-reg.txt");
+      testToken(scanner, ss, null);
+    }
+    {
+      ScanStream ss = getDataStream("data/err2-reg.txt");
+      testToken(scanner, ss, null);
+    }
+    {
+      ScanStream ss = getDataStream("data/err3-reg.txt");
+      testToken(scanner, ss, "register", "r33");
+      testToken(scanner, ss, null);
+    }
   }
 
   private static void runHexTests() throws FileNotFoundException, IOException {
@@ -108,56 +108,56 @@ public class Main {
     TableReader tableReader = new TableReader(tableFile);
     Scanner scanner = new Scanner(tableReader);
 
-//    tests.test(scanner.getCategory('x').equals("x"));
-//    tests.test(scanner.getCategory('0').equals("zero"));
-//    tests.test(scanner.getCategory('8').equals("digit"));
-//    tests.test(scanner.getCategory('B').equals("digit"));
-//    tests.test(scanner.getCategory(' ').equals("whitespace"));
-//    tests.test(scanner.getCategory('z').equals("not in alphabet"));
-//
-//    tests.test(scanner.getNewState("s0", "zero").equals("s1"));
-//    tests.test(scanner.getNewState("s1", "x").equals("s2"));
-//    tests.test(scanner.getNewState("s2", "zero").equals("s3"));
-//    tests.test(scanner.getNewState("s2", "digit").equals("s3"));
-//    tests.test(scanner.getNewState("s3", "zero").equals("s3"));
-//    tests.test(scanner.getNewState("s3", "digit").equals("s3"));
-//    tests.test(scanner.getNewState("s0", "whitespace").equals("s4"));
-//    tests.test(scanner.getNewState("s4", "whitespace").equals("s4"));
-//    tests.test(scanner.getNewState("s0", "digit").equals("error"));
-//    tests.test(scanner.getNewState("s1", "zero").equals("error"));
-//    tests.test(scanner.getNewState("s2", "x").equals("error"));
-//
-//    tests.test(scanner.getTokenType("s0").equals("error"));
-//    tests.test(scanner.getTokenType("s1").equals("error"));
-//    tests.test(scanner.getTokenType("s2").equals("error"));
-//    tests.test(scanner.getTokenType("s3").equals("hexnumber"));
-//    tests.test(scanner.getTokenType("s4").equals("ignore"));
+    tests.test(scanner.getCategory('x').equals("x"));
+    tests.test(scanner.getCategory('0').equals("zero"));
+    tests.test(scanner.getCategory('8').equals("digit"));
+    tests.test(scanner.getCategory('B').equals("digit"));
+    tests.test(scanner.getCategory(' ').equals("whitespace"));
+    tests.test(scanner.getCategory('z').equals("not in alphabet"));
+
+    tests.test(scanner.getNewState("s0", "zero").equals("s1"));
+    tests.test(scanner.getNewState("s1", "x").equals("s2"));
+    tests.test(scanner.getNewState("s2", "zero").equals("s3"));
+    tests.test(scanner.getNewState("s2", "digit").equals("s3"));
+    tests.test(scanner.getNewState("s3", "zero").equals("s3"));
+    tests.test(scanner.getNewState("s3", "digit").equals("s3"));
+    tests.test(scanner.getNewState("s0", "whitespace").equals("s4"));
+    tests.test(scanner.getNewState("s4", "whitespace").equals("s4"));
+    tests.test(scanner.getNewState("s0", "digit").equals("error"));
+    tests.test(scanner.getNewState("s1", "zero").equals("error"));
+    tests.test(scanner.getNewState("s2", "x").equals("error"));
+
+    tests.test(scanner.getTokenType("s0").equals("error"));
+    tests.test(scanner.getTokenType("s1").equals("error"));
+    tests.test(scanner.getTokenType("s2").equals("error"));
+    tests.test(scanner.getTokenType("s3").equals("hexnumber"));
+    tests.test(scanner.getTokenType("s4").equals("ignore"));
 
     //------------------------------------------------------------
     // The following tests should pass once you have
     // Scanner.nextToken() implemented.
     //------------------------------------------------------------
-//    {
-//      ScanStream ss = getDataStream("data/test1-hex.txt");
-//      testToken(scanner, ss, "hexnumber", "0x3F");
-//      testToken(scanner, ss, "ignore");
-//      testToken(scanner, ss, "hexnumber", "0x1234");
-//      testToken(scanner, ss, "ignore");
-//      testToken(scanner, ss, "hexnumber", "0x1234567890ABCDEF");
-//    }
-//    {
-//      ScanStream ss = getDataStream("data/err1-hex.txt");
-//      testToken(scanner, ss, null);
-//    }
-//    {
-//      ScanStream ss = getDataStream("data/err2-hex.txt");
-//      testToken(scanner, ss, null);
-//    }
-//    {
-//      ScanStream ss = getDataStream("data/err3-hex.txt");
-//      testToken(scanner, ss, "hexnumber", "0x3A");
-//      testToken(scanner, ss, null);
-//    }
+    {
+      ScanStream ss = getDataStream("data/test1-hex.txt");
+      testToken(scanner, ss, "hexnumber", "0x3F");
+      testToken(scanner, ss, "ignore");
+      testToken(scanner, ss, "hexnumber", "0x1234");
+      testToken(scanner, ss, "ignore");
+      testToken(scanner, ss, "hexnumber", "0x1234567890ABCDEF");
+    }
+    {
+      ScanStream ss = getDataStream("data/err1-hex.txt");
+      testToken(scanner, ss, null);
+    }
+    {
+      ScanStream ss = getDataStream("data/err2-hex.txt");
+      testToken(scanner, ss, null);
+    }
+    {
+      ScanStream ss = getDataStream("data/err3-hex.txt");
+      testToken(scanner, ss, "hexnumber", "0x3A");
+      testToken(scanner, ss, null);
+    }
   }
 
   //--------------------------------------------------------------------------------
