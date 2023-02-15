@@ -127,7 +127,7 @@ class Solver(ABC):
             fraction = self.num_experiments / 1
             if verbose and ((i + 1) % (self.num_experiments / fraction) == 0):
                 print(
-                    f"[Experiment {i+1}/{self.num_experiments}] "
+                    f"[Experiment {i+1:2}/{self.num_experiments:2}] "
                     + f"num_pulls = {self.num_pulls} | eps = {self.eps} "
                     + f"| avg_reward = {np.mean(rewards):.2f}"
                 )
@@ -180,9 +180,10 @@ class ThomsonSampling(Solver):
 # Handles the logic for running an experiment
 
 class Experiment(ABC):
-    def __init__(self, num_experiments=1, num_pulls=10000, verbose=False):
+    def __init__(self, num_experiments=1, num_pulls=10000, drift=False, verbose=False):
         self.num_experiments = num_experiments
         self.num_pulls = num_pulls
+        self.drift = drift
         self.verbose = verbose
 
     @abstractmethod
@@ -204,8 +205,8 @@ class Experiment(ABC):
 
 
 class ExperimentEpsilon(Experiment):
-    def __init__(self, epsilons, num_experiments=1, num_pulls=10000, verbose=False):
-        super().__init__(num_experiments, num_pulls, verbose)
+    def __init__(self, epsilons, num_experiments=1, num_pulls=10000, drift=False, verbose=False):
+        super().__init__(num_experiments, num_pulls, drift, verbose)
         self.epsilons = epsilons
 
     def find_convergences(self):
@@ -234,8 +235,8 @@ class ExperimentEpsilon(Experiment):
         self.show_plot("Epsilon-Greedy")
 
 class ExperimentThompson(Experiment):
-    def __init__(self, num_experiments=1, num_pulls=10000, verbose=False):
-        super().__init__(num_experiments, num_pulls, verbose)
+    def __init__(self, num_experiments=1, num_pulls=10000, drift=False, verbose=False):
+        super().__init__(num_experiments, num_pulls, drift, verbose)
 
     def find_convergences(self):
         algorithm = ThomsonSampling(self.num_experiments, self.num_pulls)
@@ -258,11 +259,21 @@ class ExperimentThompson(Experiment):
 
 # Main CLI
 
+def print_usage():
+    print("Usage: python3 bandit.py epsilon_greedy|thomson_sampling [drift]")
+
 if __name__ == "__main__":
     epsilons = [0.01, 0.05, 0.1, 0.4]
     match sys.argv[1:]:
-        case ["epsilon_greedy"]:
-            experiment_epsilon = ExperimentEpsilon(epsilons, num_experiments=10, verbose=False)
+        case ["epsilon_greedy", *rest]:
+            drift = False
+            if rest and rest[0] == "drift":
+                drift = True
+            else:
+                print_usage()
+                exit(1)
+
+            experiment_epsilon = ExperimentEpsilon(epsilons, num_experiments=10, verbose=True, drift=drift)
             experiment_epsilon.plot_convergences()
 
         case ["thompson_sampling"]:
@@ -270,4 +281,4 @@ if __name__ == "__main__":
             experiment_thompson.plot_convergences()
 
         case _:
-            print("Usage: python3 bandit.py epsilon_greedy|thomson_sampling")
+            print_usage()
