@@ -1,0 +1,9 @@
+digraph G {
+    layout = dot;
+    ordering = out;
+    rankdir = "LR";
+    
+    0 [label = "d0,d1,d2";peripheries = 2;];
+    
+    0 -> 0 [label = "0,1";];
+}

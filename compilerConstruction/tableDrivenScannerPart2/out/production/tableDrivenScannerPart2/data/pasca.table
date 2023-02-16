@@ -1,0 +1,143 @@
+// Modify this file to create your tables for the Pasca language.
+
+// Special tokens are \space, \t and \n.
+ClassifierTable
+
+// letters
+a letter
+b letter
+c letter
+d letter
+e letter
+f letter
+g letter
+h letter
+i letter
+j letter
+k letter
+l letter
+m letter
+n letter
+o letter
+p letter
+q letter
+r letter
+s letter
+t letter
+u letter
+v letter
+w letter
+x letter
+y letter
+z letter
+
+// digits
+0 zero
+1 digit
+2 digit
+3 digit
+4 digit
+5 digit
+6 digit
+7 digit
+8 digit
+9 digit
+
+// special characters
+' singlequote
+( openparen
+) closeparen
+} closebrace
+{ openbrace
+* star
+; semicolon
+. dot
+\space whitespace
+\t whitespace
+\n whitespace
+
+// In the transition table, the first state
+// is considered the input state.
+TransitionTable
+// identifiers
+s0 letter s1
+s1 letter s1
+s1 digit s1
+s1 zero s1
+
+s1 dot s11
+s1 whitespace s11
+
+// strings
+s0 singlequote s2
+s2 letter s2
+s2 digit s2
+s2 whitespace s2
+s2 zero s2
+s2 openparen s2
+s2 closeparen s2
+s2 closebrace s2
+s2 openbrace s2
+s2 semicolon s2
+s2 star s2
+s2 singlequote s3
+s3 singlequote s2
+
+// integers
+s0 digit s4
+s4 digit s4
+s4 zero s4
+
+// comments
+s0 openparen s5
+
+s5 star s6
+
+s6 openparen s6
+s6 closeparen s6
+s6 openbrace s6
+s6 closebrace s6
+s6 semicolon s6
+s6 star s7
+s6 zero s6
+s6 digit s6
+s6 letter s6
+s6 whitespace s6
+s6 singlequote s6
+
+s7 openparen s6
+s7 closeparen s8
+s7 openbrace s6
+s7 closebrace s6
+s7 semicolon s6
+s7 star s7
+s7 zero s6
+s7 digit s6
+s7 letter s6
+s7 whitespace s6
+s7 singlequote s6
+
+
+// ignores
+s0 whitespace s10
+s10 whitespace s10
+
+// delimiters
+s0 openbrace s12
+s0 closebrace s12
+s0 semicolon s12
+s0 dot s12
+
+
+// If a state has an entry in this table then
+// it is considered an accept state.
+// "ignore" is a reserved type which indicates
+// that the token should be ignored.
+TokenTypeTable
+// Actual accept states
+s1 identifier
+s3 string
+s4 integer
+s10 ignore
+s8 ignore
+s12 delimiter
