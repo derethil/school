@@ -13,6 +13,7 @@ export const authenticationMiddleware: RequestHandler = async (
     req.jwtBody = jwtBody;
     next();
   } catch (error) {
+    console.log(error);
     res.status(401).json({ error: "unauthorized" });
   }
 };
