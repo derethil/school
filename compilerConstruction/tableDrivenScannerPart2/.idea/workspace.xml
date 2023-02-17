@@ -5,30 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c3ec22f1-807d-4b6d-a2e6-e75087e0e985" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pasca-definition.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/err1-pasca.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/err2-pasca.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/err3-pasca.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/my-test.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/pasca.table" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/register.table" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/test1-pasca.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/test2-pasca.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scanner/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scanner/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scanner/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scanner/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scanner/ScanStream.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scanner/Scanner.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scanner/TableParser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scanner/TableReader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scanner/Tests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scanner/Token.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tableDrivenScannerPart2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../decisionMaking/multiArmBandit/images/Part2OptimalEpsilon.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,16 +68,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/scanner/Main.java</url>
-          <line>66</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
