@@ -3,6 +3,7 @@ import { controller } from "../lib/controller";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { RequestWithJWTBody } from "../dto/jwt";
+import { validationMiddleware } from "../middleware/validation";
 
 interface CreateUserBody {
   firstName: string;
@@ -18,7 +19,7 @@ const getMe: Endpoint = (deps) => async (req: RequestWithJWTBody, res) => {
   const user = await client.user.findUnique({ where: { id: userId } });
   const { passwordHash: _, ...userWithoutPassword } = user!;
 
-  res.json({ user: userWithoutPassword });
+  res.status(200).json({ user: userWithoutPassword });
 };
 
 const createUser: Endpoint = (deps) => async (req, res) => {
@@ -28,7 +29,7 @@ const createUser: Endpoint = (deps) => async (req, res) => {
   const passwordHash = await bcrypt.hash(password, 10);
 
   if (await client.user.findUnique({ where: { email } })) {
-    res.status(400).json({ error: "User already exists" });
+    res.status(400).json({ error: "email already taken" });
     return;
   }
 
@@ -45,10 +46,32 @@ const createUser: Endpoint = (deps) => async (req, res) => {
 
   const { passwordHash: _, ...userWithoutPassword } = user;
 
-  res.json({ user: userWithoutPassword, token });
+  res.status(201).json({ user: userWithoutPassword, token });
 };
+
+const getSchedules: Endpoint = (deps) => [
+  async (req: RequestWithJWTBody, res) => {
+    const { client } = deps;
+    const userId = req.jwtBody?.userId;
+
+    const user = await client.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      res.status(404).json({ error: "resource not found" });
+      return;
+    }
+
+    const schedules = await client.schedule.findMany({
+      where: {
+        userId,
+      },
+    });
+
+    res.status(200).json({ schedules });
+  },
+];
 
 export const usersController = controller("users", [
   { path: "/", method: "post", endpoint: createUser, skipAuth: true },
   { path: "/me", method: "get", endpoint: getMe },
+  { path: "/me/schedules", method: "get", endpoint: getSchedules },
 ]);

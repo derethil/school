@@ -8,21 +8,21 @@ interface LoginBody {
   password: string;
 }
 
-const Login: Endpoint = (deps) => async (req, res) => {
+const Authenticate: Endpoint = (deps) => async (req, res) => {
   const { client } = deps;
   const { email, password } = req.body as LoginBody;
 
   const user = await client.user.findUnique({ where: { email } });
 
   if (!user) {
-    res.status(404).json({ error: "Invalid email or password" });
+    res.status(404).json({ error: "invalid email or password" });
     return;
   }
 
   const isValidPassword = await bcrypt.compare(password, user.passwordHash);
 
   if (!isValidPassword) {
-    res.status(401).json({ error: "Invalid email or password" });
+    res.status(401).json({ error: "invalid email or password" });
     return;
   }
 
@@ -30,9 +30,9 @@ const Login: Endpoint = (deps) => async (req, res) => {
 
   const { passwordHash: _, ...userWithoutPassword } = user;
 
-  res.json({ user: userWithoutPassword, token });
+  res.status(200).json({ user: userWithoutPassword, token });
 };
 
 export const authController = controller("auth", [
-  { path: "/login", method: "post", endpoint: Login, skipAuth: true },
+  { path: "/", method: "post", endpoint: Authenticate, skipAuth: true },
 ]);

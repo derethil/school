@@ -1,6 +1,11 @@
 import { Endpoint } from "../dto/controllers";
 import { RequestWithJWTBody } from "../dto/jwt";
 import { controller } from "../lib/controller";
+import { validationMiddleware } from "../middleware/validation";
+
+// ====================
+// Reptiles
+// ====================
 
 interface CreateReptileBody {
   species: "ball_python" | "king_snake" | "corn_snake" | "redtail_boa";
@@ -26,7 +31,7 @@ const createReptile: Endpoint = (deps) => async (req: RequestWithJWTBody, res) =
     },
   });
 
-  res.json({ reptile });
+  res.status(201).json({ reptile });
 };
 
 const getReptiles: Endpoint = (deps) => async (req: RequestWithJWTBody, res) => {
@@ -39,78 +44,315 @@ const getReptiles: Endpoint = (deps) => async (req: RequestWithJWTBody, res) => 
     },
   });
 
-  res.json({ reptiles });
+  res.status(200).json({ reptiles });
 };
 
-const deleteReptile: Endpoint = (deps) => async (req: RequestWithJWTBody, res) => {
-  const { client } = deps;
-  const userId = req.jwtBody?.userId;
-  const reptileId = parseInt(req.params.id);
+const deleteReptile: Endpoint = (deps) => [
+  validationMiddleware,
+  async (req: RequestWithJWTBody, res) => {
+    const { client } = deps;
+    const userId = req.jwtBody?.userId;
+    const reptileId = parseInt(req.params.id);
 
-  if (isNaN(reptileId)) {
-    res.status(400).json({ error: "invalid request" });
-    return;
-  }
+    const reptile = await client.reptile.findFirst({
+      where: {
+        userId: userId,
+        id: reptileId,
+      },
+    });
 
-  const reptile = await client.reptile.findFirst({
-    where: {
-      userId: userId,
-      id: reptileId,
-    },
-  });
+    if (!reptile) {
+      res.status(404).json({ error: "resource not found" });
+      return;
+    }
 
-  if (!reptile) {
-    res.status(404).json({ error: "reptile not found" });
-    return;
-  }
+    await client.reptile.delete({
+      where: {
+        id: reptileId,
+      },
+    });
 
-  await client.reptile.delete({
-    where: {
-      id: reptileId,
-    },
-  });
-
-  res.status(204).send();
-};
+    res.status(204).send();
+  },
+];
 
 type UpdateReptileBody = Partial<CreateReptileBody>;
 
-const updateReptile: Endpoint = (deps) => async (req: RequestWithJWTBody, res) => {
-  const { client } = deps;
-  const userId = req.jwtBody?.userId;
-  const reptileId = parseInt(req.params.id);
-  const updateData = req.body as UpdateReptileBody;
+const updateReptile: Endpoint = (deps) => [
+  validationMiddleware,
+  async (req: RequestWithJWTBody, res) => {
+    const { client } = deps;
+    const userId = req.jwtBody?.userId;
+    const reptileId = parseInt(req.params.id);
+    const updateData = req.body as UpdateReptileBody;
 
-  if (isNaN(reptileId)) {
-    res.status(400).json({ error: "invalid request" });
-    return;
-  }
+    const reptile = await client.reptile.findFirst({
+      where: {
+        userId: userId,
+        id: reptileId,
+      },
+    });
 
-  const reptile = await client.reptile.findFirst({
-    where: {
-      userId: userId,
-      id: reptileId,
-    },
-  });
+    if (!reptile) {
+      res.status(404).json({ error: "resource not found" });
+      return;
+    }
 
-  if (!reptile) {
-    res.status(404).json({ error: "reptile not found" });
-    return;
-  }
+    const updatedReptile = await client.reptile.update({
+      where: {
+        id: reptileId,
+      },
+      data: updateData,
+    });
 
-  const updatedReptile = await client.reptile.update({
-    where: {
-      id: reptileId,
-    },
-    data: updateData,
-  });
+    res.status(200).json({ reptile: updatedReptile });
+  },
+];
 
-  res.json({ reptile: updatedReptile });
-};
+// ======================
+// Feedings
+// ======================
+
+interface CreateFeedingBody {
+  foodItem: string;
+}
+
+const createFeeding: Endpoint = (deps) => [
+  validationMiddleware,
+  async (req: RequestWithJWTBody, res) => {
+    const { client } = deps;
+    const userId = req.jwtBody?.userId;
+    const reptileId = parseInt(req.params.id);
+    const { foodItem } = req.body as CreateFeedingBody;
+
+    const reptile = await client.reptile.findFirst({
+      where: {
+        id: reptileId,
+        userId,
+      },
+    });
+
+    if (!reptile) {
+      res.status(404).json({ error: "resource not found" });
+      return;
+    }
+
+    const feeding = await client.feeding.create({
+      data: {
+        reptile: {
+          connect: {
+            id: reptileId,
+          },
+        },
+        foodItem,
+      },
+    });
+
+    res.status(201).json({ feeding });
+  },
+];
+
+const getFeedings: Endpoint = (deps) => [
+  validationMiddleware,
+  async (req: RequestWithJWTBody, res) => {
+    const { client } = deps;
+    const userId = req.jwtBody?.userId;
+    const reptileId = parseInt(req.params.id);
+
+    const reptile = await client.reptile.findFirst({
+      where: {
+        id: reptileId,
+        userId,
+      },
+    });
+
+    if (!reptile) {
+      res.status(404).json({ error: "resource not found" });
+      return;
+    }
+
+    const feedings = await client.feeding.findMany({
+      where: {
+        reptileId,
+      },
+    });
+
+    res.status(200).json({ feedings });
+  },
+];
+
+// ======================
+// Husbandry
+// ======================
+
+interface CreateHusbandryBody {
+  length: number;
+  weight: number;
+  temperature: number;
+  humidity: number;
+}
+
+const createHusbandryRecords: Endpoint = (deps) => [
+  validationMiddleware,
+  async (req: RequestWithJWTBody, res) => {
+    const { client } = deps;
+    const userId = req.jwtBody?.userId;
+    const reptileId = parseInt(req.params.id);
+    const { length, weight, temperature, humidity } = req.body as CreateHusbandryBody;
+
+    const reptile = await client.reptile.findFirst({
+      where: {
+        id: reptileId,
+        userId,
+      },
+    });
+
+    if (!reptile) {
+      res.status(404).json({ error: "resource not found" });
+      return;
+    }
+
+    const husbandry = await client.husbandryRecord.create({
+      data: {
+        reptile: {
+          connect: {
+            id: reptileId,
+          },
+        },
+        length,
+        weight,
+        temperature,
+        humidity,
+      },
+    });
+
+    res.status(201).json({ husbandry });
+  },
+];
+
+const getHusbandryRecords: Endpoint = (deps) => [
+  validationMiddleware,
+  async (req: RequestWithJWTBody, res) => {
+    const { client } = deps;
+    const userId = req.jwtBody?.userId;
+    const reptileId = parseInt(req.params.id);
+
+    const reptile = await client.reptile.findFirst({
+      where: {
+        id: reptileId,
+        userId,
+      },
+    });
+
+    if (!reptile) {
+      res.status(404).json({ error: "resource not found" });
+      return;
+    }
+
+    const husbandryRecords = await client.husbandryRecord.findMany({
+      where: {
+        reptileId,
+      },
+    });
+
+    res.status(200).json({ husbandryRecords });
+  },
+];
+
+// ======================
+// Schedules
+// ======================
+
+interface CreateScheduleBody {
+  type: string;
+  description: string;
+  monday: boolean;
+  tuesday: boolean;
+  wednesday: boolean;
+  thursday: boolean;
+  friday: boolean;
+  saturday: boolean;
+  sunday: boolean;
+}
+
+const createSchedule: Endpoint = (deps) => [
+  validationMiddleware,
+  async (req: RequestWithJWTBody, res) => {
+    const { client } = deps;
+    const userId = req.jwtBody?.userId;
+    const reptileId = parseInt(req.params.id);
+    const body = req.body as CreateScheduleBody;
+
+    const reptile = await client.reptile.findFirst({
+      where: {
+        id: reptileId,
+        userId,
+      },
+    });
+
+    if (!reptile) {
+      res.status(404).json({ error: "resource not found" });
+      return;
+    }
+
+    const schedule = await client.schedule.create({
+      data: {
+        reptile: {
+          connect: {
+            id: reptileId,
+          },
+        },
+        user: {
+          connect: {
+            id: userId,
+          },
+        },
+        ...body,
+      },
+    });
+
+    res.status(201).json({ schedule });
+  },
+];
+
+const getSchedules: Endpoint = (deps) => [
+  validationMiddleware,
+  async (req: RequestWithJWTBody, res) => {
+    const { client } = deps;
+    const userId = req.jwtBody?.userId;
+    const reptileId = parseInt(req.params.id);
+
+    const reptile = await client.reptile.findFirst({
+      where: {
+        id: reptileId,
+        userId,
+      },
+    });
+
+    if (!reptile) {
+      res.status(404).json({ error: "resource not found" });
+      return;
+    }
+
+    const schedules = await client.schedule.findMany({
+      where: {
+        reptileId,
+      },
+    });
+
+    res.json({ schedules });
+  },
+];
 
 export const reptilesController = controller("reptiles", [
   { path: "/", method: "post", endpoint: createReptile },
   { path: "/", method: "get", endpoint: getReptiles },
   { path: "/:id", method: "delete", endpoint: deleteReptile },
   { path: "/:id", method: "put", endpoint: updateReptile },
+  { path: "/:id/feedings", method: "post", endpoint: createFeeding },
+  { path: "/:id/feedings", method: "get", endpoint: getFeedings },
+  { path: "/:id/husbandry_records", method: "post", endpoint: createHusbandryRecords },
+  { path: "/:id/husbandry_records", method: "get", endpoint: getHusbandryRecords },
+  { path: "/:id/schedules", method: "post", endpoint: createSchedule },
+  { path: "/:id/schedules", method: "get", endpoint: getSchedules },
 ]);
