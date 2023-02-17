@@ -1,31 +1,22 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 
+import dotenv from "dotenv";
+import { ControllerDependencies } from "./dto/controllers";
+import { usersController } from "./controllers/users";
+
+dotenv.config();
+
 const client = new PrismaClient();
 const app = express();
 app.use(express.json());
 
-app.post('/users', async (req, res) => {
-  const user = await client.user.create({
-    data: {
-      firstName: "Joseph",
-      lastName: "Ditton",
-      email: "joseph.ditton@usu.edu",
-      passwordHash: "q23oejklnvzlskjfdnf"
-    }
-  });
-  res.json({ user });
-});
+const controllerDependencies: ControllerDependencies = {
+  client,
+};
 
-app.get("/users", async (req, res) => {
-  const users = await client.user.findMany();
-  res.json({ users });
-})
+usersController(app, controllerDependencies);
 
-app.get("/", (req, res) => {
-  res.send(`<h1>Hello, world!</h1>`);
-});
-
-app.listen(3000, () => {
-  console.log("I got started!");
+app.listen(process.env.PORT || "3000", () => {
+  console.log(`Started server on port ${process.env.PORT}`);
 });
