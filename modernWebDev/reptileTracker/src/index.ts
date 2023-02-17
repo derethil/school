@@ -4,6 +4,7 @@ import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
 import { ControllerDependencies } from "./dto/controllers";
 import { usersController } from "./controllers/users";
+import { authController } from "./controllers/auth";
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ const controllerDependencies: ControllerDependencies = {
 };
 
 usersController(app, controllerDependencies);
+authController(app, controllerDependencies);
 
 app.listen(process.env.PORT || "3000", () => {
   console.log(`Started server on port ${process.env.PORT}`);
