@@ -1,6 +1,11 @@
+from argparse import ArgumentParser
+
 import numpy as np
 import matplotlib.pyplot as plt
-from argparse import ArgumentParser
+from fitter import Fitter
+from scipy import stats
+
+# Part 1 - Simple Option Classes
 
 
 class European_Call_Payoff:
@@ -67,7 +72,10 @@ class Model:
         return self.price_paths
 
 
-def simple_option(num_paths, show_plot):
+# Part 1 - Simple Option Functions
+
+
+def simple_option(num_paths, show_plot, outperform=None):
     model = Model(num_paths, 100, -0.01, 0.5, 1 / 365, 1)
     paths = model.generate_paths()
 
@@ -76,35 +84,74 @@ def simple_option(num_paths, show_plot):
             plt.plot(path)
         plt.show()
 
-    european_call = European_Call_Payoff(100)
-    call_payoffs = [european_call.get_payoff(price_path[-1]) for price_path in paths]
+    european_call = European_Call_Payoff(100, outperform=outperform)
+    risk_free_rate = 0.01
+    call_payoffs = [
+        european_call.get_payoff(price_path[-1] / (1 + risk_free_rate))
+        for price_path in paths
+    ]
 
     print(f"Average final price: {np.mean([path[-1] for path in paths])}")
-    print(f"Average payoff: {np.mean(call_payoffs)}")
+    print(f"Price: {np.mean(call_payoffs)}")
 
 
-def basket_option():
-    pass
+# Part 2 - Basket Option Functions
+
+
+def basket_option(data_path):
+    data = np.loadtxt(data_path, delimiter=",")
+    fitter = Fitter(data)
+    fitter.fit()
+
+    print(fitter.summary(plot=True))
+
+    best = fitter.get_best()
+    print(best)
 
 
 def main():
     parser = ArgumentParser()
-    parser.add_argument("part", type=int, help="Part of the assignment to run")
     parser.add_argument(
-        "-s", "--simulations", type=int, help="Number of paths to generate", default=100
+        "part",
+        help="Part of the assignment to run",
+        choices=["simple_option", "fit_distribution", "debug"],
     )
     parser.add_argument(
-        "-p", "--plot", action="store_true", help="Show the plot (only for part 1)"
+        "-s",
+        "--simulations",
+        type=int,
+        help="Number of paths to generate (only for simple option)",
+        default=100,
+    )
+    parser.add_argument(
+        "-p",
+        "--plot",
+        action="store_true",
+        help="Show the plot (only for simple option)",
+    )
+
+    parser.add_argument(
+        "-d",
+        "--data",
+        type=str,
+        help="Path to the data file (only for fitting distributions)",
     )
 
     args = parser.parse_args()
 
     match vars(args):
-        case {"part": 1, "simulations": num_paths, "plot": show_plot}:
+        case {"part": "simple_option", "simulations": num_paths, "plot": show_plot}:
             simple_option(num_paths=num_paths, show_plot=show_plot)
 
-        case {"part": 2}:
-            basket_option()
+        case {"part": "fit_distribution", "data": data_path}:
+            if data_path is None:
+                parser.print_usage()
+                return
+
+            basket_option(data_path)
+
+        case {"part": "debug"}:
+            breakpoint()
 
         case _:
             parser.print_usage()
