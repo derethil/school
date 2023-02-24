@@ -92,27 +92,31 @@ class Environment:
     Environment that returns rewards for each action
     """
 
-    # fmt: off
-    means = np.array([0, -0.5, 2, -0.5, -1.2, -3, -10, -0.5, -1, 1, 0.7, -6, -7, -0.5, -6.5, -3, 0, 2, -9, -1, -4.5])
-    std_devs = np.array([5, 12, 3.9, 7, 8, 7, 20, 1, 2, 6, 4, 11, 1, 2, 1, 6, 8, 3.9, 12, 6, 8])
-    shifts = np.array([5, 0, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0])
-    # fmt: on
-
-    def __init__(self):
-        self.num_actions = len(self.means)
+    def __init__(self, baseline=False):
+        self.num_actions = 6 if baseline else 5
 
     def reward(self, action, current_pull=0):
-        rewards = self.gen_rewards(current_pull)
+        baseline, rewards = self.gen_rewards()
         return rewards[action]
 
-    def gen_rewards(self, current_pull=None):
-        drift = -0.001 * current_pull if current_pull is not None else 0
-        shift = self.shifts if current_pull and current_pull >= 3000 else 0
+    def gen_rewards(self):
+        rewards = np.array(
+            [
+                np.random.beta(7, 3) + 2,
+                np.random.uniform(0, 4),
+                np.random.beta(3, 7) + 2,
+                np.random.normal(2, 1.4),
+                np.random.normal(1.3, 7),
+            ]
+        )
 
-        return np.random.normal(self.means + drift + shift, self.std_devs)
+        if self.num_actions != len(rewards):
+            return np.random.normal(1.5, 3), rewards
+
+        return None, rewards
 
 
-class EpsilonGreedyAgent:
+class Agent:
     """
     Agent that uses epsilon greedy to choose actions
     """
@@ -157,7 +161,7 @@ class EpsilonGreedy:
         Run a single experiment
         """
         env = Environment()
-        agent = EpsilonGreedyAgent(env.num_actions, self.eps)
+        agent = Agent(env.num_actions, self.eps)
         actions, rewards, estimated = [], [], []
 
         for pull in range(self.num_pulls):
@@ -201,13 +205,13 @@ class EpsilonGreedy:
         return R / self.num_experiments, Q / self.num_experiments
 
 
-class ExperimentEpsilon:
+class Experiment:
     """
     Run the epsilon greedy experiment for a range of epsilons
     """
 
     def __init__(
-        self, epsilons, num_experiments=1, num_pulls=10000, verbose=True, drift=False
+        self, epsilons, num_experiments=1, num_pulls=365, verbose=False, drift=False
     ):
         self.epsilons = epsilons
 
@@ -233,7 +237,7 @@ class ExperimentEpsilon:
             )
 
             if plot:
-                plt.plot(best, label=f"$\\epsilon$-Greedy: $\\epsilon$={eps:.2f}")
+                plt.plot(best, label=f"$\\epsilon$={eps:.4f}")
 
         if plot:
             self.show_plot("Epsilon Greedy")
@@ -253,17 +257,14 @@ class ExperimentEpsilon:
 
         return estimated_convergences
 
-    def show_plot(self, title, limit=True):
+    def show_plot(self, title):
         """
         Show the plot of the convergences
         """
         plt.title(f"Convergence of {title}")
-        plt.xlabel("Pulls")
+        plt.xlabel("Days")
         plt.ylabel("Best Estimated Reward")
         plt.legend()
-
-        if limit:
-            plt.ylim(1.5, 2.5)
 
         plt.grid()
         plt.show()
@@ -274,9 +275,35 @@ def run_epsilon(epsilons, plot=False):
     Run the epsilon greedy algorithm with the given epsilons
     """
     print("Question 2: Moving Sensors")
-    experiment = ExperimentEpsilon(epsilons, num_experiments=10)
+    experiment = Experiment(epsilons, num_experiments=1000)
     experiment.run(plot)
     return experiment
+
+
+def actual_rewards(num=1000000, plot=False):
+    """
+    Find the actual rewards by testing each sensor many, many times
+    """
+    print("Question 2: Moving Sensors")
+    env = Environment()
+
+    rewards = np.zeros(env.num_actions)
+    for _ in range(num):
+        _, all_rewards = env.gen_rewards()
+        rewards += all_rewards
+
+    rewards /= num
+
+    print("Actual Sensor Readings:")
+    for i, reward in enumerate(rewards):
+        print(f"Sensor {i}: {reward:.2f}")
+
+    if plot:
+        plt.bar(range(env.num_actions), rewards)
+        plt.title("Actual Sensor Readings")
+        plt.xlabel("Sensor")
+        plt.ylabel("Readings")
+        plt.show()
 
 
 """
@@ -295,28 +322,44 @@ if __name__ == "__main__":
     # np.random.seed(122)  # seed for reproducibility
 
     parser = ArgumentParser()
+
+    # Base arguments
+
     parser.add_argument(
         "question", help="Question 1, 2, or 3", type=int, choices=[1, 2, 3]
     )
     parser.add_argument("--plot", help="Plot the results", action="store_true")
+
+    # Question 1 arguments
+
     parser.add_argument(
         "--rejection",
         help="Use rejection (question 1 only)",
         choices=["half", "increasing"],
     )
 
+    # Question 2 arguments
+
     parser.add_argument(
         "--epsilons",
         help="Epsilon values to use (question 2 only)",
         nargs="+",
         type=float,
-        default=[0.01, 0.05, 0.1, 0.4],
+        default=[0.09],
+    )
+
+    parser.add_argument(
+        "--actual-rewards",
+        help="Find the actual rewards (question 2 only)",
+        action="store_true",
     )
 
     args = parser.parse_args()
 
     match vars(args):
-        # Part 1: Finding a General Optimum
+
+        # Question 1: Job Candidates
+
         case {"question": 1, "plot": should_plot, "rejection": rejection}:
             job_candidates(
                 len_candidate=100,
@@ -325,8 +368,20 @@ if __name__ == "__main__":
                 rejection=rejection,
             )
 
-        case {"question": 2, "plot": should_plot, "epsilons": epsilons}:
-            run_epsilon(args.epsilons)
+        # Question 2: Moving Sensors
+
+        case {
+            "question": 2,
+            "plot": should_plot,
+            "epsilons": epsilons,
+            "actual_rewards": False,
+        }:
+            run_epsilon(epsilons, plot=should_plot)
+
+        case {"question": 2, "actual_rewards": True}:
+            actual_rewards()
+
+        # Question 3: American Options - Franchises
 
         case {"question": 3, "plot": should_plot, "rejection": _}:
             print("Running Question 3")
