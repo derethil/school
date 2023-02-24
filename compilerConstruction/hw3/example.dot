@@ -1,0 +1,40 @@
+// digraph G {
+// 	layout = dot ;
+// 	ordering = out ;
+// 	rankdir = "LR";
+// 	s0 [ label ="0"];
+// 	s1 [ label ="1"];
+// 	s2 [ label ="2"];
+// 	s3 [ label ="3" , peripheries = 2];
+// 	s0 -> s1 [ label =" x "];
+// 	s1 -> s2 [ label =" y "];
+// 	s2 -> s3 [ label =" z "];
+// 	s1 -> s3 [ label =" z "];
+// }
+
+// b^2(a|c)^2
+digraph G {
+	layout = dot ;
+	ordering = out ;
+	rankdir = "LR";
+
+    d0 [ label = "0"];
+    d1 [ label = "1"];
+    d2 [ label = "2"];
+    d3 [ label = "3"];
+    d4 [ label = "4"];
+    d5 [ label = "5", peripheries = 2];
+    d6 [ label = "6", peripheries = 2];
+
+    d0 -> d1 [ label = "b"];
+    d1 -> d2 [ label = "b"];
+    d2 -> d3 [ label = "a"];
+    d2 -> d4 [ label = "c"];
+
+    d3 -> d5 [ label = "a"];
+    d3 -> d6 [ label = "c"];
+
+    d4 -> d5 [ label = "a"];
+    d4 -> d6 [ label = "c"];
+
+}
