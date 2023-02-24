@@ -127,45 +127,16 @@ class EpsilonGreedy(Solver):
 # Handles the logic for running an experiment
 
 
-class Experiment(ABC):
-    def __init__(self, num_experiments=1, num_pulls=10000, verbose=False, drift=False):
+class ExperimentEpsilon:
+    def __init__(
+        self, epsilons, num_experiments=1, num_pulls=10000, verbose=False, drift=False
+    ):
+        self.epsilons = epsilons
+
         self.num_experiments = num_experiments
         self.num_pulls = num_pulls
         self.verbose = verbose
         self.drift = drift
-
-    @abstractmethod
-    def find_convergences(self):
-        raise NotImplementedError
-
-    @abstractmethod
-    def plot_convergences(self):
-        raise NotImplementedError
-
-    def show_plot(self, title, limit=True):
-        plt.title(f"Convergence of {title}")
-        plt.xlabel("Pulls")
-        plt.ylabel("Best Estimated Reward")
-        plt.legend()
-
-        if limit:
-            plt.ylim(1.5, 2.5)
-
-        plt.grid()
-        plt.show()
-
-    def remove_some_data(self, data, percentage):
-        to_skip = int(1 / percentage)
-        copy = np.zeros(data.shape)
-        copy[::to_skip] = data[::to_skip]
-        copy[copy == 0] = np.nan
-        return copy
-
-
-class ExperimentEpsilon(Experiment):
-    def __init__(self, epsilons, **kwargs):
-        super().__init__(**kwargs)
-        self.epsilons = epsilons
 
     def find_convergences(self):
         estimated_convergences = []
@@ -192,6 +163,25 @@ class ExperimentEpsilon(Experiment):
                 + f"avg_reward = {np.mean(average):.4f} | "
                 f"best_reward_estimate = {np.mean(best):.4f}"
             )
+
+    def show_plot(self, title, limit=True):
+        plt.title(f"Convergence of {title}")
+        plt.xlabel("Pulls")
+        plt.ylabel("Best Estimated Reward")
+        plt.legend()
+
+        if limit:
+            plt.ylim(1.5, 2.5)
+
+        plt.grid()
+        plt.show()
+
+    def remove_some_data(self, data, percentage):
+        to_skip = int(1 / percentage)
+        copy = np.zeros(data.shape)
+        copy[::to_skip] = data[::to_skip]
+        copy[copy == 0] = np.nan
+        return copy
 
 
 # Main CLI
