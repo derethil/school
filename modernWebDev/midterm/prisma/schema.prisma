@@ -11,3 +11,9 @@ datasource db {
 }
 
 // Add your TODO Model here and migrate!
+
+model Todo {
+  id          Int     @id @default(autoincrement())
+  title       String
+  isCompleted Boolean @default(false)
+}

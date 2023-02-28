@@ -9,22 +9,48 @@ const app = express();
 app.use(express.json());
 app.use(cors()); // need for cross origin requests
 
+interface CreateTodoBody {
+  title: string;
+}
 
 app.post("/todos", async (req, res) => {
-  // todo implement this endpoint
-  res.json({ todo: {} })
-})
+  const { title } = req.body as CreateTodoBody;
+
+  const todo = await client.todo.create({
+    data: {
+      title,
+    },
+  });
+
+  res.json({ todo });
+});
 
 app.get("/todos", async (req, res) => {
-  // TODO implement this endpoint!
-  res.json({ todos: [] });
-})
+  const todos = await client.todo.findMany();
+  res.json({ todos });
+});
 
-app.post("/todos/:id", async (req, res) => {
-  // TODO implement this endpoint
-  res.json({ todo: {} })
-})
+interface UpdateTodoBody {
+  isCompleted: boolean;
+}
+
+app.put("/todos/:id", async (req, res) => {
+  const { id } = req.params;
+  const { isCompleted } = req.body as UpdateTodoBody;
+
+  const todo = await client.todo.update({
+    where: {
+      id: Number(id),
+    },
+    data: {
+      isCompleted,
+    },
+  });
+
+  res.json({ todo });
+});
 
 app.listen(process.env.PORT, () => {
+  // log url to console
   console.log(`Listening on port ${process.env.PORT}`);
 });

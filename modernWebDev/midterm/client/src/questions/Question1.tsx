@@ -1,6 +1,8 @@
-
+import { useState } from "react";
 
 export const Question1 = () => {
+  const [count, setCount] = useState(0);
+
   return (
     <section className="question">
       <h2>Question 1</h2>
@@ -18,9 +20,14 @@ export const Question1 = () => {
         </div>
         <hr />
         <div className="solution-section">
-          {/* BUILD THE UI FOR THIS QUESTION INSIDE THIS DIV */}
+          <div>{count}</div>
+          <div>
+            <button onClick={() => setCount(count + 1)}>Increment</button>
+            <button onClick={() => setCount(count - 1)}>Decrement</button>
+            <button onClick={() => setCount(0)}>Reset</button>
+          </div>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
