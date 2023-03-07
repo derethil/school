@@ -4,140 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="44a972ab-a3b2-4b00-926b-8f999a67f768" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/antlr_4_9_1_complete.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/antlr_4_9_1_complete1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/antlr-4.9.1-complete.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cfgparser/Grammar.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cfgparser/GrammarBaseListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cfgparser/GrammarLexer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cfgparser/GrammarListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cfgparser/GrammarListenerImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cfgparser/GrammarParser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/Expr.cfg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/ExprLexer.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/Paren.cfg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/ParenLexer.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/Simple.cfg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/SimpleLexer.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/Tiny.cfg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/TinyLexer.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/expr1.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/expr2.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/expr3.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/expr4.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/expr5.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/expr6.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/paren0.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/paren1.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/paren2.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/paren3.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/paren4.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/tiny1.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/tiny2.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/tiny3.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/tiny4.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/tinyGrammar.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lexer/ExprLexer.interp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lexer/ExprLexer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lexer/ExprLexer.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lexer/ParenLexer.interp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lexer/ParenLexer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lexer/ParenLexer.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lexer/SimpleLexer.interp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lexer/SimpleLexer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lexer/SimpleLexer.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lexer/TinyLexer.interp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lexer/TinyLexer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lexer/TinyLexer.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/.idea/libraries/antlr_4_9_1_complete.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/antlr-4.9.1-complete.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/cfgparser/Grammar.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/cfgparser/GrammarBaseListener.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/cfgparser/GrammarLexer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/cfgparser/GrammarListener.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/cfgparser/GrammarListenerImpl.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/cfgparser/GrammarParser$GoalContext.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/cfgparser/GrammarParser$LhsContext.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/cfgparser/GrammarParser$NameContext.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/cfgparser/GrammarParser$Or_listContext.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/cfgparser/GrammarParser$RhsContext.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/cfgparser/GrammarParser$Rule_listContext.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/cfgparser/GrammarParser$SymbolContext.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/cfgparser/GrammarParser$Symbol_listContext.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/cfgparser/GrammarParser.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/Expr.cfg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/ExprLexer.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/Paren.cfg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/ParenLexer.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/Simple.cfg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/SimpleLexer.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/Tiny.cfg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/TinyLexer.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/expr1.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/expr2.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/expr3.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/expr4.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/expr5.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/expr6.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/paren0.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/paren1.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/paren2.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/paren3.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/paren4.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/tiny1.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/tiny2.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/tiny3.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/tiny4.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/data/tinyGrammar.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/lexer/ExprLexer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/lexer/ExprLexer.interp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/lexer/ExprLexer.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/lexer/ParenLexer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/lexer/ParenLexer.interp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/lexer/ParenLexer.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/lexer/SimpleLexer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/lexer/SimpleLexer.interp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/lexer/SimpleLexer.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/lexer/TinyLexer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/lexer/TinyLexer.interp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/lexer/TinyLexer.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/p3-parser.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/parser/Action$Act.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/parser/Action.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/parser/Grammar.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/parser/Item.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/parser/Main.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/parser/Parser.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/parser/ParserException.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/parser/Rule.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/parser/State.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/parser/States.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/parser/Tests.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/parser/Util.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/p3-parser/parser/util/SymbolComparator.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parser.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parser/Action.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parser/Grammar.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parser/Item.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parser/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parser/Parser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parser/ParserException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parser/Rule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parser/State.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parser/States.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parser/Tests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parser/Util.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parser/util/SymbolComparator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tableDrivenScannerPart2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../tableDrivenScannerPart2/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="44a972ab-a3b2-4b00-926b-8f999a67f768" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -145,6 +12,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2MeRRrSSe6hMGRfqvw4zusBL8Zh" />
   <component name="ProjectViewState">
@@ -158,6 +28,15 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="parser.Main" />
+      <module name="parser" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -168,5 +47,25 @@
       <updated>1678126058013</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="15" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/parser/Main.java</url>
+          <line>285</line>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="parser.States" memberName="states" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>

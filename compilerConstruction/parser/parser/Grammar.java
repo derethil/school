@@ -58,7 +58,7 @@ public class Grammar {
   final HashMap<Rule, HashSet<String>> firstPlus;
 
   public Grammar(String grammarFilename) throws IOException {
-//    System.out.println("Reading grammar " + grammarFilename);
+    System.out.println("Reading grammar " + grammarFilename);
     cfgparser.Grammar grammar = new cfgparser.Grammar(grammarFilename);
 
     this.grammarName = grammar.getName();
@@ -80,9 +80,9 @@ public class Grammar {
     this.startRule = start;
 
     nt2rules = new HashMap<>();
-//    System.out.println("\nRules");
+    System.out.println("\nRules");
     for (Rule rule : rules) {
-//      System.out.println(rule.toString());
+      System.out.println(rule.toString());
       final String lhs = rule.getLhs();
       terminals.remove(lhs);
       nonterminals.add(lhs);

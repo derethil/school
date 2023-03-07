@@ -123,9 +123,6 @@ public class Main {
     {
       Parser parser = new Parser("data/Paren.cfg");
       String actionTable = parser.actionTableToString();
-      String gotoTable = parser.gotoTableToString();
-      System.out.println(actionTable);
-      System.out.println(gotoTable);
       tests.test(countMatches(actionTable, 'S'), 10); // 10 shifts
       tests.test(countMatches(actionTable, 'R'), 18); // 18 reduces (2 of the Rs are in the header)
       tests.test(countMatches(actionTable, "acc"), 1); // 1 accept
@@ -133,9 +130,6 @@ public class Main {
     {
       Parser parser = new Parser("data/Expr.cfg");
       String actionTable = parser.actionTableToString();
-      String gotoTable = parser.gotoTableToString();
-      System.out.println(actionTable);
-      System.out.println(gotoTable);
       tests.test(countMatches(actionTable, 'S'), 66);
       tests.test(countMatches(actionTable, 'R'), 91);
       tests.test(countMatches(actionTable, "acc"), 1);
@@ -274,13 +268,6 @@ public class Main {
       //   according to the grammar given in data/tinyGrammar.pdf.
       //   See notes in data/Tiny.cfg (be sure to read all of them!).
       Parser parser = new Parser("data/Tiny.cfg");
-
-      String actionTable = parser.actionTableToString();
-      String gotoTable = parser.gotoTableToString();
-
-      System.out.println(actionTable);
-      System.out.println(gotoTable);
-
       String fn = "data/tiny1.dat";
       try {
         List<Action> actions = parser.parseFromFile(fn);

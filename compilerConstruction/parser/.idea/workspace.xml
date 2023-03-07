@@ -4,21 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="44a972ab-a3b2-4b00-926b-8f999a67f768" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/Tiny.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/data/Tiny.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/parser/data/Tiny.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/parser/data/Tiny.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/parser/parser/Grammar.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/parser/parser/Grammar.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/parser/parser/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/parser/parser/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/parser/parser/Parser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/parser/parser/Parser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/parser/parser/State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/parser/parser/State.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/parser/parser/States.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/parser/parser/States.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/Grammar.java" beforeDir="false" afterPath="$PROJECT_DIR$/parser/Grammar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/parser/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/parser/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/State.java" beforeDir="false" afterPath="$PROJECT_DIR$/parser/State.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/States.java" beforeDir="false" afterPath="$PROJECT_DIR$/parser/States.java" afterDir="false" />
-    </list>
+    <list default="true" id="44a972ab-a3b2-4b00-926b-8f999a67f768" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
