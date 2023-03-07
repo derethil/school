@@ -9,11 +9,28 @@ public class State implements Comparable<State> {
     private List<Item> items;
     private int name;
 
+    private State fromState;
+    private String symbol;
+
     public State(int name) {
         this.itemSet = new HashSet<>();
         this.items = new ArrayList<>();
         this.name = name;
     }
+
+    public State(int name, State fromState, String symbol) {
+        this(name);
+        this.fromState = fromState;
+        this.symbol = symbol;
+    }
+
+    public State(State fromState, String symbol) {
+        this.itemSet = new HashSet<>();
+        this.items = new ArrayList<>();
+        this.fromState = fromState;
+        this.symbol = symbol;
+    }
+
 
     public State() {
         this(0);
@@ -32,6 +49,11 @@ public class State implements Comparable<State> {
             hash = 37 * hash + Objects.hashCode(item);
         }
         return hash;
+    }
+
+    public void setGOTO(State fromState, String symbol) {
+        this.fromState = fromState;
+        this.symbol = symbol;
     }
 
     @Override
@@ -68,15 +90,38 @@ public class State implements Comparable<State> {
         return items.size();
     }
 
-    public void addItem(Item item) {
+    public boolean addItem(Item item) {
         if (!itemSet.contains(item)) {
             itemSet.add(item);
             items.add(item);
+            return true;
         }
+        return false;
     }
 
     public List<Item> getItems() {
         return items;
+    }
+
+    public boolean contains(Item item) {
+        return itemSet.contains(item);
+    }
+
+    public State getFromState() {
+        return fromState;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public int getName() {
+        return name;
+    }
+
+    public boolean isThisGOTO(State fromState, String symbol) {
+        if (this.fromState == null || this.symbol == null) return false;
+        return this.fromState.equals(fromState) && this.symbol.equals(symbol);
     }
 
 }
