@@ -3,49 +3,53 @@ import { RequestWithJWTBody } from "../dto/jwt";
 import { controller } from "../lib/controller";
 import { validationMiddleware } from "../middleware/validation";
 
+import {
+  CreateFeedingBody,
+  CreateHusbandryBody,
+  CreateReptileBody,
+  CreateScheduleBody,
+  UpdateReptileBody,
+} from "../../dto/reptiles";
+
 // ====================
 // Reptiles
 // ====================
 
-interface CreateReptileBody {
-  species: "ball_python" | "king_snake" | "corn_snake" | "redtail_boa";
-  name: string;
-  sex: "m" | "f";
-}
+const createReptile: Endpoint =
+  (deps) => async (req: RequestWithJWTBody, res) => {
+    const { client } = deps;
+    const userId = req.jwtBody?.userId;
+    const { species, name, sex } = req.body as CreateReptileBody;
 
-const createReptile: Endpoint = (deps) => async (req: RequestWithJWTBody, res) => {
-  const { client } = deps;
-  const userId = req.jwtBody?.userId;
-  const { species, name, sex } = req.body as CreateReptileBody;
-
-  const reptile = await client.reptile.create({
-    data: {
-      user: {
-        connect: {
-          id: userId,
+    const reptile = await client.reptile.create({
+      data: {
+        user: {
+          connect: {
+            id: userId,
+          },
         },
+        species,
+        name,
+        sex,
       },
-      species,
-      name,
-      sex,
-    },
-  });
+    });
 
-  res.status(201).json({ reptile });
-};
+    res.status(201).json({ reptile });
+  };
 
-const getReptiles: Endpoint = (deps) => async (req: RequestWithJWTBody, res) => {
-  const { client } = deps;
-  const userId = req.jwtBody?.userId;
+const getReptiles: Endpoint =
+  (deps) => async (req: RequestWithJWTBody, res) => {
+    const { client } = deps;
+    const userId = req.jwtBody?.userId;
 
-  const reptiles = await client.reptile.findMany({
-    where: {
-      userId,
-    },
-  });
+    const reptiles = await client.reptile.findMany({
+      where: {
+        userId,
+      },
+    });
 
-  res.status(200).json({ reptiles });
-};
+    res.status(200).json({ reptiles });
+  };
 
 const deleteReptile: Endpoint = (deps) => [
   validationMiddleware,
@@ -75,8 +79,6 @@ const deleteReptile: Endpoint = (deps) => [
     res.status(204).send();
   },
 ];
-
-type UpdateReptileBody = Partial<CreateReptileBody>;
 
 const updateReptile: Endpoint = (deps) => [
   validationMiddleware,
@@ -112,10 +114,6 @@ const updateReptile: Endpoint = (deps) => [
 // ======================
 // Feedings
 // ======================
-
-interface CreateFeedingBody {
-  foodItem: string;
-}
 
 const createFeeding: Endpoint = (deps) => [
   validationMiddleware,
@@ -185,20 +183,14 @@ const getFeedings: Endpoint = (deps) => [
 // Husbandry
 // ======================
 
-interface CreateHusbandryBody {
-  length: number;
-  weight: number;
-  temperature: number;
-  humidity: number;
-}
-
 const createHusbandryRecords: Endpoint = (deps) => [
   validationMiddleware,
   async (req: RequestWithJWTBody, res) => {
     const { client } = deps;
     const userId = req.jwtBody?.userId;
     const reptileId = parseInt(req.params.id);
-    const { length, weight, temperature, humidity } = req.body as CreateHusbandryBody;
+    const { length, weight, temperature, humidity } =
+      req.body as CreateHusbandryBody;
 
     const reptile = await client.reptile.findFirst({
       where: {
@@ -262,18 +254,6 @@ const getHusbandryRecords: Endpoint = (deps) => [
 // ======================
 // Schedules
 // ======================
-
-interface CreateScheduleBody {
-  type: string;
-  description: string;
-  monday: boolean;
-  tuesday: boolean;
-  wednesday: boolean;
-  thursday: boolean;
-  friday: boolean;
-  saturday: boolean;
-  sunday: boolean;
-}
 
 const createSchedule: Endpoint = (deps) => [
   validationMiddleware,
@@ -351,8 +331,16 @@ export const reptilesController = controller("reptiles", [
   { path: "/:id", method: "put", endpoint: updateReptile },
   { path: "/:id/feedings", method: "post", endpoint: createFeeding },
   { path: "/:id/feedings", method: "get", endpoint: getFeedings },
-  { path: "/:id/husbandry_records", method: "post", endpoint: createHusbandryRecords },
-  { path: "/:id/husbandry_records", method: "get", endpoint: getHusbandryRecords },
+  {
+    path: "/:id/husbandry_records",
+    method: "post",
+    endpoint: createHusbandryRecords,
+  },
+  {
+    path: "/:id/husbandry_records",
+    method: "get",
+    endpoint: getHusbandryRecords,
+  },
   { path: "/:id/schedules", method: "post", endpoint: createSchedule },
   { path: "/:id/schedules", method: "get", endpoint: getSchedules },
 ]);

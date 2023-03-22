@@ -2,11 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Endpoint } from "../dto/controllers";
 import { controller } from "../lib/controller";
-
-interface LoginBody {
-  email: string;
-  password: string;
-}
+import { LoginBody } from "../../dto/auth";
 
 const Authenticate: Endpoint = (deps) => async (req, res) => {
   const { client } = deps;

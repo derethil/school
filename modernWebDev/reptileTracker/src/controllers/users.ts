@@ -3,14 +3,8 @@ import { controller } from "../lib/controller";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { RequestWithJWTBody } from "../dto/jwt";
-import { validationMiddleware } from "../middleware/validation";
 
-interface CreateUserBody {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
+import { CreateUserBody } from "../../dto/users";
 
 const getMe: Endpoint = (deps) => async (req: RequestWithJWTBody, res) => {
   const { client } = deps;
