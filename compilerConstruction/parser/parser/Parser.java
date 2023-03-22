@@ -283,12 +283,14 @@ public class Parser {
 
     String a = input.pop();
     Stack<Integer> stateStack = new Stack<>();
-//    Stack<String> symbolStack = new Stack<>();
+    Stack<String> symbolStack = new Stack<>();
     stateStack.push(0);
 
     while (true) {
       Integer s = stateStack.peek();
       Action action = actionTable.get(s).get(a);
+
+      System.out.println(symbolStack);
 
       if (action == null) {
         throw ParserException.create(tokens, tokens.size() - input.size());
@@ -298,6 +300,11 @@ public class Parser {
         // Push t onto the stack
         Integer t = action.getState();
         stateStack.push(t);
+
+        State state = states.getState(t);
+        String symbol = state.getSymbol();
+        symbolStack.push(symbol);
+
         // Let a be the next input symbol
         a = input.pop();
         // Add the action to the list of actions
@@ -308,10 +315,13 @@ public class Parser {
         // Pop size of beta off the stack
         for (int i = 0; i < rule.getRhs().size(); i++) {
           stateStack.pop();
+          symbolStack.pop();
         }
         // Push GOTO[t, A] onto the stack
         Integer t = stateStack.peek();
         stateStack.push(gotoTable.get(t).get(rule.getLhs()));
+        symbolStack.push(rule.getLhs());
+
         // Add the rule to the list of actions
         actions.add(action);
       }
