@@ -5,6 +5,7 @@ import { Button, Table } from "react-daisyui";
 import { snakeToSentence } from "../../util/stringCases";
 import { useNavigate } from "react-router-dom";
 import { EditReptile } from "./reptileForm/EditReptile";
+import { CreateReptile } from "./reptileForm/CreateReptile";
 
 export function ReptilesList() {
   const api = useApi();
@@ -39,7 +40,14 @@ export function ReptilesList() {
 
   return (
     <div>
-      <h1 className="text-2xl w-64 mb-4">My Reptiles</h1>
+      <div className="flex justify-between">
+        <h1 className="text-2xl w-64 mb-4">My Reptiles</h1>
+        <CreateReptile
+          onCreate={(reptile) => {
+            setReptiles([...reptiles, reptile]);
+          }}
+        />
+      </div>
 
       <Table className="w-96">
         <Table.Head>
@@ -51,7 +59,12 @@ export function ReptilesList() {
 
         <Table.Body>
           {reptiles.map((reptile) => (
-            <Table.Row key={reptile.id}>
+            <Table.Row
+              key={reptile.id}
+              onClick={(e) => console.log("goto reptile")}
+              className="cursor-pointer"
+              hover
+            >
               <span>{reptile.name}</span>
               <span>{snakeToSentence(reptile.species)}</span>
               <span>{reptile.sex.toLocaleUpperCase()}</span>

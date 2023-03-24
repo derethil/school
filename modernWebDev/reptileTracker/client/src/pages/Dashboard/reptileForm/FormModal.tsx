@@ -58,11 +58,17 @@ export function FormModal(props: FormModalProps) {
 
   return (
     <Modal open={props.isOpen}>
-      <Modal.Header className="font-bold">
+      <Modal.Header className="font-bold mb-4">
         {props.reptileToEdit ? "Edit Reptile" : "Add Reptile"}
       </Modal.Header>
 
       <Modal.Body>
+        {alert && (
+          <Alert status={alert.status} className="mb-4">
+            {alert.message}
+          </Alert>
+        )}
+
         <Input
           className="mb-2"
           label="Name"
@@ -91,12 +97,6 @@ export function FormModal(props: FormModalProps) {
           <option value="m">Male</option>
           <option value="f">Female</option>
         </Select>
-
-        {alert && (
-          <Alert status={alert.status} className="mb-4">
-            {alert.message}
-          </Alert>
-        )}
       </Modal.Body>
 
       <Modal.Actions>
