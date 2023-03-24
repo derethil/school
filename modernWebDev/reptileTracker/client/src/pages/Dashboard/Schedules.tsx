@@ -1,8 +1,10 @@
 import { Schedule } from "@prisma/client";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../contexts/user";
 import { useApi } from "../../hooks/useApi";
 
 export function Schedules() {
+  const { user } = useContext(UserContext);
   const api = useApi();
   const [schedules, setSchedules] = useState<Schedule[]>([]);
 
@@ -14,8 +16,6 @@ export function Schedules() {
 
     fetchSchedules();
   }, []);
-
-  console.log(schedules);
 
   return (
     <div>

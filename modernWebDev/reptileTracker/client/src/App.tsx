@@ -1,13 +1,17 @@
+import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ApiContext } from "./contexts/api";
 import { AuthContext } from "./contexts/auth";
+import { UserContext } from "./contexts/user";
 import { useAuth } from "./hooks/useAuth";
+import { useUser } from "./hooks/useUser";
 import { Api } from "./lib/api";
 import { Dashboard } from "./pages/Dashboard";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { Reptile } from "./pages/Reptile";
+import { User } from "./types/users";
 
 const router = createBrowserRouter([
   {
@@ -33,12 +37,15 @@ const router = createBrowserRouter([
 ]);
 
 export function App() {
-  const { token, setToken, isLoggedIn } = useAuth();
+  const { token, setToken } = useAuth();
+  const [user, setUser] = useState<User | null>(null);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setToken }}>
+    <AuthContext.Provider value={{ token, setToken }}>
       <ApiContext.Provider value={new Api(token)}>
-        <RouterProvider router={router} />
+        <UserContext.Provider value={{ user, setUser }}>
+          <RouterProvider router={router} />
+        </UserContext.Provider>
       </ApiContext.Provider>
     </AuthContext.Provider>
   );

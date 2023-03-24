@@ -1,17 +1,20 @@
 import { useContext, useEffect, useState } from "react";
-import { Button } from "react-daisyui";
+import { Alert, Button } from "react-daisyui";
 import { Link, useNavigate } from "react-router-dom";
 
-import { CreateUserBody } from "../../../dto/users";
+import { AuthenticateResponse, CreateUserBody } from "../../../dto/users";
 
 import { PageWrapper } from "../components/PageWrapper";
 import { Input } from "../components/Input";
 import { useApi } from "../hooks/useApi";
 import { AuthContext } from "../contexts/auth";
 import { sentenceCase } from "../util/stringCases";
+import { useUser } from "../hooks/useUser";
+import { AlertState } from "../types/alert";
 
 export function Register() {
   const api = useApi();
+  const { setUser } = useUser();
   const { token, setToken } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -19,11 +22,11 @@ export function Register() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [alert, setAlert] = useState<AlertState | null>(null);
 
   const handleRegister = async () => {
     if (!firstName || !lastName || !email || !password) {
-      setError("Please fill out all fields");
+      setAlert({ status: "warning", message: "Please fill out all fields" });
       return;
     }
 
@@ -34,23 +37,24 @@ export function Register() {
       password,
     };
 
-    const resultBody = await api.post("/users", body);
+    const resultBody: AuthenticateResponse = await api.post("/users", body);
 
-    if (resultBody.token) {
+    if ("token" in resultBody) {
       setToken(resultBody.token);
+      setUser(resultBody.user);
       setTimeout(() => {
         navigate("/dashboard", {
           replace: true,
         });
       }, 0);
     } else {
-      setError(sentenceCase(resultBody.error));
+      setAlert({ status: "warning", message: sentenceCase(resultBody.error) });
     }
   };
 
   useEffect(() => {
-    if (token?.length > 0) {
-      navigate("/dashboard", {
+    if (window.localStorage.getItem("token")) {
+      navigate("/", {
         replace: true,
       });
     }
@@ -61,7 +65,11 @@ export function Register() {
       <h1 className="text-4xl font-bold">Register</h1>
 
       <form className="mt-4" onSubmit={handleRegister}>
-        {error && <p className="mb-4 text-error">{error}</p>}
+        {alert && (
+          <Alert status={alert.status} className="mb-4">
+            {alert.message}
+          </Alert>
+        )}
 
         <Input
           label="First Name"

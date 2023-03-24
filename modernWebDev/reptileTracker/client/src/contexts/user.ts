@@ -1,6 +1,12 @@
 import { createContext } from "react";
-import { User as UserModel } from "@prisma/client";
+import { User } from "../types/users";
 
-type User = Omit<UserModel, "passwordHash">;
+interface UserContext {
+  user: User | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+}
 
-export const UserContext = createContext<User | null>(null);
+export const UserContext = createContext<UserContext>({
+  user: null,
+  setUser: () => {},
+});

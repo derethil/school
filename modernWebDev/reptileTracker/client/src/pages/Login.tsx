@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Button } from "react-daisyui";
+import { Alert, Button } from "react-daisyui";
 import { Link, useNavigate } from "react-router-dom";
 
 import { Input } from "../components/Input";
@@ -9,28 +9,32 @@ import { useApi } from "../hooks/useApi";
 import { LoginBody } from "../../../dto/auth";
 import { AuthContext } from "../contexts/auth";
 import { sentenceCase } from "../util/stringCases";
+import { UserContext } from "../contexts/user";
+import { AuthenticateResponse } from "../../../dto/users";
+import { useUser } from "../hooks/useUser";
+import { AlertState } from "../types/alert";
 
 export function Login() {
   const api = useApi();
   const { token, setToken } = useContext(AuthContext);
+  const { setUser } = useUser();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [alert, setAlert] = useState<AlertState | null>(null);
 
   useEffect(() => {
-    if (token?.length > 0) {
+    if (window.localStorage.getItem("token")) {
       navigate("/dashboard", {
         replace: true,
       });
     }
-    console.log(token);
   }, [token]);
 
   const handleLogin = async () => {
     if (!email || !password) {
-      setError("Please fill out all fields");
+      setAlert({ status: "warning", message: "Please fill out all fields" });
       return;
     }
 
@@ -39,17 +43,19 @@ export function Login() {
       password,
     };
 
-    const resultBody = await api.post("/auth", body);
+    const resultBody: AuthenticateResponse = await api.post("/auth", body);
 
-    if (resultBody.token) {
+    if ("token" in resultBody) {
       setToken(resultBody.token);
+      setUser(resultBody.user);
+
       setTimeout(() => {
         navigate("/dashboard", {
           replace: true,
         });
       }, 0);
     } else {
-      setError(sentenceCase(resultBody.error));
+      setAlert({ status: "warning", message: sentenceCase(resultBody.error) });
     }
   };
 
@@ -57,14 +63,18 @@ export function Login() {
     <PageWrapper center={false}>
       <h1 className="text-4xl font-bold">Login</h1>
 
-      {error && <p className="mb-4 text-error">{error}</p>}
+      {alert && (
+        <Alert status={alert.status} className="mt-4">
+          {alert.message}
+        </Alert>
+      )}
 
-      <form className="mt-4" onSubmit={handleLogin}>
+      <form className="" onSubmit={handleLogin}>
         <Input
           label="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="mt-4"
+          className="mt-4 w-96"
         />
 
         <Input
@@ -72,7 +82,7 @@ export function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           type="password"
-          className="mt-4"
+          className="mt-4 w-96"
         />
 
         <div className="flex justify-between items-center mt-4">

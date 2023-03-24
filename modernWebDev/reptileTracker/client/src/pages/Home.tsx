@@ -10,9 +10,11 @@ export function Home() {
 
   useEffect(() => {
     if (token?.length > 0) {
-      navigate("/dashboard", {
-        replace: true,
-      });
+      setTimeout(() => {
+        navigate("/dashboard", {
+          replace: true,
+        });
+      }, 0);
     }
   }, [token]);
 

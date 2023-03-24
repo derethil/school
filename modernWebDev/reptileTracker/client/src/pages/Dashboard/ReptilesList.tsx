@@ -72,7 +72,10 @@ export function ReptilesList() {
                 <Button
                   size="xs"
                   className="btn-neutral mr-2"
-                  onClick={() => handleDelete(reptile.id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(reptile.id);
+                  }}
                 >
                   Delete
                 </Button>

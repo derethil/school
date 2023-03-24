@@ -33,7 +33,13 @@ export function EditReptile(props: EditReptileProps) {
 
   return (
     <span className="font-sans">
-      <Button size="xs" onClick={toggleOpen}>
+      <Button
+        size="xs"
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleOpen();
+        }}
+      >
         Edit
       </Button>
       <FormModal
