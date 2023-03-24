@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { Reptile } from "@prisma/client";
 import { useApi } from "../../hooks/useApi";
 import { Button, Table } from "react-daisyui";
-import { snakeToSentence } from "../../util/snakeToSentence";
+import { snakeToSentence } from "../../util/stringCases";
+import { useNavigate } from "react-router-dom";
+import { EditReptile } from "./reptileForm/EditReptile";
 
 export function ReptilesList() {
   const api = useApi();
   const [reptiles, setReptiles] = useState<Reptile[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchReptiles = async () => {
@@ -22,16 +25,28 @@ export function ReptilesList() {
     setReptiles(reptiles.filter((reptile) => reptile.id !== id));
   };
 
+  const onEdit = (updatedReptile: Reptile) => {
+    setReptiles(
+      reptiles.map((reptile) => {
+        if (reptile.id === updatedReptile.id) {
+          return updatedReptile;
+        } else {
+          return reptile;
+        }
+      })
+    );
+  };
+
   return (
     <div>
       <h1 className="text-2xl w-64 mb-4">My Reptiles</h1>
 
       <Table className="w-96">
         <Table.Head>
-          <span>Name</span>
-          <span>Species</span>
-          <span>Sex</span>
-          <span>Actions</span>
+          <div className="w-24">Name</div>
+          <div className="w-24">Species</div>
+          <div className="w-8">Sex</div>
+          <div className="w-28">Actions</div>
         </Table.Head>
 
         <Table.Body>
@@ -43,11 +58,12 @@ export function ReptilesList() {
               <span>
                 <Button
                   size="xs"
-                  className="btn-neutral"
+                  className="btn-neutral mr-2"
                   onClick={() => handleDelete(reptile.id)}
                 >
                   Delete
                 </Button>
+                <EditReptile reptile={reptile} onEdit={onEdit} />
               </span>
             </Table.Row>
           ))}

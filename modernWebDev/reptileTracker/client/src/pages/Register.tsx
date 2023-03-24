@@ -8,7 +8,7 @@ import { PageWrapper } from "../components/PageWrapper";
 import { Input } from "../components/Input";
 import { useApi } from "../hooks/useApi";
 import { AuthContext } from "../contexts/auth";
-import { sentenceCase } from "../util/sentenceCase";
+import { sentenceCase } from "../util/stringCases";
 
 export function Register() {
   const api = useApi();
@@ -38,9 +38,11 @@ export function Register() {
 
     if (resultBody.token) {
       setToken(resultBody.token);
-      navigate("/dashboard", {
-        replace: true,
-      });
+      setTimeout(() => {
+        navigate("/dashboard", {
+          replace: true,
+        });
+      }, 0);
     } else {
       setError(sentenceCase(resultBody.error));
     }

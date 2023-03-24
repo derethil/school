@@ -1,21 +1,23 @@
 import {
-  Input as DaisyInput,
-  InputProps as DaisyInputProps,
+  Select as DaisySelect,
+  SelectProps as DaisySelectProps,
 } from "react-daisyui";
 
-interface TextInputProps extends DaisyInputProps {
+interface DropdownProps extends DaisySelectProps {
   label: string;
-  labelClassName?: string;
+  className?: string;
 }
 
-export function Input(props: TextInputProps) {
+export function Select(props: DropdownProps) {
   const defaultClassName =
     "flex flex-col text-sm font-medium text-accent-content ";
 
   return (
     <label className={defaultClassName + props.className}>
       <p className="text-lg">{props.label}</p>
-      <DaisyInput className="mt-1 w-96" {...props} />
+      <DaisySelect className="mt-1 w-96" {...props}>
+        {props.children}
+      </DaisySelect>
     </label>
   );
 }

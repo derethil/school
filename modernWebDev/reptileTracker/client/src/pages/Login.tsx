@@ -8,7 +8,7 @@ import { useApi } from "../hooks/useApi";
 
 import { LoginBody } from "../../../dto/auth";
 import { AuthContext } from "../contexts/auth";
-import { sentenceCase } from "../util/sentenceCase";
+import { sentenceCase } from "../util/stringCases";
 
 export function Login() {
   const api = useApi();
@@ -42,9 +42,11 @@ export function Login() {
 
     if (resultBody.token) {
       setToken(resultBody.token);
-      navigate("/dashboard", {
-        replace: true,
-      });
+      setTimeout(() => {
+        navigate("/dashboard", {
+          replace: true,
+        });
+      }, 0);
     } else {
       setError(sentenceCase(resultBody.error));
     }

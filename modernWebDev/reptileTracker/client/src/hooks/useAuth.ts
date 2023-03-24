@@ -9,7 +9,7 @@ export const useAuth = () => {
     window.localStorage.setItem("token", token);
   }, [token]);
 
-  const isLoggedIn = token !== "";
+  const isLoggedIn = token !== null && token !== "";
 
   return { token, setToken, isLoggedIn };
 };

@@ -76,7 +76,7 @@ const deleteReptile: Endpoint = (deps) => [
       },
     });
 
-    res.status(204).send();
+    res.status(200).json({ success: true });
   },
 ];
 

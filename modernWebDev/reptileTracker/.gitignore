@@ -3,3 +3,4 @@ node_modules
 *.db
 *.zip
 postman_api_collection.json
+.vscode/
