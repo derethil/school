@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button } from "react-daisyui";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ import { sentenceCase } from "../util/sentenceCase";
 
 export function Register() {
   const api = useApi();
-  const { setToken } = useContext(AuthContext);
+  const { isLoggedIn, setToken } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [firstName, setFirstName] = useState("");
@@ -45,6 +45,14 @@ export function Register() {
       setError(sentenceCase(resultBody.error));
     }
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dashboard", {
+        replace: true,
+      });
+    }
+  }, [isLoggedIn]);
 
   return (
     <PageWrapper center={false}>

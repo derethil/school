@@ -30,6 +30,7 @@ export class Api {
       `${import.meta.env.VITE_SERVER_URL}${url}`,
       options
     );
+
     return result.json();
   }
 
