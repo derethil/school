@@ -2,20 +2,19 @@ import { useEffect } from "react";
 import { Button } from "react-daisyui";
 import { Link, useNavigate } from "react-router-dom";
 import { PageWrapper } from "../components/PageWrapper";
-import { useApi } from "../hooks/useApi";
 import { useAuth } from "../hooks/useAuth";
 
 export function Home() {
   const navigate = useNavigate();
-  const { isLoggedIn } = useAuth();
+  const { token } = useAuth();
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (token?.length > 0) {
       navigate("/dashboard", {
         replace: true,
       });
     }
-  }, [isLoggedIn]);
+  }, [token]);
 
   return (
     <PageWrapper>

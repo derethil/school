@@ -4,10 +4,10 @@ import { useAuth } from "./useAuth";
 
 export const useProtectedRoute = () => {
   const navigate = useNavigate();
-  const { isLoggedIn } = useAuth();
+  const { token } = useAuth();
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!token || token === "") {
       navigate("/", {
         replace: true,
       });

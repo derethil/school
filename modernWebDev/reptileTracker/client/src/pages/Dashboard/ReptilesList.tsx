@@ -61,7 +61,7 @@ export function ReptilesList() {
           {reptiles.map((reptile) => (
             <Table.Row
               key={reptile.id}
-              onClick={(e) => console.log("goto reptile")}
+              onClick={(e) => navigate(`/reptile/${reptile.id}`)}
               className="cursor-pointer"
               hover
             >

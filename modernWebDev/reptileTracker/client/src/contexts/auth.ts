@@ -1,12 +1,12 @@
 import { createContext } from "react";
 
 interface AuthContext {
-  isLoggedIn: boolean;
+  token: string;
   setToken: (token: string) => void;
 }
 
 const defaultContext: AuthContext = {
-  isLoggedIn: false,
+  token: "",
   setToken: (token) => {},
 };
 

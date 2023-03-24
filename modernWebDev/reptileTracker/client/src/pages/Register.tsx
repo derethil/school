@@ -12,7 +12,7 @@ import { sentenceCase } from "../util/stringCases";
 
 export function Register() {
   const api = useApi();
-  const { isLoggedIn, setToken } = useContext(AuthContext);
+  const { token, setToken } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [firstName, setFirstName] = useState("");
@@ -49,12 +49,12 @@ export function Register() {
   };
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (token?.length > 0) {
       navigate("/dashboard", {
         replace: true,
       });
     }
-  }, [isLoggedIn]);
+  }, [token]);
 
   return (
     <PageWrapper center={false}>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export const useAuth = () => {
   const [token, setToken] = useState(
@@ -9,7 +9,5 @@ export const useAuth = () => {
     window.localStorage.setItem("token", token);
   }, [token]);
 
-  const isLoggedIn = token !== null && token !== "";
-
-  return { token, setToken, isLoggedIn };
+  return { token, setToken };
 };
