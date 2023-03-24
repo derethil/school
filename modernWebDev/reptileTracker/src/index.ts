@@ -1,5 +1,6 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
+import cors from "cors";
 
 import dotenv from "dotenv";
 import { ControllerDependencies } from "./dto/controllers";
@@ -12,6 +13,7 @@ dotenv.config();
 const client = new PrismaClient();
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 const controllerDependencies: ControllerDependencies = {
   client,

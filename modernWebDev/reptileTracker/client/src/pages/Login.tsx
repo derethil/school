@@ -1,19 +1,62 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button } from "react-daisyui";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Input } from "../components/Input";
 import { PageWrapper } from "../components/PageWrapper";
+import { useApi } from "../hooks/useApi";
+
+import { LoginBody } from "../../../dto/auth";
+import { AuthContext } from "../contexts/auth";
+import { sentenceCase } from "../util/sentenceCase";
 
 export function Login() {
+  const api = useApi();
+  const { isLoggedIn, setToken } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dashboard", {
+        replace: true,
+      });
+    }
+  }, [isLoggedIn]);
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      setError("Please fill out all fields");
+      return;
+    }
+
+    const body: LoginBody = {
+      email,
+      password,
+    };
+
+    const resultBody = await api.post("/auth", body);
+
+    if (resultBody.token) {
+      setToken(resultBody.token);
+      navigate("/dashboard", {
+        replace: true,
+      });
+    } else {
+      setError(sentenceCase(resultBody.error));
+    }
+  };
 
   return (
     <PageWrapper center={false}>
       <h1 className="text-4xl font-bold">Login</h1>
 
-      <form className="mt-4">
+      {error && <p className="mb-4 text-error">{error}</p>}
+
+      <form className="mt-4" onSubmit={handleLogin}>
         <Input
           label="Email"
           value={email}
@@ -39,7 +82,7 @@ export function Login() {
             </span>
           </div>
 
-          <Button type="button" color="primary">
+          <Button type="button" color="primary" onClick={handleLogin}>
             Login
           </Button>
         </div>

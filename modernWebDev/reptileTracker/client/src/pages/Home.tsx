@@ -1,8 +1,22 @@
+import { useEffect } from "react";
 import { Button } from "react-daisyui";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PageWrapper } from "../components/PageWrapper";
+import { useApi } from "../hooks/useApi";
+import { useAuth } from "../hooks/useAuth";
 
 export function Home() {
+  const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dashboard", {
+        replace: true,
+      });
+    }
+  }, [isLoggedIn]);
+
   return (
     <PageWrapper>
       <h1 className="text-5xl font-bold">Reptile Tracker</h1>
