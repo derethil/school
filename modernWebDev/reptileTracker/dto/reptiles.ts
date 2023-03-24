@@ -18,7 +18,7 @@ export interface CreateHusbandryBody {
 }
 
 export interface CreateScheduleBody {
-  type: string;
+  type: "feed" | "record" | "clean";
   description: string;
   monday: boolean;
   tuesday: boolean;
