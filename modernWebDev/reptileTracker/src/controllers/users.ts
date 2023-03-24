@@ -58,6 +58,9 @@ const getSchedules: Endpoint = (deps) => [
       where: {
         userId,
       },
+      include: {
+        reptile: true,
+      },
     });
 
     res.status(200).json({ schedules });

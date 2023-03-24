@@ -324,6 +324,48 @@ const getSchedules: Endpoint = (deps) => [
   },
 ];
 
+const deleteSchedule: Endpoint = (deps) => [
+  validationMiddleware,
+  async (req: RequestWithJWTBody, res) => {
+    const { client } = deps;
+    const userId = req.jwtBody?.userId;
+    const reptileId = parseInt(req.params.id);
+    const scheduleId = parseInt(req.params.scheduleId);
+
+    const reptile = await client.reptile.findFirst({
+      where: {
+        id: reptileId,
+        userId,
+      },
+    });
+
+    if (!reptile) {
+      res.status(404).json({ error: "resource not found" });
+      return;
+    }
+
+    const schedule = await client.schedule.findFirst({
+      where: {
+        id: scheduleId,
+        reptileId,
+      },
+    });
+
+    if (!schedule) {
+      res.status(404).json({ error: "resource not found" });
+      return;
+    }
+
+    await client.schedule.delete({
+      where: {
+        id: scheduleId,
+      },
+    });
+
+    res.status(200).json({ success: true });
+  },
+];
+
 export const reptilesController = controller("reptiles", [
   { path: "/", method: "post", endpoint: createReptile },
   { path: "/", method: "get", endpoint: getReptiles },
@@ -343,4 +385,9 @@ export const reptilesController = controller("reptiles", [
   },
   { path: "/:id/schedules", method: "post", endpoint: createSchedule },
   { path: "/:id/schedules", method: "get", endpoint: getSchedules },
+  {
+    path: "/:id/schedules/:scheduleId",
+    method: "delete",
+    endpoint: deleteSchedule,
+  },
 ]);

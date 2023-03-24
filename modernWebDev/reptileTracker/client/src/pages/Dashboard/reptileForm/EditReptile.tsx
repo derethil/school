@@ -34,6 +34,7 @@ export function EditReptile(props: EditReptileProps) {
   return (
     <span className="font-sans">
       <Button
+        className="mb-0.5"
         size="xs"
         onClick={(e) => {
           e.stopPropagation();

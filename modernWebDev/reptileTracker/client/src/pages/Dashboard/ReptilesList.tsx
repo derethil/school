@@ -7,23 +7,32 @@ import { useNavigate } from "react-router-dom";
 import { EditReptile } from "./reptileForm/EditReptile";
 import { CreateReptile } from "./reptileForm/CreateReptile";
 
-export function ReptilesList() {
+interface ReptilesListProps {
+  onDelete?: (id: number) => void;
+  onEdit?: (reptile: Reptile) => void;
+}
+
+export function ReptilesList(props: ReptilesListProps) {
   const api = useApi();
-  const [reptiles, setReptiles] = useState<Reptile[]>([]);
   const navigate = useNavigate();
+  const [reptiles, setReptiles] = useState<Reptile[]>([]);
+
+  const fetchReptiles = async () => {
+    const reptiles: Reptile[] = (await api.get("/reptiles")).reptiles;
+    setReptiles(reptiles);
+  };
 
   useEffect(() => {
-    const fetchReptiles = async () => {
-      const reptiles: Reptile[] = (await api.get("/reptiles")).reptiles;
-      setReptiles(reptiles);
-    };
-
     fetchReptiles();
   }, []);
 
   const handleDelete = async (id: number) => {
     const response = await api.del(`/reptiles/${id}`);
     setReptiles(reptiles.filter((reptile) => reptile.id !== id));
+
+    if (props.onDelete) {
+      props?.onDelete(id);
+    }
   };
 
   const onEdit = (updatedReptile: Reptile) => {
@@ -36,12 +45,16 @@ export function ReptilesList() {
         }
       })
     );
+
+    if (props.onEdit) {
+      props?.onEdit(updatedReptile);
+    }
   };
 
   return (
     <div>
       <div className="flex justify-between">
-        <h1 className="text-2xl w-64 mb-4">My Reptiles</h1>
+        <h1 className="text-2xl mb-4">My Reptiles</h1>
         <CreateReptile
           onCreate={(reptile) => {
             setReptiles([...reptiles, reptile]);
@@ -49,12 +62,12 @@ export function ReptilesList() {
         />
       </div>
 
-      <Table className="w-96">
+      <Table className="w-screen xl:w-96">
         <Table.Head>
-          <div className="w-24">Name</div>
-          <div className="w-24">Species</div>
-          <div className="w-8">Sex</div>
-          <div className="w-28">Actions</div>
+          <div className="xl:w-24">Name</div>
+          <div className="xl:w-24">Species</div>
+          <div className="xl:w-8">Sex</div>
+          <div className="xl:w-48">Actions</div>
         </Table.Head>
 
         <Table.Body>
@@ -68,7 +81,7 @@ export function ReptilesList() {
               <span>{reptile.name}</span>
               <span>{snakeToSentence(reptile.species)}</span>
               <span>{reptile.sex.toLocaleUpperCase()}</span>
-              <span>
+              <span className="flex justify-end items-center">
                 <Button
                   size="xs"
                   className="btn-neutral mr-2"
