@@ -1,12 +1,12 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Button } from "react-daisyui";
 import { Link, useNavigate } from "react-router-dom";
 import { PageWrapper } from "../components/PageWrapper";
-import { useAuth } from "../hooks/useAuth";
+import { AuthContext } from "../contexts/auth";
 
 export function Home() {
   const navigate = useNavigate();
-  const { token } = useAuth();
+  const { token } = useContext(AuthContext);
 
   useEffect(() => {
     if (token?.length > 0) {

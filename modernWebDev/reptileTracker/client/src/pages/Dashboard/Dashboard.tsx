@@ -1,14 +1,17 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Button } from "react-daisyui";
 import { useNavigate } from "react-router-dom";
 import { PageWrapper } from "../../components/PageWrapper";
-import { useAuth } from "../../hooks/useAuth";
+import { AuthContext } from "../../contexts/auth";
+
+import { useUser } from "../../hooks/useUser";
 import { ReptilesList } from "./ReptilesList";
 import { Schedules } from "./Schedules";
 
 export function Dashboard() {
+  const { user } = useUser();
   const navigate = useNavigate();
-  const { setToken } = useAuth();
+  const { setToken } = useContext(AuthContext);
 
   const handleLogout = () => {
     setToken("");
@@ -29,11 +32,16 @@ export function Dashboard() {
 
   return (
     <PageWrapper center={false}>
-      <div className="flex justify-between items-start">
+      <div className="flex justify-between items-start mb-4">
         <h1 className="text-4xl mb-6">Dashboard</h1>
-        <Button className="btn-primary" onClick={handleLogout}>
-          Logout
-        </Button>
+        <div className="flex items-center">
+          <p className="text-sm mr-2">
+            {user?.firstName} {user?.lastName}
+          </p>
+          <Button className="btn-primary" onClick={handleLogout}>
+            Logout
+          </Button>
+        </div>
       </div>
 
       <div className="flex  ">

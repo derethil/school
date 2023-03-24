@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-export const useAuth = () => {
+export const useAuthState = () => {
   const [token, setToken] = useState(
     window.localStorage.getItem("token") || ""
   );
