@@ -7,7 +7,9 @@ module.exports = {
     "node_modules/react-daisyui/dist/**/*.js",
   ],
   theme: {
-    extend: {},
+    extend: {
+      "128": "32rem",
+    },
   },
   plugins: [require("daisyui")],
 };

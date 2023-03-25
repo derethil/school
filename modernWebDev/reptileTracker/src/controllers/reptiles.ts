@@ -51,6 +51,31 @@ const getReptiles: Endpoint =
     res.status(200).json({ reptiles });
   };
 
+const getReptile: Endpoint = (deps) => async (req: RequestWithJWTBody, res) => {
+  const { client } = deps;
+  const userId = req.jwtBody?.userId;
+  const reptileId = parseInt(req.params.id);
+
+  const reptile = await client.reptile.findFirst({
+    where: {
+      userId,
+      id: reptileId,
+    },
+    include: {
+      feedings: true,
+      husbandryRecords: true,
+      schedules: true,
+    },
+  });
+
+  if (!reptile) {
+    res.status(404).json({ error: "resource not found" });
+    return;
+  }
+
+  res.status(200).json({ reptile });
+};
+
 const deleteReptile: Endpoint = (deps) => [
   validationMiddleware,
   async (req: RequestWithJWTBody, res) => {
@@ -204,7 +229,7 @@ const createHusbandryRecords: Endpoint = (deps) => [
       return;
     }
 
-    const husbandry = await client.husbandryRecord.create({
+    const husbandryRecord = await client.husbandryRecord.create({
       data: {
         reptile: {
           connect: {
@@ -218,7 +243,7 @@ const createHusbandryRecords: Endpoint = (deps) => [
       },
     });
 
-    res.status(201).json({ husbandry });
+    res.status(201).json({ husbandryRecord });
   },
 ];
 
@@ -369,6 +394,7 @@ const deleteSchedule: Endpoint = (deps) => [
 export const reptilesController = controller("reptiles", [
   { path: "/", method: "post", endpoint: createReptile },
   { path: "/", method: "get", endpoint: getReptiles },
+  { path: "/:id", method: "get", endpoint: getReptile },
   { path: "/:id", method: "delete", endpoint: deleteReptile },
   { path: "/:id", method: "put", endpoint: updateReptile },
   { path: "/:id/feedings", method: "post", endpoint: createFeeding },

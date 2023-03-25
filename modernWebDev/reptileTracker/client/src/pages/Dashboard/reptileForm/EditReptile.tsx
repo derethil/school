@@ -1,6 +1,6 @@
 import { Reptile } from "@prisma/client";
 import { useState } from "react";
-import { Button } from "react-daisyui";
+import { Button, ButtonProps } from "react-daisyui";
 import { useApi } from "../../../hooks/useApi";
 import { ReptileState } from "../../../types/reptileState";
 import { FormModal } from "./FormModal";
@@ -9,6 +9,8 @@ import { UpdateReptileBody } from "../../../../../dto/reptiles";
 interface EditReptileProps {
   reptile: Reptile;
   onEdit?: (reptile: Reptile) => void;
+  buttonSize?: ButtonProps["size"];
+  buttonText?: string;
 }
 
 interface EditReptileResponse {
@@ -35,13 +37,13 @@ export function EditReptile(props: EditReptileProps) {
     <span className="font-sans">
       <Button
         className="mb-0.5"
-        size="xs"
+        size={props.buttonSize ?? "xs"}
         onClick={(e) => {
           e.stopPropagation();
           toggleOpen();
         }}
       >
-        Edit
+        {props.buttonText ?? "Edit"}
       </Button>
       <FormModal
         reptileToEdit={{

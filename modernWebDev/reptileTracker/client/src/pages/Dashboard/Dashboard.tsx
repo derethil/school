@@ -2,6 +2,7 @@ import { Reptile } from "@prisma/client";
 import { useContext, useEffect, useState } from "react";
 import { Button } from "react-daisyui";
 import { useNavigate } from "react-router-dom";
+import { Header } from "../../components/Header";
 import { PageWrapper } from "../../components/PageWrapper";
 import { AuthContext } from "../../contexts/auth";
 import { useApi } from "../../hooks/useApi";
@@ -11,7 +12,7 @@ import { ScheduleWithReptile } from "../../types/reptileState";
 import { ReptilesList } from "./ReptilesList";
 import { Schedules } from "./Schedules";
 
-const daysOfWeek = [
+export const daysOfWeek = [
   "sunday",
   "monday",
   "tuesday",
@@ -23,14 +24,7 @@ const daysOfWeek = [
 
 export function Dashboard() {
   const api = useApi();
-  const { user } = useUser();
   const navigate = useNavigate();
-  const { setToken } = useContext(AuthContext);
-
-  const handleLogout = () => {
-    setToken("");
-    setTimeout(() => navigate("/"), 0);
-  };
 
   // Handle redirecting to login page if not logged in
   if (!window.localStorage.getItem("token")) return <></>;
@@ -86,17 +80,7 @@ export function Dashboard() {
 
   return (
     <PageWrapper center={false}>
-      <div className="flex justify-between items-start mb-4">
-        <h1 className="text-4xl mb-6">Dashboard</h1>
-        <div className="flex items-center">
-          <p className="text-sm mr-2">
-            {user?.firstName} {user?.lastName}
-          </p>
-          <Button className="btn-primary" onClick={handleLogout}>
-            Logout
-          </Button>
-        </div>
-      </div>
+      <Header pageTitle="Dashboard" />
 
       <div className="flex flex-col xl:flex-row">
         <div className="xl:mr-8">
