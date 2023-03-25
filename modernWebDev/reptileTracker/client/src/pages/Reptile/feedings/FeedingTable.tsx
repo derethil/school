@@ -5,16 +5,19 @@ import { sentenceCase } from "../../../util/stringCases";
 import { ReptileWithExtras } from "../Reptile";
 import { CreateFeeding } from "./CreateFeeding";
 
-interface ScheduleTableProps {
+interface FeedingTableProps {
   reptile: ReptileWithExtras;
 }
 
-export function FeedingTable(props: ScheduleTableProps) {
+export function FeedingTable(props: FeedingTableProps) {
   const { reptile: givenReptile } = props;
   const [reptile, setReptile] = useState(givenReptile);
 
   useEffect(() => {
-    setReptile(givenReptile);
+    setReptile({
+      ...givenReptile,
+      feedings: reptile.feedings,
+    });
   }, [givenReptile]);
 
   const handleCreateFeeding = (record: Feeding) => {

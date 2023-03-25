@@ -39,6 +39,8 @@ export function Reptile() {
     return <></>;
   }
 
+  console.log(reptile);
+
   return (
     <PageWrapper center={false}>
       <Header pageTitle={reptile.name} />

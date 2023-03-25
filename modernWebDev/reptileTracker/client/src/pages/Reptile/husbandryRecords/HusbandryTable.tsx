@@ -14,7 +14,10 @@ export function HusbandryTable(props: HusbandryTableProps) {
   const [reptile, setReptile] = useState(givenReptile);
 
   useEffect(() => {
-    setReptile(givenReptile);
+    setReptile({
+      ...givenReptile,
+      husbandryRecords: reptile.husbandryRecords,
+    });
   }, [givenReptile]);
 
   const handleCreateHusbandryRecord = (record: HusbandryRecord) => {
