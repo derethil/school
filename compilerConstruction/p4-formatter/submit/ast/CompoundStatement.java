@@ -14,7 +14,7 @@ public class CompoundStatement implements Statement {
 
     @Override
     public void toCminus(StringBuilder builder, String prefix) {
-        builder.append(prefix);
+//        builder.append(prefix);
         builder.append("{").append("\n");
 
         for (VarDeclaration varDeclaration: declarations) {
@@ -25,7 +25,7 @@ public class CompoundStatement implements Statement {
             statement.toCminus(builder, prefix);
         }
 
-        builder.append("\n}");
+        builder.append("}");
 
     }
 }

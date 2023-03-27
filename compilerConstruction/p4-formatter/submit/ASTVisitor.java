@@ -232,15 +232,22 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
     }
 
     @Override public Node visitOrExpression(CminusParser.OrExpressionContext ctx) {
-        return visitChildren(ctx);
+        List<Expression> andExpressions = new ArrayList<>();
+
+        for (CminusParser.AndExpressionContext exprCtx: ctx.andExpression()) {
+            andExpressions.add((Expression) visitAndExpression(exprCtx));
+        }
+
+        return new OrExpression(andExpressions);
     }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
-//    @Override public T visitAndExpression(CminusParser.AndExpressionContext ctx) { return visitChildren(ctx); }
+
+    @Override public Node visitAndExpression(CminusParser.AndExpressionContext ctx) {
+        List<Expression> unaryRelExpressions = new ArrayList<>();
+        for (CminusParser.UnaryRelExpressionContext unaryExpCtx: ctx.unaryRelExpression()) {
+            unaryRelExpressions.add((Expression) visitUnaryRelExpression(unaryExpCtx));
+        }
+        return new AndExpression(unaryRelExpressions);
+    }
 //    /**
 //     * {@inheritDoc}
 //     *
