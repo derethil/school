@@ -15,6 +15,6 @@ public class ExpressionStatement implements Statement {
             expression.toCminus(builder, prefix);
         }
 
-        builder.append(";\n");
+        builder.append(";");
     }
 }
