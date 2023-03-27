@@ -63,13 +63,3 @@ export function ScheduleTable(props: ScheduleTableProps) {
     </div>
   );
 }
-
-// Logging in
-// The display of the dashboard page showing the list of schedules and reptiles
-// Creating a new reptile
-// Editing an existing reptile
-// Creating a husbandry record for a reptile
-// Creating a feeding for a reptile
-// Creating a schedule for a reptile
-// Deleting a reptile
-// Logging out
