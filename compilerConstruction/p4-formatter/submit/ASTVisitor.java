@@ -1,7 +1,5 @@
 package submit;
 
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.TerminalNode;
 import parser.CminusBaseVisitor;
 import parser.CminusParser;
 import submit.ast.*;
@@ -200,11 +198,17 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
     @Override public Node visitExpression(CminusParser.ExpressionContext ctx) {
         if (ctx.simpleExpression() != null) {
             return visitSimpleExpression(ctx.simpleExpression());
-        } else {
-            BinaryOperatorType op = BinaryOperatorType.fromString(ctx.getChild(1).getText());
 
-            LOGGER.fine(op.toString());
+        } else if (ctx.getChildCount() == 2) {
+            Node mutable = visitMutable(ctx.mutable());
+
+        } else { // assignment operators
+            AssignmentType assignmentType = AssignmentType.fromString(ctx.getChild(1).getText());
+            Node mutable = visitMutable(ctx.mutable());
+            Node expression = visitExpression(ctx.expression());
+            return new Assignment((Mutable) mutable, assignmentType, (Expression) expression);
         }
+
         return new StringConstant("test");
     }
 
@@ -298,7 +302,10 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
 //     * <p>The default implementation returns the result of calling
 //     * {@link #visitChildren} on {@code ctx}.</p>
 //     */
-//    @Override public T visitMutable(CminusParser.MutableContext ctx) { return visitChildren(ctx); }
+    @Override public Node visitMutable(CminusParser.MutableContext ctx) {
+        Node mutable = new Mutable(ctx.ID().getText(), null);
+        return mutable;
+    }
 //    /**
 //     * {@inheritDoc}
 //     *

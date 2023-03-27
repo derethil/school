@@ -43,9 +43,9 @@ public class Main {
         // TODO Update the filename as needed
         final String filename = "data/test0.c";
 
-//        LOGGER.info("");
-//        LOGGER.info("Parsing " + filename + "\n");
-//        LOGGER.info("");
+        LOGGER.info("");
+        LOGGER.info("Parsing " + filename + "\n");
+        LOGGER.info("");
         final CharStream charStream = CharStreams.fromFileName(filename);
         CminusLexer lexer = new CminusLexer(charStream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);

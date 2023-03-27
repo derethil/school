@@ -1,0 +1,20 @@
+int a, b;
+int c[3];
+
+int fie()
+{
+  "test";
+
+}
+int foo(int a)
+{
+  "test";
+
+}
+int add(int a[], int b)
+{
+  int c, z;
+  "test";
+  return;
+
+}
