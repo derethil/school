@@ -19,8 +19,14 @@ public class FunDeclaration implements Declaration, Node {
     public void toCminus(StringBuilder builder, final String prefix) {
         builder.append("\n");
         builder.append(prefix);
-        returnType.toCminus(builder, prefix);
-        builder.append(" ");
+
+        if (returnType == null) {
+            builder.append("void").append(" ");
+        } else {
+            returnType.toCminus(builder, prefix);
+            builder.append(" ");
+        }
+
         builder.append(id).append("(");
 
         for (Param parameter : parameters) {
@@ -35,12 +41,6 @@ public class FunDeclaration implements Declaration, Node {
         builder.append(")\n");
 
         builder.append(prefix);
-        builder.append("{\n");
-
-        builder.append(prefix);
         statement.toCminus(builder, prefix + "  ");
-
-        builder.append(prefix);
-        builder.append("}\n");
     }
 }

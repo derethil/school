@@ -60,4 +60,8 @@ public class SymbolTable {
     return parent;
   }
 
+  public String toString() {
+    return table.toString();
+  }
+
 }

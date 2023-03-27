@@ -29,16 +29,11 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         for (CminusParser.DeclarationContext d : ctx.declaration()) {
             decls.add((Declaration) visitDeclaration(d));
         }
+
         return new Program(decls);
     }
 
     @Override public Node visitVarDeclaration(CminusParser.VarDeclarationContext ctx) {
-        for (CminusParser.VarDeclIdContext v : ctx.varDeclId()) {
-            String id = v.ID().getText();
-            LOGGER.fine("Var ID: " + id);
-        }
-
-
         VarType type = getVarType(ctx.typeSpecifier());
         List<String> ids = new ArrayList<>();
         List<Integer> arraySizes = new ArrayList<>();
@@ -64,8 +59,6 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
     }
 
     @Override public Node visitConstant(CminusParser.ConstantContext ctx) {
-        // constant : NUMCONST | CHARCONST | STRINGCONST | 'true' | 'false' ;
-
         final Node node;
         if (ctx.NUMCONST() != null) {
             node = new NumConstant(Integer.parseInt(ctx.NUMCONST().getText()));
@@ -90,16 +83,26 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
 
         return node;
     }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
-//    @Override public T visitVarDeclId(CminusParser.VarDeclIdContext ctx) { return visitChildren(ctx); }
+
+//    @Override public Node visitVarDeclId(CminusParser.VarDeclIdContext ctx) {
+//        return visitChildren(ctx);
+//    }
+
     @Override public Node visitFunDeclaration(CminusParser.FunDeclarationContext ctx) {
-        // ('void' | typeSpecifier) ID '(' param? (',' param)* ')' statement ;
-        TypeSpecifier type = (TypeSpecifier) visitTypeSpecifier(ctx.typeSpecifier());
+        TypeSpecifier type;
+        if (ctx.typeSpecifier() == null) {
+            type = null;
+        } else {
+            type = (TypeSpecifier) visitTypeSpecifier(ctx.typeSpecifier());
+        }
+
+        VarType returnType = getVarType(ctx.typeSpecifier());
+        symbolTable.addSymbol(ctx.ID().getText(), new SymbolInfo(
+            ctx.ID().getText(),
+            returnType,
+            true
+        ));
+
         String id = ctx.ID().getText();
         List<Param> params = new ArrayList<>();
         Statement statement = (Statement) visitStatement(ctx.statement());
@@ -130,23 +133,48 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
     }
 
     @Override public Node visitStatement(CminusParser.StatementContext ctx) {
+        Node node;
+
+        if (ctx.expressionStmt() != null) {
+            return visitExpressionStmt(ctx.expressionStmt());
+        } else if (ctx.compoundStmt() != null) {
+            return visitCompoundStmt(ctx.compoundStmt());
+        } else if (ctx.ifStmt() != null) {
+
+        } else if (ctx.whileStmt() != null) {
+
+        } else if (ctx.returnStmt() != null) {
+
+        } else if (ctx.breakStmt() != null) {
+
+        }
         return new Return(null);
-//        return visitChildren(ctx);
     }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
-//    @Override public T visitCompoundStmt(CminusParser.CompoundStmtContext ctx) { return visitChildren(ctx); }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
-//    @Override public T visitExpressionStmt(CminusParser.ExpressionStmtContext ctx) { return visitChildren(ctx); }
+
+    @Override public Node visitCompoundStmt(CminusParser.CompoundStmtContext ctx) {
+        symbolTable = symbolTable.createChild();
+
+        List<VarDeclaration> declarations = new ArrayList<>();
+        List<Statement> statements = new ArrayList<>();
+
+        for (CminusParser.VarDeclarationContext varCtx : ctx.varDeclaration()) {
+            Node node = visitVarDeclaration(varCtx);
+            declarations.add((VarDeclaration) node);
+        }
+
+        for (CminusParser.StatementContext stmtCtx : ctx.statement()) {
+            Node node = visitStatement(stmtCtx);
+            statements.add((Statement) node);
+        }
+
+        return new CompoundStatement(declarations, statements);
+
+    }
+
+    @Override public Node visitExpressionStmt(CminusParser.ExpressionStmtContext ctx) {
+        Node expression = visitExpression(ctx.expression());
+        return new ExpressionStatement((Expression) expression);
+    }
 //    /**
 //     * {@inheritDoc}
 //     *
@@ -168,27 +196,25 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
 //     * {@link #visitChildren} on {@code ctx}.</p>
 //     */
 //    @Override public T visitBreakStmt(CminusParser.BreakStmtContext ctx) { return visitChildren(ctx); }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
-//    @Override public T visitExpression(CminusParser.ExpressionContext ctx) { return visitChildren(ctx); }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
-//    @Override public T visitSimpleExpression(CminusParser.SimpleExpressionContext ctx) { return visitChildren(ctx); }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
-//    @Override public T visitOrExpression(CminusParser.OrExpressionContext ctx) { return visitChildren(ctx); }
+
+    @Override public Node visitExpression(CminusParser.ExpressionContext ctx) {
+        if (ctx.simpleExpression() != null) {
+            return visitSimpleExpression(ctx.simpleExpression());
+        } else {
+            BinaryOperatorType op = BinaryOperatorType.fromString(ctx.getChild(1).getText());
+
+            LOGGER.fine(op.toString());
+        }
+        return new StringConstant("test");
+    }
+
+    @Override public Node visitSimpleExpression(CminusParser.SimpleExpressionContext ctx) {
+        return visitOrExpression(ctx.orExpression());
+    }
+
+    @Override public Node visitOrExpression(CminusParser.OrExpressionContext ctx) {
+        return visitChildren(ctx);
+    }
 //    /**
 //     * {@inheritDoc}
 //     *
