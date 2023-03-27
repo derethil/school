@@ -1,20 +1,31 @@
+Parsing data/test0.c
+
+
+
+Building abstract syntax tree
+
+Undefined symbol on line 12: print
+Undefined symbol on line 16: print
+
+Formatted code:
+
 int a, b;
 int c[3];
 
 int fie()
 {
-  "test";
+  print(a);
 
 }
 int foo(int a)
 {
-  "test";
+  print(a);
 
 }
 int add(int a[], int b)
 {
   int c, z;
-  "test";
+  c -= 3;
   return;
 
 }

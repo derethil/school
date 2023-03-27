@@ -1,5 +1,6 @@
 package submit;
 
+import org.antlr.v4.runtime.RuleContext;
 import parser.CminusBaseVisitor;
 import parser.CminusParser;
 import submit.ast.*;
@@ -138,7 +139,7 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         } else if (ctx.compoundStmt() != null) {
             return visitCompoundStmt(ctx.compoundStmt());
         } else if (ctx.ifStmt() != null) {
-
+            return visitIfStmt(ctx.ifStmt());
         } else if (ctx.whileStmt() != null) {
 
         } else if (ctx.returnStmt() != null) {
@@ -146,6 +147,7 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         } else if (ctx.breakStmt() != null) {
 
         }
+
         return new Return(null);
     }
 
@@ -165,6 +167,8 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
             statements.add((Statement) node);
         }
 
+        RuleContext parentCtx = ctx.parent;
+
         return new CompoundStatement(declarations, statements);
 
     }
@@ -173,13 +177,24 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         Node expression = visitExpression(ctx.expression());
         return new ExpressionStatement((Expression) expression);
     }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
-//    @Override public T visitIfStmt(CminusParser.IfStmtContext ctx) { return visitChildren(ctx); }
+    @Override public Node visitIfStmt(CminusParser.IfStmtContext ctx) {
+        Node expression = visitSimpleExpression(ctx.simpleExpression());
+
+        List<CminusParser.StatementContext> statements= ctx.statement();
+        if (statements.size() == 1) {
+            return new IfStatement(
+                    (Expression) expression,
+                    (Statement) visitStatement(statements.get(0)),
+                    null
+            );
+        } else {
+            return new IfStatement(
+                    (Expression) expression,
+                    (Statement) visitStatement(statements.get(0)),
+                    (Statement) visitStatement(statements.get(1))
+            );
+        }
+    }
 //    /**
 //     * {@inheritDoc}
 //     *
@@ -196,20 +211,20 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
 //    @Override public T visitBreakStmt(CminusParser.BreakStmtContext ctx) { return visitChildren(ctx); }
 
     @Override public Node visitExpression(CminusParser.ExpressionContext ctx) {
-        if (ctx.simpleExpression() != null) {
-            return visitSimpleExpression(ctx.simpleExpression());
-
-        } else if (ctx.getChildCount() == 2) {
-            Node mutable = visitMutable(ctx.mutable());
-
-        } else { // assignment operators
-            AssignmentType assignmentType = AssignmentType.fromString(ctx.getChild(1).getText());
-            Node mutable = visitMutable(ctx.mutable());
-            Node expression = visitExpression(ctx.expression());
-            return new Assignment((Mutable) mutable, assignmentType, (Expression) expression);
+        switch (ctx.getChildCount()) {
+            case 1 -> {
+                return visitSimpleExpression(ctx.simpleExpression());
+            }
+            case 2 -> {
+                return visitMutable(ctx.mutable());
+            }
+            default -> {
+                BinaryOperatorType type = BinaryOperatorType.fromString(ctx.getChild(1).getText());
+                Node mutable = visitMutable(ctx.mutable());
+                Node expression = visitExpression(ctx.expression());
+                return new BinaryOperator((Mutable) mutable, type, (Expression) expression);
+            }
         }
-
-        return new StringConstant("test");
     }
 
     @Override public Node visitSimpleExpression(CminusParser.SimpleExpressionContext ctx) {
@@ -306,19 +321,29 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         Node mutable = new Mutable(ctx.ID().getText(), null);
         return mutable;
     }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
-//    @Override public T visitImmutable(CminusParser.ImmutableContext ctx) { return visitChildren(ctx); }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
-//    @Override public T visitCall(CminusParser.CallContext ctx) { return visitChildren(ctx); }
 
+    @Override public Node visitImmutable(CminusParser.ImmutableContext ctx) {
+        if (ctx.expression() != null) {
+            Node expression = visitExpression(ctx.expression());
+            return new Immutable((Expression) expression);
+        } else if (ctx.call() != null) {
+            return visitCall(ctx.call());
+        } else {
+            return visitConstant(ctx.constant());
+        }
+    }
+
+    @Override public Node visitCall(CminusParser.CallContext ctx) {
+        if (symbolTable.find(ctx.ID().getText()) == null) {
+            LOGGER.warning("Undefined symbol on line " + ctx.start.getLine() + ": " + ctx.ID().getText());
+        }
+
+        List<Expression> arguments = new ArrayList<>();
+
+        for (CminusParser.ExpressionContext expressionContext : ctx.expression()) {
+            arguments.add((Expression) visitExpression(expressionContext));
+        }
+
+        return new Call(ctx.ID().getText(), arguments);
+    }
 }

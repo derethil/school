@@ -5,6 +5,7 @@ import java.util.List;
 public class CompoundStatement implements Statement {
     private final List<VarDeclaration> declarations;
     private final List<Statement> statements;
+    private final boolean shouldAppendPrefix = true;
 
     public CompoundStatement(List<VarDeclaration> declarations, List<Statement> statements) {
         this.declarations = declarations;
@@ -13,6 +14,7 @@ public class CompoundStatement implements Statement {
 
     @Override
     public void toCminus(StringBuilder builder, String prefix) {
+        builder.append(prefix);
         builder.append("{").append("\n");
 
         for (VarDeclaration varDeclaration: declarations) {
