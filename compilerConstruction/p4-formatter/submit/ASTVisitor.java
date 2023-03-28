@@ -6,8 +6,6 @@ import parser.CminusParser;
 import submit.ast.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -100,7 +98,7 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         }
 
         VarType returnType = type != null ? getVarType(ctx.typeSpecifier()) : null;
-        symbolTable.addSymbol(ctx.ID().getText(), new SymbolInfo(
+        symbolTable.getParent().addSymbol(ctx.ID().getText(), new SymbolInfo(
             ctx.ID().getText(),
             returnType,
             true
@@ -108,6 +106,9 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
 
         String id = ctx.ID().getText();
         List<Param> params = new ArrayList<>();
+
+        symbolTable = symbolTable.createChild();
+
         for (CminusParser.ParamContext paramCtx : ctx.param()) {
             Node param = visitParam(paramCtx);
             params.add((Param) param);
@@ -177,6 +178,7 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
             Node node = visitStatement(stmtCtx);
             statements.add((Statement) node);
         }
+        symbolTable = symbolTable.getParent();
 
         boolean shouldIndent = !(ctx.parent.parent instanceof CminusParser.FunDeclarationContext);
         return new CompoundStatement(declarations, statements, shouldIndent);
@@ -365,16 +367,11 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
 //     * {@link #visitChildren} on {@code ctx}.</p>
 //     */
 //    @Override public T visitFactor(CminusParser.FactorContext ctx) { return visitChildren(ctx); }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
+
     @Override public Node visitMutable(CminusParser.MutableContext ctx) {
 
         if (symbolTable.find(ctx.ID().getText()) == null) {
-            LOGGER.warning("Undefined symbol on line " + ctx.start.getLine() + ": " + ctx.ID().getText());
+            LOGGER.warning("Undefined symbol on line " + ctx.getStart().getLine() + ": " + ctx.ID().getText());
         }
 
         if (ctx.expression() != null) {

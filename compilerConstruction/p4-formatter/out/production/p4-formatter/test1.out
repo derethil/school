@@ -6,6 +6,7 @@ Parsing data/test1.c
 Building abstract syntax tree
 
 Undefined symbol on line 36: fred
+Undefined symbol on line 56: z
 Undefined symbol on line 60: fie
 
 Formatted code:
@@ -77,6 +78,5 @@ int main()
   fie();
   return 0;
 }
-
 
 
