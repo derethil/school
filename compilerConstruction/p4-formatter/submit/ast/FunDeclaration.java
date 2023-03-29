@@ -41,7 +41,7 @@ public class FunDeclaration implements Declaration, Node {
         builder.append(")\n");
 
         builder.append(prefix);
-        statement.toCminus(builder, prefix + "  ");
+        statement.toCminus(builder, prefix);
 
         builder.append("\n");
     }

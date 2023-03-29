@@ -1,6 +1,6 @@
 package submit;
 
-import org.antlr.v4.runtime.RuleContext;
+import org.antlr.v4.runtime.tree.TerminalNode;
 import parser.CminusBaseVisitor;
 import parser.CminusParser;
 import submit.ast.*;
@@ -77,7 +77,9 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         if (varCtx != null) {
             node = visitVarDeclaration(varCtx);
         } else {
+            symbolTable = symbolTable.createChild();
             node = visitFunDeclaration(ctx.funDeclaration());
+            symbolTable = symbolTable.getParent();
         }
 
         return node;
@@ -95,8 +97,8 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
             type = (TypeSpecifier) visitTypeSpecifier(ctx.typeSpecifier());
         }
 
-        VarType returnType = getVarType(ctx.typeSpecifier());
-        symbolTable.addSymbol(ctx.ID().getText(), new SymbolInfo(
+        VarType returnType = type != null ? getVarType(ctx.typeSpecifier()) : null;
+        symbolTable.getParent().addSymbol(ctx.ID().getText(), new SymbolInfo(
             ctx.ID().getText(),
             returnType,
             true
@@ -104,13 +106,24 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
 
         String id = ctx.ID().getText();
         List<Param> params = new ArrayList<>();
-        Statement statement = (Statement) visitStatement(ctx.statement());
 
+        symbolTable = symbolTable.createChild();
 
         for (CminusParser.ParamContext paramCtx : ctx.param()) {
             Node param = visitParam(paramCtx);
             params.add((Param) param);
+
+            SymbolInfo paramInfo = new SymbolInfo(
+                    paramCtx.paramId().getChild(0).getText(),
+                    getVarType(paramCtx.typeSpecifier()),
+                    false
+            );
+
+            symbolTable.addSymbol(paramCtx.paramId().getChild(0).getText(), paramInfo);
         }
+
+        Statement statement = (Statement) visitStatement(ctx.statement());
+        symbolTable = symbolTable.getParent();
 
         return new FunDeclaration(type, id, params, statement);
     }
@@ -133,22 +146,21 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
 
     @Override public Node visitStatement(CminusParser.StatementContext ctx) {
         Node node;
-
         if (ctx.expressionStmt() != null) {
-            return visitExpressionStmt(ctx.expressionStmt());
+            node = visitExpressionStmt(ctx.expressionStmt());
         } else if (ctx.compoundStmt() != null) {
-            return visitCompoundStmt(ctx.compoundStmt());
+            node = visitCompoundStmt(ctx.compoundStmt());
         } else if (ctx.ifStmt() != null) {
-            return visitIfStmt(ctx.ifStmt());
+            node = visitIfStmt(ctx.ifStmt());
         } else if (ctx.whileStmt() != null) {
-
+            node = visitWhileStmt(ctx.whileStmt());
         } else if (ctx.returnStmt() != null) {
-
-        } else if (ctx.breakStmt() != null) {
-
+            node = new Return((Expression) visitExpression(ctx.returnStmt().expression()));
+        } else { // ctx.breakStmt() != null
+            node = new Break();
         }
 
-        return new Return(null);
+        return node;
     }
 
     @Override public Node visitCompoundStmt(CminusParser.CompoundStmtContext ctx) {
@@ -166,10 +178,10 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
             Node node = visitStatement(stmtCtx);
             statements.add((Statement) node);
         }
+        symbolTable = symbolTable.getParent();
 
-        RuleContext parentCtx = ctx.parent;
-
-        return new CompoundStatement(declarations, statements);
+        boolean shouldIndent = !(ctx.parent.parent instanceof CminusParser.FunDeclarationContext);
+        return new CompoundStatement(declarations, statements, shouldIndent);
 
     }
 
@@ -195,13 +207,12 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
             );
         }
     }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
-//    @Override public T visitWhileStmt(CminusParser.WhileStmtContext ctx) { return visitChildren(ctx); }
+
+    @Override public Node visitWhileStmt(CminusParser.WhileStmtContext ctx) {
+        Node expression = visitSimpleExpression(ctx.simpleExpression());
+        Node statement = visitStatement(ctx.statement());
+        return new WhileStatement((Expression) expression, (Statement) statement);
+    }
 //    /**
 //     * {@inheritDoc}
 //     *
@@ -216,7 +227,8 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
                 return visitSimpleExpression(ctx.simpleExpression());
             }
             case 2 -> {
-                return visitMutable(ctx.mutable());
+                List<UnaryOperatorType> type = List.of(UnaryOperatorType.fromString(ctx.getChild(1).getText()));
+                return new UnaryExpression((Expression) visitMutable(ctx.mutable()), type, false);
             }
             default -> {
                 BinaryOperatorType type = BinaryOperatorType.fromString(ctx.getChild(1).getText());
@@ -248,20 +260,35 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         }
         return new AndExpression(unaryRelExpressions);
     }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
-//    @Override public T visitUnaryRelExpression(CminusParser.UnaryRelExpressionContext ctx) { return visitChildren(ctx); }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
-//    @Override public T visitRelExpression(CminusParser.RelExpressionContext ctx) { return visitChildren(ctx); }
+
+    @Override public Node visitUnaryRelExpression(CminusParser.UnaryRelExpressionContext ctx) {
+        Expression expression = (Expression) visitRelExpression(ctx.relExpression());
+        if (ctx.BANG() == null) {
+            return expression;
+        } else {
+            List<UnaryOperatorType> types = new ArrayList<>();
+            for (TerminalNode bang: ctx.BANG()) {
+                types.add(UnaryOperatorType.fromString(bang.getText()));
+            }
+            return new UnaryExpression(expression, types, true);
+        }
+    }
+
+    @Override public Node visitRelExpression(CminusParser.RelExpressionContext ctx) {
+        List<Expression> sumExpressions = new ArrayList<>();
+
+        for (CminusParser.SumExpressionContext sumCtx: ctx.sumExpression()) {
+            sumExpressions.add((Expression) visitSumExpression(sumCtx));
+        }
+
+        List<BinaryOperatorType> types = new ArrayList<>();
+
+        for (CminusParser.RelopContext relopCtx: ctx.relop()) {
+            types.add(BinaryOperatorType.fromString(relopCtx.getText()));
+        }
+
+        return new BinaryExpression(sumExpressions, types);
+    }
 //    /**
 //     * {@inheritDoc}
 //     *
@@ -269,13 +296,23 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
 //     * {@link #visitChildren} on {@code ctx}.</p>
 //     */
 //    @Override public T visitRelop(CminusParser.RelopContext ctx) { return visitChildren(ctx); }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
-//    @Override public T visitSumExpression(CminusParser.SumExpressionContext ctx) { return visitChildren(ctx); }
+
+    @Override public Node visitSumExpression(CminusParser.SumExpressionContext ctx) {
+        List<Expression> termExpressions = new ArrayList<>();
+
+        for (CminusParser.TermExpressionContext termCtx: ctx.termExpression()) {
+            termExpressions.add((Expression) visitTermExpression(termCtx));
+        }
+
+        List<BinaryOperatorType> types = new ArrayList<>();
+
+        for (CminusParser.SumopContext sumopCtx: ctx.sumop()) {
+            types.add(BinaryOperatorType.fromString(sumopCtx.getText()));
+        }
+
+        return new BinaryExpression(termExpressions, types);
+    }
+
 //    /**
 //     * {@inheritDoc}
 //     *
@@ -283,13 +320,22 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
 //     * {@link #visitChildren} on {@code ctx}.</p>
 //     */
 //    @Override public T visitSumop(CminusParser.SumopContext ctx) { return visitChildren(ctx); }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
-//    @Override public T visitTermExpression(CminusParser.TermExpressionContext ctx) { return visitChildren(ctx); }
+
+    @Override public Node visitTermExpression(CminusParser.TermExpressionContext ctx) {
+        List<Expression> unaryExpressions = new ArrayList<>();
+
+        for (CminusParser.UnaryExpressionContext unaryExpCtx: ctx.unaryExpression()) {
+            unaryExpressions.add((Expression) visitUnaryExpression(unaryExpCtx));
+        }
+
+        List<BinaryOperatorType> types = new ArrayList<>();
+
+        for (CminusParser.MulopContext sumopCtx: ctx.mulop()) {
+            types.add(BinaryOperatorType.fromString(sumopCtx.getText()));
+        }
+
+        return new BinaryExpression(unaryExpressions, types);
+    }
 //    /**
 //     * {@inheritDoc}
 //     *
@@ -297,13 +343,16 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
 //     * {@link #visitChildren} on {@code ctx}.</p>
 //     */
 //    @Override public T visitMulop(CminusParser.MulopContext ctx) { return visitChildren(ctx); }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
-//    @Override public T visitUnaryExpression(CminusParser.UnaryExpressionContext ctx) { return visitChildren(ctx); }
+
+    @Override public Node visitUnaryExpression(CminusParser.UnaryExpressionContext ctx) {
+        List<UnaryOperatorType> types = new ArrayList<>();
+
+        for (CminusParser.UnaryopContext unaryopCtx: ctx.unaryop()) {
+            types.add(UnaryOperatorType.fromString(unaryopCtx.getText()));
+        }
+
+        return new UnaryExpression((Expression) visitFactor(ctx.factor()), types, true);
+    }
 //    /**
 //     * {@inheritDoc}
 //     *
@@ -318,15 +367,18 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
 //     * {@link #visitChildren} on {@code ctx}.</p>
 //     */
 //    @Override public T visitFactor(CminusParser.FactorContext ctx) { return visitChildren(ctx); }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
+
     @Override public Node visitMutable(CminusParser.MutableContext ctx) {
-        Node mutable = new Mutable(ctx.ID().getText(), null);
-        return mutable;
+
+        if (symbolTable.find(ctx.ID().getText()) == null) {
+            LOGGER.warning("Undefined symbol on line " + ctx.getStart().getLine() + ": " + ctx.ID().getText());
+        }
+
+        if (ctx.expression() != null) {
+            return new Mutable(ctx.ID().getText(), (Expression) visitExpression(ctx.expression()));
+        } else {
+            return new Mutable(ctx.ID().getText(), null);
+        }
     }
 
     @Override public Node visitImmutable(CminusParser.ImmutableContext ctx) {
