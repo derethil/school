@@ -12,9 +12,7 @@ public enum BinaryOperatorType {
 
   OR("||"), AND("&&"),
   LE("<="), LT("<"), GT(">"), GE(">="), EQ("=="), NE("!="),
-  PLUS("+"), MINUS("-"), TIMES("*"), DIVIDE("/"), MOD("%"),
-  EQUALS("="), PLUS_EQUALS("+="), MINUS_EQUALS("-="), TIMES_EQUALS("*="), DIVIDE_EQUALS("/=");
-
+  PLUS("+"), MINUS("-"), TIMES("*"), DIVIDE("/"), MOD("%");
 
   private final String value;
 

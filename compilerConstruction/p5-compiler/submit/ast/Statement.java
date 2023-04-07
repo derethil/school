@@ -11,7 +11,6 @@ import java.util.ArrayList;
  * @author edwajohn
  */
 public interface Statement extends Node {
-    public default boolean isCompound() {
-        return false;
-    }
+    public static CompoundStatement empty() { return new CompoundStatement(new ArrayList<>()); }
+
 }

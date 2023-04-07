@@ -9,7 +9,6 @@ import java.util.List;
 
 /**
  *
- *
  * @author edwajohn
  */
 public class VarDeclaration implements Declaration, Node {

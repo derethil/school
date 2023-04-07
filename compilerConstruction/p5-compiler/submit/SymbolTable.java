@@ -60,23 +60,4 @@ public class SymbolTable {
     return parent;
   }
 
-  public String toString(boolean includeParents, int level) {
-    StringBuilder builder = new StringBuilder();
-    builder.append(level);
-    builder.append(": ");
-    builder.append(table);
-
-    if (includeParents && parent != null) {
-      builder.append(", ");
-      builder.append(parent.toString(true, level + 1));
-    }
-
-    return builder.toString();
-  }
-
-
-  public String toString() {
-      return this.toString(false, 0);
-  }
-
 }
