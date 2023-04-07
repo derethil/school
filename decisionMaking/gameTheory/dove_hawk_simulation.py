@@ -2,8 +2,7 @@ from abc import ABC, abstractmethod
 from argparse import ArgumentParser
 from enum import Enum
 from random import shuffle
-from types import NoneType
-from typing import Optional
+import sys
 import logging
 
 import numpy as np
@@ -47,8 +46,12 @@ class Agent(ABC):
         if self is other:
             return self is other
 
-    @abstractmethod
     def __repr__(self) -> str:
+        return self.__class__.__name__
+
+    @property
+    @abstractmethod
+    def color(self) -> str:
         raise NotImplementedError
 
     @abstractmethod
@@ -57,8 +60,7 @@ class Agent(ABC):
 
 
 class Dove(Agent):
-    def __repr__(self) -> str:
-        return "Dove"
+    color = "#3f7ea0"
 
     def get_outcome(self, others: list[Agent]) -> AgentOutcome:
         """
@@ -100,12 +102,11 @@ class Dove(Agent):
 
 
 class Hawk(Agent):
+    color = "#d53b50"
+
     def __init__(self) -> None:
         super().__init__()
         self.wins = 0
-
-    def __repr__(self) -> str:
-        return "Hawk"
 
     def get_outcome(self, others: list[Agent]) -> AgentOutcome:
         """
@@ -301,11 +302,14 @@ class Simulation:
     def plot_agent_history(self) -> None:
         counts = np.array([list(agents.values()) for agents in self.agent_history])
 
+        labels = np.unique([list(h.keys()) for h in self.agent_history])
+        colors = [str_to_class(agent).color for agent in labels]
+
         plt.stackplot(
             range(len(self.agent_history)),
             *counts.T,
-            labels=list(self.agent_history[0].keys()),
-            colors=["#3f7ea0", "#d53b50"],
+            labels=labels,
+            colors=colors,
         )
         plt.legend(loc="upper left")
         plt.show()
@@ -314,6 +318,10 @@ class Simulation:
 # ============
 # Main
 # ============
+
+
+def str_to_class(classname: str) -> type:
+    return getattr(sys.modules[__name__], classname)
 
 
 def logging_setup(verbose: bool) -> None:
