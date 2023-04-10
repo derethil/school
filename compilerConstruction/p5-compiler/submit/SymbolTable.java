@@ -12,6 +12,7 @@ import java.util.List;
  *
  */
 public class SymbolTable {
+  private static int labelCount = 0;
 
   private final HashMap<String, SymbolInfo> table;
   private SymbolTable parent;
@@ -21,6 +22,9 @@ public class SymbolTable {
     table = new HashMap<>();
     parent = null;
     children = new ArrayList<>();
+
+    // Add the built-in functions to the symbol table.
+    addSymbol("println", new SymbolInfo("println", null, true));
   }
 
   public void addSymbol(String id, SymbolInfo symbol) {
@@ -56,8 +60,29 @@ public class SymbolTable {
     return child;
   }
 
+  public SymbolTable getChild(int index) {
+    return children.get(index);
+  }
+
   public SymbolTable getParent() {
     return parent;
   }
 
+  public String getUniqueLabel() {
+    return "datalabel" + labelCount++;
+  }
+
+  public List<String> getSymbols() {
+    return new ArrayList<>(table.keySet());
+  }
+
+  // a function to find the child of a symbol table
+    public SymbolTable findChild(String id) {
+        for (SymbolTable child : children) {
+            if (child.find(id) != null) {
+                return child;
+            }
+        }
+        return null;
+    }
 }

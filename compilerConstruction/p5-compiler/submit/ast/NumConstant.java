@@ -4,6 +4,10 @@
  */
 package submit.ast;
 
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolTable;
+
 /**
  *
  * @author edwajohn
@@ -18,6 +22,18 @@ public class NumConstant implements Expression, Node {
 
   public void toCminus(StringBuilder builder, final String prefix) {
     builder.append(Integer.toString(value));
+  }
+
+  public MIPSResult toMIPS(
+          StringBuilder code,
+          StringBuilder data,
+          SymbolTable symbolTable,
+          RegisterAllocator regAllocator
+  ) {
+
+    String register = regAllocator.getT();
+    code.append("li ").append(register).append(" ").append(value).append("\n");
+    return MIPSResult.createRegisterResult(register, VarType.INT);
   }
 
 }

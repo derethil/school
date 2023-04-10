@@ -4,6 +4,11 @@
  */
 package submit.ast;
 
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolInfo;
+import submit.SymbolTable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +46,24 @@ public class FunDeclaration implements Declaration, Node {
     }
     builder.append(")\n");
     statement.toCminus(builder, prefix);
+  }
+
+  @Override
+  public MIPSResult toMIPS(
+          StringBuilder code,
+          StringBuilder data,
+          SymbolTable symbolTable,
+          RegisterAllocator regAllocator
+  ) {
+    code.append("\n# code for ").append(id).append("\n");
+    code.append(id).append(":\n");
+
+    SymbolTable child = symbolTable.getChild(0);
+    child.addSymbol("return", new SymbolInfo("return", returnType, false));
+
+    statement.toMIPS(code, data, symbolTable, regAllocator);
+
+    return null;
   }
 
 }
