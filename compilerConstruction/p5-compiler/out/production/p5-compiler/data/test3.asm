@@ -27,37 +27,17 @@ la $a0 newline
 li $v0 4
 syscall
 
-# Get a's offset from $sp from the symbol table and initialize a's address with it. We'll add $sp later.
-li $t0 -4
-# Add the stack pointer address to the offset.
-add $t0 $t0 $sp
-# Compute rhs for assignment = 
-li $t1 3
-# complete assignment statement with store
-sw $t1 0($t0)
-# Get b's offset from $sp from the symbol table and initialize b's address with it. We'll add $sp later.
-li $t0 -8
-# Add the stack pointer address to the offset.
-add $t0 $t0 $sp
-# Compute rhs for assignment = 
-li $t1 4
-# complete assignment statement with store
-sw $t1 0($t0)
+li $t0 3
+sw $t0 -4($sp)
+
+li $t0 4
+sw $t0 -8($sp)
+
 # println
-# Get a's offset from $sp from the symbol table and initialize a's address with it. We'll add $sp later.
-li $t0 -4
-# Add the stack pointer address to the offset.
-add $t0 $t0 $sp
-# Load the value of a.
-lw $t1 0($t0)
-# Get b's offset from $sp from the symbol table and initialize b's address with it. We'll add $sp later.
-li $t0 -8
-# Add the stack pointer address to the offset.
-add $t0 $t0 $sp
-# Load the value of b.
-lw $t2 0($t0)
-add $t1 $t1 $t2
-move $a0 $t1
+lw $t0 -4($sp)
+lw $t1 -8($sp)
+add $t0 $t0 $t1
+move $a0 $t0
 li $v0 1
 syscall
 la $a0 newline

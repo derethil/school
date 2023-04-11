@@ -34,13 +34,10 @@ public class SymbolTable {
 
   public void addSymbol(String id, SymbolInfo symbol) {
     table.put(id, symbol);
-    size += symbol.getOffset();
-  }
-
-  public void addVariable(String id, VarType type, boolean isStatic) {
-    size += type.getSize();
-    SymbolInfo symbol = new SymbolInfo(id, type, isStatic, size);
-    table.put(id, symbol);
+    if (symbol.getType() != null) {
+      size += symbol.getType().getSize();
+      symbol.setOffset(size);
+    }
   }
 
   /**
@@ -86,5 +83,21 @@ public class SymbolTable {
 
   public List<String> getSymbols() {
     return new ArrayList<>(table.keySet());
+  }
+
+  public void saveRegister(StringBuilder code, RegisterAllocator regAllocator, String register, String id) {
+    SymbolInfo symbol = find(id);
+    if (symbol == null) {
+      throw new RuntimeException("Symbol not found: " + id);
+    }
+    regAllocator.saveOneT(code, register, symbol.getOffset() * -1);
+  }
+
+  public void restoreRegister(StringBuilder code, RegisterAllocator regAllocator, String register, String id) {
+    SymbolInfo symbol = find(id);
+    if (symbol == null) {
+      throw new RuntimeException("Symbol not found: " + id);
+    }
+    regAllocator.restoreOneT(code, register, symbol.getOffset() * -1);
   }
 }

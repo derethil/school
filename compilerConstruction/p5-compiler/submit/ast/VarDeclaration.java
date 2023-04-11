@@ -56,9 +56,6 @@ public class VarDeclaration implements Declaration, Node {
           SymbolTable symbolTable,
           RegisterAllocator regAllocator
   ) {
-    for (String id : ids) {
-      symbolTable.addVariable(id, type, isStatic);
-    }
 
     return MIPSResult.createVoidResult();
   }

@@ -79,6 +79,16 @@ public final class RegisterAllocator {
         return saveRestore(code, baseOffset, false, true);
     }
 
+    public int saveOneT(StringBuilder code, String register, int offset) {
+        code.append(String.format("sw %s %d($sp)\n", register, offset));
+        return offset + 4;
+    }
+
+    public int restoreOneT(StringBuilder code, String register, int offset) {
+        code.append(String.format("lw %s %d($sp)\n", register, offset));
+        return offset + 4;
+    }
+
 //    public int restoreS(StringBuilder code, int baseOffset) {
 //        return saveRestore(code, baseOffset, true, false);
 //    }

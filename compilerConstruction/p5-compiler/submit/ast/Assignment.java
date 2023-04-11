@@ -47,20 +47,9 @@ public class Assignment implements Expression, Node {
           SymbolTable symbolTable,
           RegisterAllocator regAllocator
   ) {
-    MIPSResult mutableMIPS = mutable.toMIPS(code, data, symbolTable, regAllocator);
-
-    code.append("# Compute rhs for assignment = \n");
     MIPSResult rhsMIPS = rhs.toMIPS(code, data, symbolTable, regAllocator);
-
-    code.append("# complete assignment statement with store\n");
-    String rhsRegister = rhsMIPS.getRegister();
-    String mutableRegister = mutableMIPS.getRegister();
-
-    code.append(String.format("sw %s 0(%s)", rhsRegister, mutableRegister));
-
-    symbolTable.find(mutable.getId()).setInitialized(true);
-    regAllocator.clear(mutableRegister);
-    regAllocator.clear(rhsRegister);
+    symbolTable.saveRegister(code, regAllocator, rhsMIPS.getRegister(), mutable.getId());
+    regAllocator.clear(rhsMIPS.getRegister());
     return MIPSResult.createVoidResult();
   }
 
