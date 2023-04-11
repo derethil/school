@@ -23,7 +23,7 @@ public class SymbolTable {
   private int size;
 
   public SymbolTable() {
-    int size = 0;
+    size = 0;
     table = new HashMap<>();
     parent = null;
     children = new ArrayList<>();
@@ -35,7 +35,8 @@ public class SymbolTable {
   public void addSymbol(String id, SymbolInfo symbol) {
     table.put(id, symbol);
     if (symbol.getType() != null) {
-      size += symbol.getType().getSize();
+      int typeSize = symbol.getType().getSize();
+      size -= symbol.getType().getSize();
       symbol.setOffset(size);
     }
   }
@@ -53,6 +54,22 @@ public class SymbolTable {
     }
     if (parent != null) {
       return parent.find(id);
+    }
+    return null;
+  }
+
+  public SymbolInfo findWithOffset(String id) {
+    return findWithOffset(id, 0);
+  }
+
+  public SymbolInfo findWithOffset(String id, int totalParentOffset) {
+    if (table.containsKey(id)) {
+      SymbolInfo symbol = table.get(id).copy();
+      symbol.setOffset(totalParentOffset + symbol.getOffset());
+      return symbol;
+    }
+    if (parent != null) {
+      return parent.findWithOffset(id, totalParentOffset - parent.size);
     }
     return null;
   }
@@ -86,18 +103,23 @@ public class SymbolTable {
   }
 
   public void saveRegister(StringBuilder code, RegisterAllocator regAllocator, String register, String id) {
-    SymbolInfo symbol = find(id);
+    SymbolInfo symbol = findWithOffset(id);
     if (symbol == null) {
       throw new RuntimeException("Symbol not found: " + id);
     }
-    regAllocator.saveOneT(code, register, symbol.getOffset() * -1);
+    regAllocator.saveOneT(code, register, symbol.getOffset());
   }
 
   public void restoreRegister(StringBuilder code, RegisterAllocator regAllocator, String register, String id) {
-    SymbolInfo symbol = find(id);
+    SymbolInfo symbol = findWithOffset(id);
     if (symbol == null) {
       throw new RuntimeException("Symbol not found: " + id);
     }
-    regAllocator.restoreOneT(code, register, symbol.getOffset() * -1);
+    int offset = symbol.getOffset();
+    regAllocator.restoreOneT(code, register, symbol.getOffset());
+  }
+
+  public int getSize() {
+    return size;
   }
 }

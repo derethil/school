@@ -35,6 +35,10 @@ public class SymbolInfo {
     this.offset = offset;
   }
 
+  public SymbolInfo copy() {
+    return new SymbolInfo(id, type, function, offset);
+  }
+
   @Override
   public String toString() {
     return "<" + id + ", " + type + '>';

@@ -47,8 +47,10 @@ public class CompoundStatement implements Statement {
       code.append(String.format("# %s \n", symbol));
     });
 
+    int parentTableSize = this.symbolTable.getParent().getSize();
+
     code.append("# Update the stack pointer.\n");
-    code.append("addi $sp $sp -0\n"); // TODO: actually compute the size of the stack frame
+    code.append(String.format("addi $sp $sp %d\n", parentTableSize));
 
     statements.forEach((statement) -> {
       statement.toMIPS(code, data, this.symbolTable, regAllocator);
@@ -56,7 +58,7 @@ public class CompoundStatement implements Statement {
     });
 
     code.append("# Exiting scope.\n");
-    code.append("addi $sp $sp 0\n"); // TODO: actually compute the size of the stack frame
+    code.append(String.format("addi $sp $sp %d\n", -parentTableSize));
 
     return MIPSResult.createVoidResult();
   }

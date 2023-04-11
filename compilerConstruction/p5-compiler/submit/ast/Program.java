@@ -55,5 +55,4 @@ public class Program implements Node {
 
     return MIPSResult.createVoidResult();
   }
-
 }
