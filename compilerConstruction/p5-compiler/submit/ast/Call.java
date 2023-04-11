@@ -45,7 +45,7 @@ public class Call implements Expression {
           SymbolTable symbolTable,
           RegisterAllocator regAllocator
   ) {
-    code.append("# ").append(id).append("\n");
+    code.append(String.format("# Calling function %s\n", id));
     switch (id) {
       case "println" -> {
         MIPSResult result = args.get(0).toMIPS(code, data, symbolTable, regAllocator);
@@ -75,7 +75,34 @@ public class Call implements Expression {
       }
 
       default -> {
-       return null;
+       code.append("# Save $ra to a register\n");
+       String register = regAllocator.getT();
+       code.append(String.format("move %s $ra\n", register));
+
+       code.append("# Save $t0-9 registers\n");
+       int allocatedSize = regAllocator.saveT(code, symbolTable.getTotalSize());
+
+       code.append("# Evaluate parameters and save to stack\n");
+       // TODO: Evaluate parameters and save to stack
+
+       code.append("# Update the stack pointer\n");
+       code.append(String.format("addi $sp $sp %d\n", -allocatedSize));
+
+       code.append("# Call the function\n");
+       code.append(String.format("jal %s\n", id));
+
+       code.append("# Restore the stack pointer\n");
+       code.append(String.format("addi $sp $sp %d\n", allocatedSize));
+
+       code.append("# Restore $t0-9 registers\n");
+       regAllocator.restoreT(code, symbolTable.getTotalSize());
+
+       code.append("# Restore $ra\n");
+       code.append(String.format("move $ra %s\n", register));
+
+       regAllocator.clear(register);
+
+       return MIPSResult.createVoidResult();
       }
     }
   }

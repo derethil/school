@@ -63,6 +63,8 @@ public class FunDeclaration implements Declaration, Node {
 
     statement.toMIPS(code, data, symbolTable, regAllocator);
 
+    code.append("jr $ra\n");
+
     return null;
   }
 

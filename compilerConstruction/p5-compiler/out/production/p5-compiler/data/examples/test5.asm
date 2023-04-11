@@ -126,6 +126,7 @@ add $sp $sp 4
 lw $t0 -4($sp)
 # Restore $ra
 move $ra $t0
+
 # Calling function fum
 # Save $ra to a register
 move $t0 $ra

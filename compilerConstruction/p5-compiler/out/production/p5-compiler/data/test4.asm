@@ -82,8 +82,22 @@ syscall
 # Exiting scope.
 addi $sp $sp 4
 
+li $t0 4
+sw $t0 0($sp)
+
 # Exiting scope.
 addi $sp $sp 8
+
+# println
+lw $t0 -4($sp)
+lw $t1 -8($sp)
+add $t0 $t0 $t1
+move $a0 $t0
+li $v0 1
+syscall
+la $a0 newline
+li $v0 4
+syscall
 
 # Exiting scope.
 addi $sp $sp 0

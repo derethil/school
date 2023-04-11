@@ -122,4 +122,11 @@ public class SymbolTable {
   public int getSize() {
     return size;
   }
+
+  public int getTotalSize() {
+    if (parent == null) {
+      return size;
+    }
+    return size + parent.getTotalSize();
+  }
 }

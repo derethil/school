@@ -44,7 +44,7 @@ public class CompoundStatement implements Statement {
     code.append("# Entering a new scope.\n");
     code.append("# Symbols in symbol table:\n");
     this.symbolTable.getSymbols().forEach((symbol) -> {
-      code.append(String.format("# %s \n", symbol));
+      code.append(String.format("#  %s \n", symbol));
     });
 
     int parentTableSize = this.symbolTable.getParent().getSize();
