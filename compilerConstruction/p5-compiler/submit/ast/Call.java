@@ -53,12 +53,13 @@ public class Call implements Expression {
 
         switch (type) {
           case INT -> {
-            code.append("move $a0 ").append(result.getRegister()).append("\n");
+            String register = result.getRegister();
+            code.append(String.format("move $a0 %s\n", register));
             code.append("li $v0 1\n");
-            regAllocator.clear(result.getRegister());
+            regAllocator.clear(register);
           }
           case CHAR -> {
-            code.append("la $a0 ").append(result.getAddress()).append("\n");
+            code.append(String.format("la $a0 %s\n", result.getAddress()));
             code.append("li $v0 4\n");
           }
           default -> {

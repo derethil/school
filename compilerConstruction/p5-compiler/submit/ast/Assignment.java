@@ -4,6 +4,11 @@
  */
 package submit.ast;
 
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolInfo;
+import submit.SymbolTable;
+
 /**
  *
  * @author edwajohn
@@ -20,6 +25,11 @@ public class Assignment implements Expression, Node {
     this.rhs = rhs;
   }
 
+  public boolean isInitialized(SymbolTable symbolTable) {
+    SymbolInfo info = symbolTable.find(mutable.getId());
+    return info.isInitialized();
+  }
+
   public void toCminus(StringBuilder builder, final String prefix) {
     mutable.toCminus(builder, prefix);
     if (rhs != null) {
@@ -27,8 +37,31 @@ public class Assignment implements Expression, Node {
       rhs.toCminus(builder, prefix);
     } else {
       builder.append(type.toString());
-
     }
+  }
+
+  @Override
+  public MIPSResult toMIPS(
+          StringBuilder code,
+          StringBuilder data,
+          SymbolTable symbolTable,
+          RegisterAllocator regAllocator
+  ) {
+    MIPSResult mutableMIPS = mutable.toMIPS(code, data, symbolTable, regAllocator);
+
+    code.append("# Compute rhs for assignment = \n");
+    MIPSResult rhsMIPS = rhs.toMIPS(code, data, symbolTable, regAllocator);
+
+    code.append("# complete assignment statement with store\n");
+    String rhsRegister = rhsMIPS.getRegister();
+    String mutableRegister = mutableMIPS.getRegister();
+
+    code.append(String.format("sw %s 0(%s)", rhsRegister, mutableRegister));
+
+    symbolTable.find(mutable.getId()).setInitialized(true);
+    regAllocator.clear(mutableRegister);
+    regAllocator.clear(rhsRegister);
+    return MIPSResult.createVoidResult();
   }
 
 }

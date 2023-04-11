@@ -44,25 +44,26 @@ public class BinaryOperator implements Expression {
           RegisterAllocator regAllocator
   ) {
     MIPSResult left = lhs.toMIPS(code, data, symbolTable, regAllocator);
-    MIPSResult right = rhs.toMIPS(code, data, symbolTable, regAllocator);
-
     String leftRegister = left.getRegister();
+
+    MIPSResult right = rhs.toMIPS(code, data, symbolTable, regAllocator);
     String rightRegister = right.getRegister();
+
 
     switch (type) {
       case PLUS -> {
-        code.append("add ").append(leftRegister).append(" ").append(leftRegister).append(" ").append(rightRegister).append("\n");
+        code.append(String.format("add %s %s %s\n", leftRegister, leftRegister, rightRegister));
       }
       case MINUS -> {
-          code.append("sub ").append(leftRegister).append(" ").append(leftRegister).append(" ").append(rightRegister).append("\n");
+        code.append(String.format("sub %s %s %s\n", leftRegister, leftRegister, rightRegister));
       }
       case TIMES -> {
-        code.append("mult ").append(leftRegister).append(" ").append(rightRegister).append("\n");
-        code.append("mflo ").append(leftRegister).append("\n");
+        code.append(String.format("mult %s %s\n", leftRegister, rightRegister));
+        code.append(String.format("mflo %s\n", leftRegister));
       }
       case DIVIDE -> {
-        code.append("div ").append(leftRegister).append(" ").append(rightRegister).append("\n");
-        code.append("mflo ").append(leftRegister).append("\n");
+        code.append(String.format("div %s %s\n", leftRegister, rightRegister));
+        code.append(String.format("mflo %s\n", leftRegister));
       }
       default -> {
         throw new UnsupportedOperationException("BinaryOperatorType " + type + " not supported yet.");

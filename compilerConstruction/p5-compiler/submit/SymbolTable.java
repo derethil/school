@@ -1,5 +1,7 @@
 package submit;
 
+import submit.ast.VarType;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +20,10 @@ public class SymbolTable {
   private SymbolTable parent;
   private final List<SymbolTable> children;
 
+  private int size;
+
   public SymbolTable() {
+    int size = 0;
     table = new HashMap<>();
     parent = null;
     children = new ArrayList<>();
@@ -28,6 +33,13 @@ public class SymbolTable {
   }
 
   public void addSymbol(String id, SymbolInfo symbol) {
+    table.put(id, symbol);
+    size += symbol.getOffset();
+  }
+
+  public void addVariable(String id, VarType type, boolean isStatic) {
+    size += type.getSize();
+    SymbolInfo symbol = new SymbolInfo(id, type, isStatic, size);
     table.put(id, symbol);
   }
 
@@ -75,14 +87,4 @@ public class SymbolTable {
   public List<String> getSymbols() {
     return new ArrayList<>(table.keySet());
   }
-
-  // a function to find the child of a symbol table
-    public SymbolTable findChild(String id) {
-        for (SymbolTable child : children) {
-            if (child.find(id) != null) {
-                return child;
-            }
-        }
-        return null;
-    }
 }

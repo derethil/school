@@ -17,10 +17,22 @@ public class SymbolInfo {
   private final VarType type;
   private final boolean function;
 
+  private int offset;
+
+  private boolean isInitialized = false;
+
   public SymbolInfo(String id, VarType type, boolean function) {
     this.id = id;
     this.type = type;
     this.function = function;
+    this.offset = 0;
+  }
+
+  public SymbolInfo(String id, VarType type, boolean function, int offset) {
+    this.id = id;
+    this.type = type;
+    this.function = function;
+    this.offset = offset;
   }
 
   @Override
@@ -28,4 +40,23 @@ public class SymbolInfo {
     return "<" + id + ", " + type + '>';
   }
 
+  public VarType getType() {
+    return type;
+  }
+
+  public int getOffset() {
+    return offset;
+  }
+
+  public boolean isInitialized() {
+      return isInitialized;
+  }
+
+  public void setInitialized(boolean isInitialized) {
+      this.isInitialized = isInitialized;
+  }
+
+  public void setOffset(int offset) {
+    this.offset = offset;
+  }
 }

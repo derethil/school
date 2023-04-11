@@ -32,10 +32,7 @@ public class StringConstant implements Expression {
           RegisterAllocator regAllocator
   ) {
     String label = symbolTable.getUniqueLabel();
-
-    String start = String.format("%-14s", label + ":");
-    data.append(start).append(".asciiz ").append(value).append("\n");
-
+    data.append(String.format("%-14s.asciiz %s\n", label + ":", value));
     return MIPSResult.createAddressResult(label, VarType.CHAR);
   }
 }

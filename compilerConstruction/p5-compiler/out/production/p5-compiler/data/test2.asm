@@ -11,8 +11,8 @@ j main
 main:
 # Entering a new scope.
 # Symbols in symbol table:
-#  println
-#  return
+# println 
+# return 
 # Update the stack pointer.
 addi $sp $sp -0
 # println
@@ -22,6 +22,7 @@ syscall
 la $a0 newline
 li $v0 4
 syscall
+
 # println
 li $t0 7
 move $a0 $t0
@@ -30,6 +31,7 @@ syscall
 la $a0 newline
 li $v0 4
 syscall
+
 # println
 li $t0 3
 li $t1 4
@@ -40,6 +42,7 @@ syscall
 la $a0 newline
 li $v0 4
 syscall
+
 # println
 li $t0 14
 li $t1 2
@@ -51,6 +54,7 @@ syscall
 la $a0 newline
 li $v0 4
 syscall
+
 # println
 li $t0 7
 li $t1 1
@@ -62,6 +66,7 @@ syscall
 la $a0 newline
 li $v0 4
 syscall
+
 # println
 li $t0 7
 li $t1 2
@@ -76,6 +81,7 @@ syscall
 la $a0 newline
 li $v0 4
 syscall
+
 # Exiting scope.
 addi $sp $sp 0
 li $v0 10

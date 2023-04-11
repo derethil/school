@@ -32,7 +32,7 @@ public class NumConstant implements Expression, Node {
   ) {
 
     String register = regAllocator.getT();
-    code.append("li ").append(register).append(" ").append(value).append("\n");
+    code.append(String.format("li %s %d\n", register, value));
     return MIPSResult.createRegisterResult(register, VarType.INT);
   }
 

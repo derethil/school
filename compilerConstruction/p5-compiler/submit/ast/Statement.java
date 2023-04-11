@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * @author edwajohn
  */
 public interface Statement extends Node {
-    public static CompoundStatement empty() { return new CompoundStatement(new ArrayList<>()); }
-
+    public static CompoundStatement empty() {
+        return new CompoundStatement(new ArrayList<>(), null);
+    }
 }

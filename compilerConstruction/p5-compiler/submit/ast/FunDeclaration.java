@@ -55,8 +55,8 @@ public class FunDeclaration implements Declaration, Node {
           SymbolTable symbolTable,
           RegisterAllocator regAllocator
   ) {
-    code.append("\n# code for ").append(id).append("\n");
-    code.append(id).append(":\n");
+    code.append(String.format("\n# code for %s\n", id));
+    code.append(String.format("%s:\n", id));
 
     SymbolTable child = symbolTable.getChild(0);
     child.addSymbol("return", new SymbolInfo("return", returnType, false));

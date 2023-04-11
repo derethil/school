@@ -32,4 +32,13 @@ public enum VarType {
     return value;
   }
 
+  public int getSize() {
+    switch (this) {
+      case INT:
+        return 4;
+      default:
+        throw new RuntimeException("Unknown type: " + this);
+    }
+  }
+
 }
