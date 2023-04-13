@@ -11,15 +11,14 @@ j main
 main:
 # Entering a new scope.
 # Symbols in symbol table:
-# a 
-# println 
-# b 
-# return 
+#  a 
+#  println 
+#  b 
 # Update the stack pointer.
 addi $sp $sp 0
 
 
-# println
+# Calling function println
 la $a0 datalabel0
 li $v0 4
 syscall
@@ -33,7 +32,7 @@ sw $t0 -4($sp)
 li $t0 4
 sw $t0 -8($sp)
 
-# println
+# Calling function println
 lw $t0 -4($sp)
 lw $t1 -8($sp)
 add $t0 $t0 $t1

@@ -34,12 +34,23 @@ public class SymbolTable {
 
   public void addSymbol(String id, SymbolInfo symbol) {
     table.put(id, symbol);
-    if (symbol.getType() != null) {
-      int typeSize = symbol.getType().getSize();
+    if (symbol.getType() != null && !symbol.isFunction()) {
       size -= symbol.getType().getSize();
       symbol.setOffset(size);
+    } else if (id.equals("return")){
+      size -= 4;
+      symbol.setOffset(4);
     }
   }
+
+  public void updateSize(int size) {
+    this.size = size;
+  }
+
+  public int getSize() {
+    return size;
+  }
+
 
   /**
    * Returns null if no symbol with that id is in this symbol table or an
@@ -115,12 +126,7 @@ public class SymbolTable {
     if (symbol == null) {
       throw new RuntimeException("Symbol not found: " + id);
     }
-    int offset = symbol.getOffset();
     regAllocator.restoreOneT(code, register, symbol.getOffset());
-  }
-
-  public int getSize() {
-    return size;
   }
 
   public int getTotalSize() {

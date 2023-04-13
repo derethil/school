@@ -51,17 +51,30 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
     }
 
     @Override public Node visitFunDeclaration(CminusParser.FunDeclarationContext ctx) {
+//        SymbolTable child = symbolTable.createChild();
+//        symbolTable = child;
+
         VarType returnType = null;
         if (ctx.typeSpecifier() != null) {
             returnType = getVarType(ctx.typeSpecifier());
         }
         String id = ctx.ID().getText();
+
+        CompoundStatement statement = (CompoundStatement) visitStatement(ctx.statement());
+
+        SymbolTable statementSymbolTable = statement.getSymbolTable();
+        symbolTable = statementSymbolTable;
         List<Param> params = new ArrayList<>();
         for (CminusParser.ParamContext p : ctx.param()) {
             params.add((Param) visitParam(p));
         }
-        Statement statement = (Statement) visitStatement(ctx.statement());
+        symbolTable = symbolTable.getParent();
+
         symbolTable.addSymbol(id, new SymbolInfo(id, returnType, true));
+        if (returnType != null) {
+            statementSymbolTable.addSymbol("return", new SymbolInfo("return", returnType, false));
+        }
+
         return new FunDeclaration(returnType, id, params, statement);
     }
 

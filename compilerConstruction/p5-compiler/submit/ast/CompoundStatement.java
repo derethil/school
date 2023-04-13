@@ -63,4 +63,7 @@ public class CompoundStatement implements Statement {
     return MIPSResult.createVoidResult();
   }
 
+  public SymbolTable getSymbolTable() {
+    return symbolTable;
+  }
 }

@@ -12,7 +12,6 @@ foo:
 # Entering a new scope.
 # Symbols in symbol table:
 #  println 
-#  return 
 # Update the stack pointer.
 addi $sp $sp 0
 # Calling function println
@@ -27,6 +26,7 @@ syscall
 # Exiting scope.
 addi $sp $sp 0
 jr $ra
+
 # code for fum
 fum:
 # Entering a new scope.
@@ -61,22 +61,23 @@ syscall
 # Save $ra to a register
 move $t0 $ra
 # Save $t0-9 registers
-sw $t0 4($sp)
+sw $t0 -12($sp)
 # Evaluate parameters and save to stack
 # Update the stack pointer
-addi $sp $sp -4
+addi $sp $sp -12
 # Call the function
 jal foo
 # Restore the stack pointer
-addi $sp $sp 4
+addi $sp $sp 12
 # Restore $t0-9 registers
-lw $t0 4($sp)
+lw $t0 -12($sp)
 # Restore $ra
 move $ra $t0
 
 # Exiting scope.
 addi $sp $sp 0
 jr $ra
+
 # code for main
 main:
 # Entering a new scope.
@@ -94,41 +95,47 @@ syscall
 
 # Calling function foo
 # Save $ra to a register
-move $t0 $ra
+move $t1 $ra
 # Save $t0-9 registers
 sw $t0 -4($sp)
+sw $t1 -8($sp)
 # Evaluate parameters and save to stack
 # Update the stack pointer
-addi $sp $sp -4
+addi $sp $sp -8
 # Call the function
 jal foo
 # Restore the stack pointer
-addi $sp $sp 4
+addi $sp $sp 8
 # Restore $t0-9 registers
 lw $t0 -4($sp)
+lw $t1 -8($sp)
 # Restore $ra
-move $ra $t0
+move $ra $t1
 
 # Calling function fum
 # Save $ra to a register
-move $t0 $ra
+move $t2 $ra
 # Save $t0-9 registers
 sw $t0 -4($sp)
+sw $t1 -8($sp)
+sw $t2 -12($sp)
 # Evaluate parameters and save to stack
 # Update the stack pointer
-addi $sp $sp -4
+addi $sp $sp -12
 # Call the function
 jal fum
 # Restore the stack pointer
-addi $sp $sp 4
+addi $sp $sp 12
 # Restore $t0-9 registers
 lw $t0 -4($sp)
+lw $t1 -8($sp)
+lw $t2 -12($sp)
 # Restore $ra
-move $ra $t0
+move $ra $t2
 
 # Exiting scope.
 addi $sp $sp 0
-jr $rali $v0 10
+li $v0 10
 syscall
 
 # All memory structures are placed after the

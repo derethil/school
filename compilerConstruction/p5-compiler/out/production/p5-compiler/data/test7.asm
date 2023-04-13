@@ -7,72 +7,36 @@
 
 j main
 
-# code for foo
-foo:
+# code for identity
+identity:
 # Entering a new scope.
 # Symbols in symbol table:
 #  println 
+#  x 
+#  return 
 # Update the stack pointer.
 addi $sp $sp 0
-# Calling function println
-li $t0 7
-move $a0 $t0
-li $v0 1
-syscall
-la $a0 newline
-li $v0 4
-syscall
+lw $t0 -4($sp)
+sw $t0 4($sp)
 
 # Exiting scope.
 addi $sp $sp 0
 jr $ra
 
-# code for fum
-fum:
+# code for add
+add:
 # Entering a new scope.
 # Symbols in symbol table:
-#  a 
 #  println 
-#  b 
+#  x 
+#  y 
+#  return 
 # Update the stack pointer.
 addi $sp $sp 0
-
-
-li $t0 9
-sw $t0 -4($sp)
-
-li $t0 12
-sw $t0 -8($sp)
-
-# Calling function println
-lw $t0 -8($sp)
-lw $t1 -4($sp)
-sub $t0 $t0 $t1
-li $t1 4
+lw $t0 -4($sp)
+lw $t1 -8($sp)
 add $t0 $t0 $t1
-move $a0 $t0
-li $v0 1
-syscall
-la $a0 newline
-li $v0 4
-syscall
-
-# Calling function foo
-# Save $ra to a register
-move $t0 $ra
-# Save $t0-9 registers
-sw $t0 -12($sp)
-# Evaluate parameters and save to stack
-# Update the stack pointer
-addi $sp $sp -12
-# Call the function
-jal foo
-# Restore the stack pointer
-addi $sp $sp 12
-# Restore $t0-9 registers
-lw $t0 -12($sp)
-# Restore $ra
-move $ra $t0
+sw $t0 4($sp)
 
 # Exiting scope.
 addi $sp $sp 0
@@ -93,17 +57,50 @@ la $a0 newline
 li $v0 4
 syscall
 
-# Calling function foo
+# Calling function println
+# Calling function identity
+# Save $ra to a register
+move $t0 $ra
+# Save $t0-9 registers
+sw $t0 -4($sp)
+# Evaluate parameters and save to stack
+li $t1 7
+sw $t1 -8($sp)
+# Update the stack pointer
+addi $sp $sp -4
+# Call the function
+jal identity
+# Restore the stack pointer
+addi $sp $sp 4
+# Restore $t0-9 registers
+lw $t0 -4($sp)
+# Restore $ra
+move $ra $t0
+# Load the value returned by the function
+lw $t1 -12($sp)
+move $a0 $t1
+li $v0 1
+syscall
+la $a0 newline
+li $v0 4
+syscall
+
+# Calling function println
+# Calling function add
 # Save $ra to a register
 move $t1 $ra
 # Save $t0-9 registers
 sw $t0 -4($sp)
 sw $t1 -8($sp)
 # Evaluate parameters and save to stack
+li $t2 3
+sw $t2 -12($sp)
+li $t2 4
+sw $t2 -16($sp)
 # Update the stack pointer
 addi $sp $sp -8
 # Call the function
-jal foo
+jal add
 # Restore the stack pointer
 addi $sp $sp 8
 # Restore $t0-9 registers
@@ -111,27 +108,14 @@ lw $t0 -4($sp)
 lw $t1 -8($sp)
 # Restore $ra
 move $ra $t1
-
-# Calling function fum
-# Save $ra to a register
-move $t2 $ra
-# Save $t0-9 registers
-sw $t0 -4($sp)
-sw $t1 -8($sp)
-sw $t2 -12($sp)
-# Evaluate parameters and save to stack
-# Update the stack pointer
-addi $sp $sp -12
-# Call the function
-jal fum
-# Restore the stack pointer
-addi $sp $sp 12
-# Restore $t0-9 registers
-lw $t0 -4($sp)
-lw $t1 -8($sp)
-lw $t2 -12($sp)
-# Restore $ra
-move $ra $t2
+# Load the value returned by the function
+lw $t2 -20($sp)
+move $a0 $t2
+li $v0 1
+syscall
+la $a0 newline
+li $v0 4
+syscall
 
 # Exiting scope.
 addi $sp $sp 0
@@ -143,4 +127,4 @@ syscall
 .data
 
 newline:      .asciiz "\n"
-datalabel0:   .asciiz "This program prints 7 7 7"
+datalabel0:   .asciiz "This program prints 7 7"

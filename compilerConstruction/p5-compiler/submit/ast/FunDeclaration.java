@@ -58,14 +58,13 @@ public class FunDeclaration implements Declaration, Node {
     code.append(String.format("\n# code for %s\n", id));
     code.append(String.format("%s:\n", id));
 
-    SymbolTable child = symbolTable.getChild(0);
-    child.addSymbol("return", new SymbolInfo("return", returnType, false));
-
     statement.toMIPS(code, data, symbolTable, regAllocator);
 
-    code.append("jr $ra\n");
+    if (!id.equals("main")) {
+      code.append("jr $ra\n");
+    }
 
-    return null;
+    return MIPSResult.createVoidResult();
   }
 
 }

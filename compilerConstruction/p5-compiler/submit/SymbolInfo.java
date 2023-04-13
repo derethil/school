@@ -21,6 +21,8 @@ public class SymbolInfo {
 
   private boolean isInitialized = false;
 
+  private boolean didReturn = false;
+
   public SymbolInfo(String id, VarType type, boolean function) {
     this.id = id;
     this.type = type;
@@ -60,7 +62,19 @@ public class SymbolInfo {
       this.isInitialized = isInitialized;
   }
 
+  public void setDidReturn(boolean didReturn) {
+    this.didReturn = didReturn;
+  }
+
+  public boolean didReturn() {
+    return didReturn;
+  }
+
   public void setOffset(int offset) {
     this.offset = offset;
+  }
+
+  public boolean isFunction() {
+    return function;
   }
 }

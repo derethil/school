@@ -6,6 +6,7 @@ package submit.ast;
 
 import submit.MIPSResult;
 import submit.RegisterAllocator;
+import submit.SymbolInfo;
 import submit.SymbolTable;
 
 import java.util.ArrayList;
@@ -75,34 +76,52 @@ public class Call implements Expression {
       }
 
       default -> {
-       code.append("# Save $ra to a register\n");
-       String register = regAllocator.getT();
-       code.append(String.format("move %s $ra\n", register));
+        code.append("# Save $ra to a register\n");
+        String register = regAllocator.getT();
+        code.append(String.format("move %s $ra\n", register));
 
-       code.append("# Save $t0-9 registers\n");
-       int allocatedSize = regAllocator.saveT(code, symbolTable.getTotalSize());
+        code.append("# Save $t0-9 registers\n");
+        int symbolTableSize = symbolTable.getSize();
+        int allocatedSize = regAllocator.saveT(code, -symbolTableSize);
+        int stackPointerOffset = symbolTableSize - allocatedSize;
+        int offsetOfParams = stackPointerOffset - 4;
 
-       code.append("# Evaluate parameters and save to stack\n");
-       // TODO: Evaluate parameters and save to stack
+        code.append("# Evaluate parameters and save to stack\n");
 
-       code.append("# Update the stack pointer\n");
-       code.append(String.format("addi $sp $sp %d\n", -allocatedSize));
+        for (Expression arg: args) {
+          MIPSResult result = arg.toMIPS(code, data, symbolTable, regAllocator);
+          String reg = result.getRegister();
+          code.append(String.format("sw %s %d($sp)\n", reg, offsetOfParams));
+          offsetOfParams -= 4;
+          regAllocator.clear(reg);
+        }
 
-       code.append("# Call the function\n");
-       code.append(String.format("jal %s\n", id));
+        code.append("# Update the stack pointer\n");
+        code.append(String.format("addi $sp $sp %d\n", stackPointerOffset));
 
-       code.append("# Restore the stack pointer\n");
-       code.append(String.format("addi $sp $sp %d\n", allocatedSize));
+        code.append("# Call the function\n");
+        code.append(String.format("jal %s\n", id));
 
-       code.append("# Restore $t0-9 registers\n");
-       regAllocator.restoreT(code, symbolTable.getTotalSize());
+        code.append("# Restore the stack pointer\n");
+        code.append(String.format("addi $sp $sp %d\n", -stackPointerOffset));
 
-       code.append("# Restore $ra\n");
-       code.append(String.format("move $ra %s\n", register));
+        code.append("# Restore $t0-9 registers\n");
+        regAllocator.restoreT(code, -symbolTable.getSize());
 
-       regAllocator.clear(register);
+        code.append("# Restore $ra\n");
+        code.append(String.format("move $ra %s\n", register));
 
-       return MIPSResult.createVoidResult();
+        SymbolInfo functionSymbol = symbolTable.find(id);
+
+        if (functionSymbol.getType() == null) { // void function
+          return MIPSResult.createVoidResult();
+        }
+
+        code.append("# Load the value returned by the function\n");
+        String returnRegister = regAllocator.getT();
+        code.append(String.format("lw %s %d($sp)\n", returnRegister, offsetOfParams));
+
+        return MIPSResult.createRegisterResult(returnRegister, functionSymbol.getType());
       }
     }
   }

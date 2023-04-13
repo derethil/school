@@ -47,6 +47,8 @@ public class Assignment implements Expression, Node {
           SymbolTable symbolTable,
           RegisterAllocator regAllocator
   ) {
+    SymbolInfo mutableSymbol = symbolTable.find(mutable.getId());
+    mutableSymbol.setInitialized(true);
     MIPSResult rhsMIPS = rhs.toMIPS(code, data, symbolTable, regAllocator);
     symbolTable.saveRegister(code, regAllocator, rhsMIPS.getRegister(), mutable.getId());
     regAllocator.clear(rhsMIPS.getRegister());

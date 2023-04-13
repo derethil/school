@@ -13,10 +13,11 @@ main:
 # Symbols in symbol table:
 #  a 
 #  println 
-#  b 
 # Update the stack pointer.
 addi $sp $sp 0
 
+li $t0 3
+sw $t0 -4($sp)
 
 # Calling function println
 la $a0 datalabel0
@@ -26,22 +27,11 @@ la $a0 newline
 li $v0 4
 syscall
 
-li $t0 3
-sw $t0 -4($sp)
 
-li $t0 4
-sw $t0 -8($sp)
 
-# Calling function println
-lw $t0 -4($sp)
-lw $t1 -8($sp)
-add $t0 $t0 $t1
-move $a0 $t0
-li $v0 1
-syscall
-la $a0 newline
-li $v0 4
-syscall
+
+
+
 
 # Exiting scope.
 addi $sp $sp 0
@@ -53,4 +43,4 @@ syscall
 .data
 
 newline:      .asciiz "\n"
-datalabel0:   .asciiz "This program prints the number 7"
+datalabel0:   .asciiz "This program prints [1..5] correct."
