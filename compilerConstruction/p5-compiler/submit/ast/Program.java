@@ -53,6 +53,8 @@ public class Program implements Node {
     code.append("li $v0 10\n");
     code.append("syscall\n");
 
+    regAllocator.printT(data);
+
     return MIPSResult.createVoidResult();
   }
 }

@@ -65,10 +65,10 @@ lw $t1 -20($sp)
 # Restore $ra
 move $ra $t1
 # Load the value returned by the function
-lw $t2 -32($sp)
-sw $t2 -20($sp)
-li $t2 1
-sw $t2 -24($sp)
+lw $t1 -32($sp)
+sw $t1 -20($sp)
+li $t1 1
+sw $t1 -24($sp)
 # Update the stack pointer
 addi $sp $sp -16
 # Call the function
@@ -77,12 +77,11 @@ jal add
 addi $sp $sp 16
 # Restore $t0-9 registers
 lw $t0 -16($sp)
-lw $t1 -20($sp)
 # Restore $ra
 move $ra $t0
 # Load the value returned by the function
-lw $t2 -28($sp)
-sw $t2 -12($sp)
+lw $t0 -28($sp)
+sw $t0 -12($sp)
 
 # Exiting scope.
 addi $sp $sp 0
@@ -106,31 +105,27 @@ syscall
 # Calling function println
 # Calling function add2
 # Save $ra to a register
-move $t2 $ra
+move $t0 $ra
 # Save $t0-9 registers
 sw $t0 -4($sp)
-sw $t1 -8($sp)
-sw $t2 -12($sp)
 # Evaluate parameters and save to stack
-li $t3 2
-sw $t3 -16($sp)
-li $t3 4
-sw $t3 -20($sp)
+li $t1 2
+sw $t1 -8($sp)
+li $t1 4
+sw $t1 -12($sp)
 # Update the stack pointer
-addi $sp $sp -12
+addi $sp $sp -4
 # Call the function
 jal add2
 # Restore the stack pointer
-addi $sp $sp 12
+addi $sp $sp 4
 # Restore $t0-9 registers
 lw $t0 -4($sp)
-lw $t1 -8($sp)
-lw $t2 -12($sp)
 # Restore $ra
-move $ra $t2
+move $ra $t0
 # Load the value returned by the function
-lw $t3 -24($sp)
-move $a0 $t3
+lw $t0 -16($sp)
+move $a0 $t0
 li $v0 1
 syscall
 la $a0 newline
@@ -148,3 +143,4 @@ syscall
 
 newline:      .asciiz "\n"
 datalabel0:   .asciiz "This program prints 7"
+# t: [false, false, false, false, false, false, false, false, false, false]

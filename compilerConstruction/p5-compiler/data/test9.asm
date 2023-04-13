@@ -44,3 +44,4 @@ syscall
 
 newline:      .asciiz "\n"
 datalabel0:   .asciiz "This program prints [1..5] correct."
+t: [false, false, false, false, false, false, false, false, false, false]

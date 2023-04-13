@@ -95,43 +95,37 @@ syscall
 
 # Calling function foo
 # Save $ra to a register
-move $t1 $ra
+move $t0 $ra
 # Save $t0-9 registers
 sw $t0 -4($sp)
-sw $t1 -8($sp)
 # Evaluate parameters and save to stack
 # Update the stack pointer
-addi $sp $sp -8
+addi $sp $sp -4
 # Call the function
 jal foo
 # Restore the stack pointer
-addi $sp $sp 8
+addi $sp $sp 4
 # Restore $t0-9 registers
 lw $t0 -4($sp)
-lw $t1 -8($sp)
 # Restore $ra
-move $ra $t1
+move $ra $t0
 
 # Calling function fum
 # Save $ra to a register
-move $t2 $ra
+move $t0 $ra
 # Save $t0-9 registers
 sw $t0 -4($sp)
-sw $t1 -8($sp)
-sw $t2 -12($sp)
 # Evaluate parameters and save to stack
 # Update the stack pointer
-addi $sp $sp -12
+addi $sp $sp -4
 # Call the function
 jal fum
 # Restore the stack pointer
-addi $sp $sp 12
+addi $sp $sp 4
 # Restore $t0-9 registers
 lw $t0 -4($sp)
-lw $t1 -8($sp)
-lw $t2 -12($sp)
 # Restore $ra
-move $ra $t2
+move $ra $t0
 
 # Exiting scope.
 addi $sp $sp 0
@@ -144,3 +138,4 @@ syscall
 
 newline:      .asciiz "\n"
 datalabel0:   .asciiz "This program prints 7 7 7"
+# t: [false, false, false, false, false, false, false, false, false, false]

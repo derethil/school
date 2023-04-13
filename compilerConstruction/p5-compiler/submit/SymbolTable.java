@@ -19,8 +19,8 @@ public class SymbolTable {
   private final HashMap<String, SymbolInfo> table;
   private SymbolTable parent;
   private final List<SymbolTable> children;
-
   private int size;
+  private int paramSize = 0;
 
   public SymbolTable() {
     size = 0;
@@ -43,8 +43,9 @@ public class SymbolTable {
     }
   }
 
-  public void updateSize(int size) {
-    this.size = size;
+  public void setParamSize(int paramSize) {
+    this.paramSize = paramSize;
+    size -= paramSize;
   }
 
   public int getSize() {

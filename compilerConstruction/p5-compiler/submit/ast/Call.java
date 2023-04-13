@@ -77,8 +77,8 @@ public class Call implements Expression {
 
       default -> {
         code.append("# Save $ra to a register\n");
-        String register = regAllocator.getT();
-        code.append(String.format("move %s $ra\n", register));
+        String raRegister = regAllocator.getT();
+        code.append(String.format("move %s $ra\n", raRegister));
 
         code.append("# Save $t0-9 registers\n");
         int symbolTableSize = symbolTable.getSize();
@@ -109,7 +109,8 @@ public class Call implements Expression {
         regAllocator.restoreT(code, -symbolTable.getSize());
 
         code.append("# Restore $ra\n");
-        code.append(String.format("move $ra %s\n", register));
+        code.append(String.format("move $ra %s\n", raRegister));
+        regAllocator.clear(raRegister);
 
         SymbolInfo functionSymbol = symbolTable.find(id);
 

@@ -77,8 +77,8 @@ lw $t0 -4($sp)
 # Restore $ra
 move $ra $t0
 # Load the value returned by the function
-lw $t1 -12($sp)
-move $a0 $t1
+lw $t0 -12($sp)
+move $a0 $t0
 li $v0 1
 syscall
 la $a0 newline
@@ -88,29 +88,27 @@ syscall
 # Calling function println
 # Calling function add
 # Save $ra to a register
-move $t1 $ra
+move $t0 $ra
 # Save $t0-9 registers
 sw $t0 -4($sp)
-sw $t1 -8($sp)
 # Evaluate parameters and save to stack
-li $t2 3
-sw $t2 -12($sp)
-li $t2 4
-sw $t2 -16($sp)
+li $t1 3
+sw $t1 -8($sp)
+li $t1 4
+sw $t1 -12($sp)
 # Update the stack pointer
-addi $sp $sp -8
+addi $sp $sp -4
 # Call the function
 jal add
 # Restore the stack pointer
-addi $sp $sp 8
+addi $sp $sp 4
 # Restore $t0-9 registers
 lw $t0 -4($sp)
-lw $t1 -8($sp)
 # Restore $ra
-move $ra $t1
+move $ra $t0
 # Load the value returned by the function
-lw $t2 -20($sp)
-move $a0 $t2
+lw $t0 -16($sp)
+move $a0 $t0
 li $v0 1
 syscall
 la $a0 newline
@@ -128,3 +126,4 @@ syscall
 
 newline:      .asciiz "\n"
 datalabel0:   .asciiz "This program prints 7 7"
+# t: [false, false, false, false, false, false, false, false, false, false]

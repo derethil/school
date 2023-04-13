@@ -25,11 +25,6 @@ public class Assignment implements Expression, Node {
     this.rhs = rhs;
   }
 
-  public boolean isInitialized(SymbolTable symbolTable) {
-    SymbolInfo info = symbolTable.find(mutable.getId());
-    return info.isInitialized();
-  }
-
   public void toCminus(StringBuilder builder, final String prefix) {
     mutable.toCminus(builder, prefix);
     if (rhs != null) {
@@ -47,8 +42,6 @@ public class Assignment implements Expression, Node {
           SymbolTable symbolTable,
           RegisterAllocator regAllocator
   ) {
-    SymbolInfo mutableSymbol = symbolTable.find(mutable.getId());
-    mutableSymbol.setInitialized(true);
     MIPSResult rhsMIPS = rhs.toMIPS(code, data, symbolTable, regAllocator);
     symbolTable.saveRegister(code, regAllocator, rhsMIPS.getRegister(), mutable.getId());
     regAllocator.clear(rhsMIPS.getRegister());

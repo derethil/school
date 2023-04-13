@@ -13,14 +13,14 @@ add:
 # Symbols in symbol table:
 #  println 
 #  x 
-#  i 
 #  y 
+#  i 
 # Update the stack pointer.
 addi $sp $sp 0
 
 # Calling function println
-lw $t0 -8($sp)
-lw $t1 -12($sp)
+lw $t0 -4($sp)
+lw $t1 -8($sp)
 add $t0 $t0 $t1
 move $a0 $t0
 li $v0 1
@@ -73,34 +73,32 @@ lw $t0 -12($sp)
 # Restore $ra
 move $ra $t0
 
-li $t1 5
-sw $t1 -4($sp)
+li $t0 5
+sw $t0 -4($sp)
 
-li $t1 2
-sw $t1 -8($sp)
+li $t0 2
+sw $t0 -8($sp)
 
 # Calling function add
 # Save $ra to a register
-move $t1 $ra
+move $t0 $ra
 # Save $t0-9 registers
 sw $t0 -12($sp)
-sw $t1 -16($sp)
 # Evaluate parameters and save to stack
-lw $t2 -4($sp)
-sw $t2 -20($sp)
-lw $t2 -8($sp)
-sw $t2 -24($sp)
+lw $t1 -4($sp)
+sw $t1 -16($sp)
+lw $t1 -8($sp)
+sw $t1 -20($sp)
 # Update the stack pointer
-addi $sp $sp -16
+addi $sp $sp -12
 # Call the function
 jal add
 # Restore the stack pointer
-addi $sp $sp 16
+addi $sp $sp 12
 # Restore $t0-9 registers
 lw $t0 -12($sp)
-lw $t1 -16($sp)
 # Restore $ra
-move $ra $t1
+move $ra $t0
 
 # Exiting scope.
 addi $sp $sp 0
@@ -113,3 +111,4 @@ syscall
 
 newline:      .asciiz "\n"
 datalabel0:   .asciiz "This program prints 7 7"
+# t: [false, false, false, false, false, false, false, false, false, false]

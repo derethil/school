@@ -54,3 +54,4 @@ syscall
 
 newline:      .asciiz "\n"
 datalabel0:   .asciiz "This program prints the number 7"
+# t: [false, false, false, false, false, false, false, false, false, false]

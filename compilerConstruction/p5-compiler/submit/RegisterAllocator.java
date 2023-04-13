@@ -133,4 +133,8 @@ public final class RegisterAllocator {
         Arrays.fill(t, false);
         Arrays.fill(s, false);
     }
+
+    public void printT(StringBuilder data) {
+        data.append("# t: ").append(Arrays.toString(t)).append("\n");
+    }
 }

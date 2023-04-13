@@ -33,3 +33,4 @@ syscall
 
 newline:      .asciiz "\n"
 datalabel0:   .asciiz "Hello world"
+# t: [false, false, false, false, false, false, false, false, false, false]
