@@ -54,7 +54,7 @@ public class BinaryOperator implements Expression {
       case PLUS -> {
         code.append(String.format("add %s %s %s\n", leftRegister, leftRegister, rightRegister));
       }
-      case MINUS -> {
+      case MINUS, EQ -> {
         code.append(String.format("sub %s %s %s\n", leftRegister, leftRegister, rightRegister));
       }
       case TIMES -> {
@@ -65,20 +65,31 @@ public class BinaryOperator implements Expression {
         code.append(String.format("div %s %s\n", leftRegister, rightRegister));
         code.append(String.format("mflo %s\n", leftRegister));
       }
+      case LT -> {
+        code.append(String.format("slt %s %s %s\n", leftRegister, leftRegister, rightRegister));
+        code.append(String.format("subi %s %s 1\n", leftRegister, leftRegister));
+      }
+      case GT -> {
+        code.append(String.format("slt %s %s %s\n", leftRegister, rightRegister, leftRegister));
+        code.append(String.format("subi %s %s 1\n", leftRegister, leftRegister));
+      }
+      case LE -> {
+        code.append(String.format("slt %s %s %s\n", leftRegister, rightRegister, leftRegister));
+      }
+      case GE -> {
+        code.append(String.format("slt %s %s %s\n", leftRegister, leftRegister, rightRegister));
+      }
+      case NE -> {
+        code.append(String.format("sne %s %s %s\n", leftRegister, leftRegister, rightRegister));
+        code.append(String.format("subi %s %s 1\n", leftRegister, leftRegister));
+      }
       default -> {
         throw new UnsupportedOperationException("BinaryOperatorType " + type + " not supported yet.");
       }
     }
 
     regAllocator.clear(rightRegister);
+    return MIPSResult.createRegisterResult(leftRegister, VarType.INT);
 
-    switch (type) {
-      case PLUS, MINUS, TIMES, DIVIDE -> {
-        return MIPSResult.createRegisterResult(leftRegister, VarType.INT);
-      }
-      default -> {
-        return MIPSResult.createVoidResult();
-      }
-    }
   }
 }

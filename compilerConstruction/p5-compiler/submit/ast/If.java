@@ -4,6 +4,10 @@
  */
 package submit.ast;
 
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolTable;
+
 /**
  *
  * @author edwajohn
@@ -40,5 +44,31 @@ public class If implements Statement {
       }
     }
 //    builder.append(prefix).append("}");
+  }
+
+  @Override
+  public MIPSResult toMIPS(
+          StringBuilder code,
+          StringBuilder data,
+          SymbolTable symbolTable,
+          RegisterAllocator regAllocator
+  ) {
+    MIPSResult expressionResult = expression.toMIPS(code, data, symbolTable, regAllocator);
+    String expressionRegister = expressionResult.getRegister();
+    String falseLabel = symbolTable.getUniqueLabel();
+    String trueLabel = symbolTable.getUniqueLabel();
+
+    code.append(String.format("bne %s $zero %s\n", expressionRegister, falseLabel));
+    regAllocator.clear(expressionRegister);
+
+    trueStatement.toMIPS(code, data, symbolTable, regAllocator);
+    code.append(String.format("j %s\n", trueLabel));
+
+    code.append(String.format("%s:\n", falseLabel));
+
+    if (falseStatement != null) falseStatement.toMIPS(code, data, symbolTable, regAllocator);
+    code.append(String.format("%s:\n", trueLabel));
+
+    return null;
   }
 }
