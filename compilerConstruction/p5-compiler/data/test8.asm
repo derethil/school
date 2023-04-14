@@ -21,6 +21,7 @@ lw $t0 -4($sp)
 lw $t1 -8($sp)
 add $t0 $t0 $t1
 sw $t0 -12($sp)
+jr $ra
 
 # Exiting scope.
 addi $sp $sp 0
@@ -82,6 +83,7 @@ move $ra $t0
 # Load the value returned by the function
 lw $t0 -28($sp)
 sw $t0 -12($sp)
+jr $ra
 
 # Exiting scope.
 addi $sp $sp 0

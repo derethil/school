@@ -54,6 +54,13 @@ sw $t0 0($sp)
 
 # Exiting scope.
 addi $sp $sp 4
+j loopLabel1
+endLabel2:
+
+# Exiting scope.
+addi $sp $sp 0
+li $v0 10
+syscall
 
 # All memory structures are placed after the
 # .data assembler directive
@@ -61,3 +68,4 @@ addi $sp $sp 4
 
 newline:      .asciiz "\n"
 datalabel0:   .asciiz "This program prints 0 through 9."
+# t: [false, false, false, false, false, false, false, false, false, false]

@@ -18,6 +18,7 @@ identity:
 addi $sp $sp 0
 lw $t0 -4($sp)
 sw $t0 -8($sp)
+jr $ra
 
 # Exiting scope.
 addi $sp $sp 0
@@ -37,6 +38,7 @@ lw $t0 -4($sp)
 lw $t1 -8($sp)
 add $t0 $t0 $t1
 sw $t0 -12($sp)
+jr $ra
 
 # Exiting scope.
 addi $sp $sp 0

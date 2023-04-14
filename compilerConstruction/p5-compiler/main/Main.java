@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,10 +45,15 @@ public class Main {
         }
         LOGGER = Logger.getLogger(Parser.class.getName());
 
+        String filename;
         if (args.length < 1) {
-            throw new RuntimeException("Be sure to add your test C- file as a command-line parameter.");
+            System.out.println("Please enter the test file number: ");
+            Scanner sc = new Scanner(System.in);
+            int testNum = sc.nextInt();
+            filename = "data/test" + testNum + ".c";
+        } else {
+            filename = args[0];
         }
-        final String filename = args[0];
 
         LOGGER.info("");
         LOGGER.info("Parsing " + filename + "\n");

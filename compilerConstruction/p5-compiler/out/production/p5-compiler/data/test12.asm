@@ -18,23 +18,27 @@ fib:
 addi $sp $sp 0
 lw $t0 -4($sp)
 li $t1 0
-sub $t0 $t0 $t1
-bne $t0 $zero datalabel0
+seq $t0 $t0 $t1
+xori $t0 $t0 1
+bne $t0 $zero falseLabel0
 li $t0 1
 sw $t0 -8($sp)
-j datalabel1
-datalabel0:
-datalabel1:
+jr $ra
+j trueLabel1
+falseLabel0:
+trueLabel1:
 
 lw $t0 -4($sp)
 li $t1 1
-sub $t0 $t0 $t1
-bne $t0 $zero datalabel2
+seq $t0 $t0 $t1
+xori $t0 $t0 1
+bne $t0 $zero falseLabel2
 li $t0 1
 sw $t0 -8($sp)
-j datalabel3
-datalabel2:
-datalabel3:
+jr $ra
+j trueLabel3
+falseLabel2:
+trueLabel3:
 
 # Calling function fib
 # Save $ra to a register
@@ -84,6 +88,7 @@ move $ra $t1
 lw $t1 -24($sp)
 add $t0 $t0 $t1
 sw $t0 -8($sp)
+jr $ra
 
 # Exiting scope.
 addi $sp $sp 0
@@ -109,6 +114,54 @@ la $a0 newline
 li $v0 4
 syscall
 
+loopLabel5:
+lw $t0 -4($sp)
+li $t1 12
+slt $t0 $t0 $t1
+xori $t0 $t0 1
+bne $t0 $zero endLabel6
+# Entering a new scope.
+# Symbols in symbol table:
+#  println 
+# Update the stack pointer.
+addi $sp $sp -4
+# Calling function println
+# Calling function fib
+# Save $ra to a register
+move $t0 $ra
+# Save $t0-9 registers
+sw $t0 -4($sp)
+# Evaluate parameters and save to stack
+lw $t1 0($sp)
+sw $t1 -8($sp)
+# Update the stack pointer
+addi $sp $sp -4
+# Call the function
+jal fib
+# Restore the stack pointer
+addi $sp $sp 4
+# Restore $t0-9 registers
+lw $t0 -4($sp)
+# Restore $ra
+move $ra $t0
+# Load the value returned by the function
+lw $t0 -12($sp)
+move $a0 $t0
+li $v0 1
+syscall
+la $a0 newline
+li $v0 4
+syscall
+
+lw $t0 0($sp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 0($sp)
+
+# Exiting scope.
+addi $sp $sp 4
+j loopLabel5
+endLabel6:
 
 # Exiting scope.
 addi $sp $sp 0
