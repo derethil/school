@@ -55,8 +55,8 @@ public class If implements Statement {
   ) {
     MIPSResult expressionResult = expression.toMIPS(code, data, symbolTable, regAllocator);
     String expressionRegister = expressionResult.getRegister();
-    String falseLabel = symbolTable.getUniqueLabel();
-    String trueLabel = symbolTable.getUniqueLabel();
+    String falseLabel = symbolTable.getUniqueLabel("falseLabel");
+    String trueLabel = symbolTable.getUniqueLabel("trueLabel");
 
     code.append(String.format("bne %s $zero %s\n", expressionRegister, falseLabel));
     regAllocator.clear(expressionRegister);

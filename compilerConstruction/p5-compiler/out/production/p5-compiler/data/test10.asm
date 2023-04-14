@@ -20,25 +20,25 @@ lw $t0 -4($sp)
 li $t1 0
 seq $t0 $t0 $t1
 xori $t0 $t0 1
-bne $t0 $zero datalabel0
+bne $t0 $zero falseLabel0
 li $t0 1
 sw $t0 -8($sp)
 jr $ra
-j datalabel1
-datalabel0:
-datalabel1:
+j trueLabel1
+falseLabel0:
+trueLabel1:
 
 lw $t0 -4($sp)
 li $t1 1
 seq $t0 $t0 $t1
 xori $t0 $t0 1
-bne $t0 $zero datalabel2
+bne $t0 $zero falseLabel2
 li $t0 1
 sw $t0 -8($sp)
 jr $ra
-j datalabel3
-datalabel2:
-datalabel3:
+j trueLabel3
+falseLabel2:
+trueLabel3:
 
 # Calling function fib
 # Save $ra to a register

@@ -31,7 +31,7 @@ public class StringConstant implements Expression {
           SymbolTable symbolTable,
           RegisterAllocator regAllocator
   ) {
-    String label = symbolTable.getUniqueLabel();
+    String label = symbolTable.getUniqueLabel("datalabel");
     data.append(String.format("%-14s.asciiz %s\n", label + ":", value));
     return MIPSResult.createAddressResult(label, VarType.CHAR);
   }

@@ -31,7 +31,7 @@ lw $t0 -4($sp)
 li $t1 4
 slt $t0 $t0 $t1
 xori $t0 $t0 1
-bne $t0 $zero datalabel1
+bne $t0 $zero falseLabel1
 # Entering a new scope.
 # Symbols in symbol table:
 #  println 
@@ -47,15 +47,15 @@ syscall
 
 # Exiting scope.
 addi $sp $sp 4
-j datalabel2
-datalabel1:
-datalabel2:
+j trueLabel2
+falseLabel1:
+trueLabel2:
 
 lw $t0 -4($sp)
 li $t1 4
 sgt $t0 $t0 $t1
 xori $t0 $t0 1
-bne $t0 $zero datalabel4
+bne $t0 $zero falseLabel4
 # Entering a new scope.
 # Symbols in symbol table:
 #  println 
@@ -71,15 +71,15 @@ syscall
 
 # Exiting scope.
 addi $sp $sp 4
-j datalabel5
-datalabel4:
-datalabel5:
+j trueLabel5
+falseLabel4:
+trueLabel5:
 
 lw $t0 -4($sp)
 li $t1 4
 sgt $t0 $t0 $t1
 xori $t0 $t0 1
-bne $t0 $zero datalabel7
+bne $t0 $zero falseLabel7
 # Entering a new scope.
 # Symbols in symbol table:
 #  println 
@@ -95,8 +95,8 @@ syscall
 
 # Exiting scope.
 addi $sp $sp 4
-j datalabel8
-datalabel7:
+j trueLabel8
+falseLabel7:
 # Entering a new scope.
 # Symbols in symbol table:
 #  println 
@@ -112,13 +112,13 @@ syscall
 
 # Exiting scope.
 addi $sp $sp 4
-datalabel8:
+trueLabel8:
 
 lw $t0 -4($sp)
 li $t1 3
 sle $t0 $t1 $t0
 xori $t0 $t0 1
-bne $t0 $zero datalabel11
+bne $t0 $zero falseLabel11
 # Entering a new scope.
 # Symbols in symbol table:
 #  println 
@@ -134,15 +134,15 @@ syscall
 
 # Exiting scope.
 addi $sp $sp 4
-j datalabel12
-datalabel11:
-datalabel12:
+j trueLabel12
+falseLabel11:
+trueLabel12:
 
 lw $t0 -4($sp)
 li $t1 3
 seq $t0 $t0 $t1
 xori $t0 $t0 1
-bne $t0 $zero datalabel14
+bne $t0 $zero falseLabel14
 # Entering a new scope.
 # Symbols in symbol table:
 #  println 
@@ -158,15 +158,15 @@ syscall
 
 # Exiting scope.
 addi $sp $sp 4
-j datalabel15
-datalabel14:
-datalabel15:
+j trueLabel15
+falseLabel14:
+trueLabel15:
 
 lw $t0 -4($sp)
 li $t1 4
 sge $t0 $t0 $t1
 xori $t0 $t0 1
-bne $t0 $zero datalabel17
+bne $t0 $zero falseLabel17
 # Entering a new scope.
 # Symbols in symbol table:
 #  println 
@@ -182,8 +182,8 @@ syscall
 
 # Exiting scope.
 addi $sp $sp 4
-j datalabel18
-datalabel17:
+j trueLabel18
+falseLabel17:
 # Entering a new scope.
 # Symbols in symbol table:
 #  println 
@@ -199,7 +199,7 @@ syscall
 
 # Exiting scope.
 addi $sp $sp 4
-datalabel18:
+trueLabel18:
 
 lw $t0 -4($sp)
 li $t1 4
@@ -221,7 +221,7 @@ xori $t0 $t0 1
 xori $t1 $t1 1
 or $t0 $t0 $t1
 xori $t0 $t0 1
-bne $t0 $zero datalabel21
+bne $t0 $zero falseLabel21
 # Entering a new scope.
 # Symbols in symbol table:
 #  println 
@@ -237,8 +237,8 @@ syscall
 
 # Exiting scope.
 addi $sp $sp 4
-j datalabel22
-datalabel21:
+j trueLabel22
+falseLabel21:
 # Entering a new scope.
 # Symbols in symbol table:
 #  println 
@@ -254,7 +254,7 @@ syscall
 
 # Exiting scope.
 addi $sp $sp 4
-datalabel22:
+trueLabel22:
 
 # Exiting scope.
 addi $sp $sp 0

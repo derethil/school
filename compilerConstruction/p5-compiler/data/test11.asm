@@ -27,6 +27,35 @@ la $a0 newline
 li $v0 4
 syscall
 
+loopLabel1:
+lw $t0 -4($sp)
+li $t1 10
+slt $t0 $t0 $t1
+xori $t0 $t0 1
+bne $t0 $zero endLabel2
+# Entering a new scope.
+# Symbols in symbol table:
+#  println 
+# Update the stack pointer.
+addi $sp $sp -4
+# Calling function println
+lw $t0 0($sp)
+move $a0 $t0
+li $v0 1
+syscall
+la $a0 newline
+li $v0 4
+syscall
+
+lw $t0 0($sp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 0($sp)
+
+# Exiting scope.
+addi $sp $sp 4
+j loopLabel1
+endLabel2:
 
 # Exiting scope.
 addi $sp $sp 0

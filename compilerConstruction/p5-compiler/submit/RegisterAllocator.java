@@ -120,6 +120,7 @@ public final class RegisterAllocator {
     }
 
     public void clear(String reg) {
+        if (reg == null) return;
         if (reg.charAt(1) == 's') {
             s[Integer.parseInt(reg.substring(2))] = false;
         } else if (reg.charAt(1) == 't') {

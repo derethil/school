@@ -106,8 +106,8 @@ public class SymbolTable {
     return parent;
   }
 
-  public String getUniqueLabel() {
-    return "datalabel" + labelCount++;
+  public String getUniqueLabel(String prefix) {
+    return prefix + labelCount++;
   }
 
   public List<String> getSymbols() {
