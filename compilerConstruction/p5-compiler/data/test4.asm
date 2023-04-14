@@ -64,7 +64,7 @@ li $t0 9
 sw $t0 -4($sp)
 
 li $t0 2
-sub $t0 $zero $t0
+neg $t0 $t0
 sw $t0 0($sp)
 
 # Calling function println

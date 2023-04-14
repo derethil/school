@@ -43,6 +43,7 @@ public class Return implements Statement {
       MIPSResult result = expr.toMIPS(code, data, symbolTable, regAllocator);
       symbolTable.saveRegister(code, regAllocator, result.getRegister(), "return");
       regAllocator.clear(result.getRegister());
+      code.append("jr $ra\n");
       return MIPSResult.createVoidResult();
     }
     return MIPSResult.createVoidResult();

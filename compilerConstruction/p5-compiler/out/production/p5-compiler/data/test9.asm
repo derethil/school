@@ -203,11 +203,19 @@ datalabel18:
 
 lw $t0 -4($sp)
 li $t1 4
-seq $t0 $t0 $t1
+sgt $t0 $t0 $t1
 xori $t0 $t0 1
 lw $t1 -4($sp)
-li $t2 3
-seq $t1 $t1 $t2
+li $t2 4
+slt $t1 $t1 $t2
+xori $t1 $t1 1
+lw $t2 -4($sp)
+li $t3 3
+seq $t2 $t2 $t3
+xori $t2 $t2 1
+xori $t1 $t1 1
+xori $t2 $t2 1
+and $t1 $t1 $t2
 xori $t1 $t1 1
 xori $t0 $t0 1
 xori $t1 $t1 1

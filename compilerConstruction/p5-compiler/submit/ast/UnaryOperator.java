@@ -40,7 +40,7 @@ public class UnaryOperator implements Expression {
 
     switch (type) {
       case NEG -> {
-        code.append(String.format("sub %s $zero %s\n", register, register));
+        code.append(String.format("neg %s %s\n", register, register));
       }
       default -> {
         throw new UnsupportedOperationException(String.format("Operator %s supported yet.", type));

@@ -49,7 +49,6 @@ public class BinaryOperator implements Expression {
     MIPSResult right = rhs.toMIPS(code, data, symbolTable, regAllocator);
     String rightRegister = right.getRegister();
 
-
     switch (type) {
       case PLUS -> {
         code.append(String.format("add %s %s %s\n", leftRegister, leftRegister, rightRegister));

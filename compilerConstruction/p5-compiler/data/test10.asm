@@ -16,7 +16,29 @@ fib:
 #  return 
 # Update the stack pointer.
 addi $sp $sp 0
+lw $t0 -4($sp)
+li $t1 0
+seq $t0 $t0 $t1
+xori $t0 $t0 1
+bne $t0 $zero datalabel0
+li $t0 1
+sw $t0 -8($sp)
+jr $ra
+j datalabel1
+datalabel0:
+datalabel1:
 
+lw $t0 -4($sp)
+li $t1 1
+seq $t0 $t0 $t1
+xori $t0 $t0 1
+bne $t0 $zero datalabel2
+li $t0 1
+sw $t0 -8($sp)
+jr $ra
+j datalabel3
+datalabel2:
+datalabel3:
 
 # Calling function fib
 # Save $ra to a register
@@ -66,6 +88,7 @@ move $ra $t1
 lw $t1 -24($sp)
 add $t0 $t0 $t1
 sw $t0 -8($sp)
+jr $ra
 
 # Exiting scope.
 addi $sp $sp 0
@@ -79,7 +102,7 @@ main:
 # Update the stack pointer.
 addi $sp $sp 0
 # Calling function println
-la $a0 datalabel0
+la $a0 datalabel4
 li $v0 4
 syscall
 la $a0 newline
@@ -404,5 +427,5 @@ syscall
 .data
 
 newline:      .asciiz "\n"
-datalabel0:   .asciiz "This program prints the first 11 numbers of the Fibonacci sequence"
+datalabel4:   .asciiz "This program prints the first 11 numbers of the Fibonacci sequence"
 # t: [false, false, false, false, false, false, false, false, false, false]
