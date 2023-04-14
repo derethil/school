@@ -24,4 +24,9 @@ void main() {
   } else {
     println("5 correct");
   }
+  if ((a > 4) || (a < 4) && (a == 3)) {
+    println("6 correct");
+  } else {
+    println("6 not correct");
+  }
 }

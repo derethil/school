@@ -54,7 +54,7 @@ public class BinaryOperator implements Expression {
       case PLUS -> {
         code.append(String.format("add %s %s %s\n", leftRegister, leftRegister, rightRegister));
       }
-      case MINUS, EQ -> {
+      case MINUS -> {
         code.append(String.format("sub %s %s %s\n", leftRegister, leftRegister, rightRegister));
       }
       case TIMES -> {
@@ -65,23 +65,45 @@ public class BinaryOperator implements Expression {
         code.append(String.format("div %s %s\n", leftRegister, rightRegister));
         code.append(String.format("mflo %s\n", leftRegister));
       }
+      case MOD -> {
+        code.append(String.format("div %s %s\n", leftRegister, rightRegister));
+        code.append(String.format("mfhi %s\n", leftRegister));
+      }
       case LT -> {
         code.append(String.format("slt %s %s %s\n", leftRegister, leftRegister, rightRegister));
-        code.append(String.format("subi %s %s 1\n", leftRegister, leftRegister));
+        code.append(String.format("xori %s %s 1\n", leftRegister, leftRegister));
       }
       case GT -> {
-        code.append(String.format("slt %s %s %s\n", leftRegister, rightRegister, leftRegister));
-        code.append(String.format("subi %s %s 1\n", leftRegister, leftRegister));
+        code.append(String.format("sgt %s %s %s\n", leftRegister, leftRegister, rightRegister));
+        code.append(String.format("xori %s %s 1\n", leftRegister, leftRegister));
       }
       case LE -> {
-        code.append(String.format("slt %s %s %s\n", leftRegister, rightRegister, leftRegister));
+        code.append(String.format("sle %s %s %s\n", leftRegister, rightRegister, leftRegister));
+        code.append(String.format("xori %s %s 1\n", leftRegister, leftRegister));
       }
       case GE -> {
-        code.append(String.format("slt %s %s %s\n", leftRegister, leftRegister, rightRegister));
+        code.append(String.format("sge %s %s %s\n", leftRegister, leftRegister, rightRegister));
+        code.append(String.format("xori %s %s 1\n", leftRegister, leftRegister));
+      }
+      case EQ -> {
+        code.append(String.format("seq %s %s %s\n", leftRegister, leftRegister, rightRegister));
+        code.append(String.format("xori %s %s 1\n", leftRegister, leftRegister));
       }
       case NE -> {
         code.append(String.format("sne %s %s %s\n", leftRegister, leftRegister, rightRegister));
-        code.append(String.format("subi %s %s 1\n", leftRegister, leftRegister));
+        code.append(String.format("xori %s %s 1\n", leftRegister, leftRegister));
+      }
+      case AND -> {
+        code.append(String.format("xori %s %s 1\n", leftRegister, leftRegister));
+        code.append(String.format("xori %s %s 1\n", rightRegister, rightRegister));
+        code.append(String.format("and %s %s %s\n", leftRegister, leftRegister, rightRegister));
+        code.append(String.format("xori %s %s 1\n", leftRegister, leftRegister));
+      }
+      case OR -> {
+        code.append(String.format("xori %s %s 1\n", leftRegister, leftRegister));
+        code.append(String.format("xori %s %s 1\n", rightRegister, rightRegister));
+        code.append(String.format("or %s %s %s\n", leftRegister, leftRegister, rightRegister));
+        code.append(String.format("xori %s %s 1\n", leftRegister, leftRegister));
       }
       default -> {
         throw new UnsupportedOperationException("BinaryOperatorType " + type + " not supported yet.");
