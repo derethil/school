@@ -1,0 +1,15 @@
+[submodule "softwareEngineering/puttputtgolf"]
+	path = softwareEngineering/puttputtgolf
+	url = git@github.com:3450-Group-3/PuttPuttGolf.git
+[submodule "decisionMaking/incrementalGameTheory"]
+	path = decisionMaking/incrementalGameTheory
+	url = https://github.com/seanrcollings/cs5060-final
+[submodule "webDevelopment/giftGiver"]
+	path = webDevelopment/giftGiver
+	url = https://github.com/seanrcollings/usu-cs4600-final
+[submodule "databases/themeParkDatabase"]
+	path = databases/themeParkDatabase
+	url = git@github.com:seanrcollings/usu-5800-final-project.git
+[submodule "deepLearning/finalProject"]
+	path = deepLearning/finalProject
+	url = git@github.com:5810FinalProject/final_project.git
